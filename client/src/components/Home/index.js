@@ -135,11 +135,13 @@ class Home extends Component {
           >
             {this.state.mode === 0 ? (
               <React.Fragment>
+              
                 Welcome to our MSCI 342 term project!
+
               </React.Fragment>
             ) : (
               <React.Fragment>
-                Welcome back!
+                Take two of THESE and call me in the morning!
               </React.Fragment>
             )}
           </Typography>
