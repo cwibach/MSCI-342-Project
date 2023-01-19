@@ -141,6 +141,7 @@ class Home extends Component {
             ) : (
               <React.Fragment>
                 Take two of THESE and call me in the morning!
+                Not welcome to MSCI342! wheqdiwqheqhwqe
               </React.Fragment>
             )}
           </Typography>
