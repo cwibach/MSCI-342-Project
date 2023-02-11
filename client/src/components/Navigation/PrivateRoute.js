@@ -8,6 +8,8 @@ import LandLordProfile from '../LandlordAccount';
 import RenterProfile from '../RenterAccount';
 import SearchRenters from '../SearchRenters';
 import SearchUnits from '../SearchUnits';
+import MyUnits from '../MyUnits';
+import AddUnit from "../AddUnit";
 
 export default function PrivateRoute({
   //authenticated,
@@ -24,6 +26,8 @@ export default function PrivateRoute({
       <Route path="/RenterProfile" exact component={RenterProfile} />
       <Route path="/Community" exact component={SearchRenters} />
       <Route path="/SearchUnits" exact component={SearchUnits} />
+      <Route path="/MyUnits" exact component={MyUnits} />
+      <Route path="/AddUnit" exact component={AddUnit} />
       </Switch>
     </Router>
   );

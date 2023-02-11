@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { AppBar, Toolbar, Box, Button} from '@mui/material';
 
-class LandLordProfile extends Component {
+class MyUnits extends Component {
     render () {
         return(
             <AppBar position="static">
@@ -28,22 +28,22 @@ class LandLordProfile extends Component {
                         <Button
                         color="inherit" 
                         style={{ cursor: "pointer" }}
-                        onClick={() => history.push('/AddUnit')}
+                        onClick={() => history.push('/LandLordProfile')}
                         size='medium'
                         sx={{p: 5}}>
                             <Typography variant="h5" color="inherit" noWrap>
-                                Add Posting
+                                Profile
                             </Typography>
                         </Button>
 
                         <Button
                         color="inherit" 
                         style={{ cursor: "pointer" }}
-                        onClick={() => history.push('/MyUnits')}
+                        onClick={() => history.push('/AddUnit')}
                         size='medium'
                         sx={{p: 5}}>
                             <Typography variant="h5" color="inherit" noWrap>
-                                My Units
+                                Add Posting
                             </Typography>
                         </Button>
 
@@ -65,4 +65,4 @@ class LandLordProfile extends Component {
     }
 }
 
-export default LandLordProfile;
+export default MyUnits;
