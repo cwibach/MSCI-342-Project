@@ -6,15 +6,27 @@ import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Button from "@mui/material/Button";
+import history from '../Navigation/history';
 
 class LandLordLogin extends Component {
     render () {
         return(
             <div>
-                Login as a Landlord
+                <Button variant="contained"
+                    onClick={() => history.push('/')}>
+                    Back to Home
+                </Button>
+
+                Login as a LandLord
+                
+                <Button variant="contained"
+                    onClick={() => history.push('/LandlordProfile')}>
+                    Login
+                </Button>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(LandLordLogin);
+export default LandLordLogin;

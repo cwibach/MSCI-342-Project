@@ -31,10 +31,10 @@ const theme = createTheme({
       default: "#000000"
     },
     primary: {
-      main: "#52f1ff",
+      main: "#8549a7",
     },
     secondary: {
-      main: "#b552f7",
+      main: "#deb7ff",
     },
   },
 });
@@ -116,8 +116,6 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
 
-
-
     const mainMessage = (
       <Grid
         container
@@ -152,8 +150,7 @@ class Home extends Component {
         </Grid>
       </Grid>
     )
-
-
+    
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
