@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Button from "@mui/material/Button";
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@mui/material';
+import {appTheme} from "../../themes/theme";
 import history from '../Navigation/history';
 
 
@@ -152,24 +151,41 @@ class Home extends Component {
     )
     
     return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <CssBaseline />
-          <Paper
-            className={classes.paper}
-          >
-            <Button variant="contained"
-              onClick={() => history.push('/LandlordLogin')}>
-              Landlord
-            </Button>
-            <Button variant="contained"
-              onClick={() => history.push('/RenterLogin')}>
-              Renter
-            </Button>
-          </Paper>
+      <ThemeProvider theme={appTheme}>
+          <CssBaseline enableColorScheme/>
 
-        </div>
-      </MuiThemeProvider>
+          <Box
+            margin={3}
+            display={"flex"}
+            justifyContent={"center"}
+            flexGrow={4}
+            alignItems={"center"}
+            sx={{
+              height: 500
+            }}
+          >
+            <Grid
+            container
+            spacing={5}
+            direction="column"
+            style={{maxWidth: "20%"}}>
+
+              <Button variant="contained" size="large" sx={{height:100}}
+              onClick={() => history.push('/LandlordLogin')}>
+                Landlord
+              </Button>
+              
+              <br/>
+
+              <Button variant="contained" size="large" sx={{height:100}}
+                onClick={() => history.push('/RenterLogin')}>
+                  Renter
+              </Button>
+            </Grid>
+
+          </Box>
+
+      </ThemeProvider>
     );
   }
 }

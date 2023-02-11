@@ -1,30 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Button from "@mui/material/Button";
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider} from '@mui/material';
+import {appTheme} from "../../themes/theme";
 import history from '../Navigation/history';
 
 class RenterLogin extends Component {
     render () {
         return(
-            <div>
-                <Button variant="contained"
-                    onClick={() => history.push('/')}>
-                    Back to Home
-                </Button>
+            <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme/>
+            
+            <Box
+            margin={6}
+            display={"flex"}
+            justifyContent={"center"}
+            flexGrow={4}
+            alignItems={"flex-start"}
+            sx={{
+              height: 1000
+            }}
+            >
+                <Grid container
+                spacing={50}
+                direction="column"
+                style={{maxWidth: "20%"}}>
 
-                Login as a Renter
+                    <Button variant="contained"
+                        onClick={() => history.push('/')}>
+                        Back to Home
+                    </Button>
 
-                <Button variant="contained"
-                    onClick={() => history.push('/RenterProfile')}>
-                    Login
-                </Button>
-            </div>
+                    <br/>
+
+                    <Typography variant="h4" color="primary">
+                        Login as a Renter
+                    </Typography>
+                    
+                    <br/>
+
+                    <Button variant="contained"
+                        onClick={() => history.push('/RenterProfile')}>
+                        Login
+                    </Button>
+                </Grid>
+            </Box>
+            </ThemeProvider>
         );
     }
 }

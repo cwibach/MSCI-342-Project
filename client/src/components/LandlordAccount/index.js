@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
-import { AppBar, Toolbar, Box, Button} from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider} from '@mui/material';
+import {appTheme} from "../../themes/theme";
 
 class LandLordProfile extends Component {
     render () {
         return(
+            <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme/>
+
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h4" color="inherit" >
+                    <Typography variant="h4" >
                         Profile
                     </Typography>
 
@@ -26,12 +29,12 @@ class LandLordProfile extends Component {
                         alignItems="center">
 
                         <Button
-                        color="inherit" 
+                        color="inherit"
                         style={{ cursor: "pointer" }}
                         onClick={() => history.push('/AddUnit')}
                         size='medium'
                         sx={{p: 5}}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            <Typography variant="h5" noWrap>
                                 Add Posting
                             </Typography>
                         </Button>
@@ -42,7 +45,7 @@ class LandLordProfile extends Component {
                         onClick={() => history.push('/MyUnits')}
                         size='medium'
                         sx={{p: 5}}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            <Typography variant="h5" noWrap>
                                 My Units
                             </Typography>
                         </Button>
@@ -53,7 +56,7 @@ class LandLordProfile extends Component {
                         onClick={() => history.push('/LandLordLogin')}
                         size='medium'
                         sx={{p: 5}}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            <Typography variant="h5" noWrap>
                                 Logout
                             </Typography>
                         </Button>
@@ -61,6 +64,7 @@ class LandLordProfile extends Component {
                     </Box>
                 </Toolbar>
             </AppBar>
+            </ThemeProvider>
         );
     }
 }
