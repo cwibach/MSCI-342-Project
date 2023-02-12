@@ -4,15 +4,18 @@ import {createTheme} from "@mui/material/styles";
 
 export const appTheme = createTheme({
     palette: {
-        type: 'dark',
+        type: 'light',
         background: {
-            default: "#000000"
+            default: "#160B18"
         },
         primary: {
-            main: purple[300],
+            main: "#a86add",
+            background: "#deb7ff"
         },
         secondary: {
-            main: purple[700],
+            main: "#634087",
+            background: "#c785ec",
+            dark: "#483248"
         }
     }
 });
