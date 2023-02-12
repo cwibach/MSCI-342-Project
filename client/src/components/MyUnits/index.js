@@ -79,9 +79,7 @@ const ListofUnits = () => {
         Visible: false,
         PostingDate: "2023-01-12",
         Bath: 2,
-        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet",
-        expanded: false,
-        buttonText: "Show Info"},
+        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"},
         {id: 2,
         Address: "Second address",
         NumRooms: 5,
@@ -90,9 +88,7 @@ const ListofUnits = () => {
         Visible: false,
         PostingDate: "2023-01-12",
         Bath: 2,
-        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet",
-        expanded: false,
-        buttonText: "Show Info"},
+        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"},
         {id: 3,
         Address: "Third address",
         NumRooms: 3,
@@ -101,9 +97,7 @@ const ListofUnits = () => {
         Visible: false,
         PostingDate: "2023-01-12",
         Bath: 2,
-        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet",
-        expanded: false,
-        buttonText: "Show Info"},
+        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"},
         {id: 4,
         Address: "Fourth address",
         NumRooms: 2,
@@ -112,9 +106,7 @@ const ListofUnits = () => {
         Visible: false,
         PostingDate: "2023-01-12",
         Bath: 2,
-        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet",
-        expanded: false,
-        buttonText: "Show Info"},
+        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"},
         {id: 5,
         Address: "Fifth address",
         NumRooms: 4,
@@ -123,41 +115,40 @@ const ListofUnits = () => {
         Visible: false,
         PostingDate: "2023-01-12",
         Bath: 2,
-        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet",
-        expanded: false,
-        buttonText: "Show Info"}
+        AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"}
     ];
 
     const [unitList, setUnitList] = React.useState([]);
+    const [expanded, setExpanded] = React.useState([]);
 
     React.useEffect(() => {
         setUnitList(tempUnits);
-    }, []);
+    }, [0]);
 
-    // const expandUnit = (id) => {
-    //     const tempUnitList = [...unitList];
+    const addToExpanded = (unitID) => {
+        let tempExpanded = [...expanded];
 
-    //     console.log(id);
+        tempExpanded.push(unitID);
 
-    //     const enabled = tempUnitList[id - 1].expanded;
+        setExpanded(tempExpanded);
+    }
 
-    //     if (enabled){
-    //         tempUnitList[id].expanded = false;
-    //         tempUnitList[id].buttonText = "Show Info";
-    //     } else {
-    //         tempUnitList[id].expanded = true;
-    //         tempUnitList[id].buttonText = "Hide Info";
-    //     }
+    const removeFromExpanded = (unitID) => {
+        let tempExpanded = [...expanded];
 
-    //     setUnitList(tempUnitList);
+        for (let i = 0; i < tempExpanded.length; i++){
+            if (tempExpanded[i] == unitID) {
+                tempExpanded.splice(i, 1);
+            }
+        }
 
-    // }
+        setExpanded(tempExpanded);
+    }
 
     return(
         <Grid margin={appTheme.spacing(2)}>
             {unitList.map((unit) => {
                 
-
                 return(
                     <Grid item key={unit.id}>
                         <AppPaper>
@@ -171,10 +162,10 @@ const ListofUnits = () => {
                                 {unit.Address}
                             </Typography>
 
-                            {/* {(unit.expanded) ? (<> */}
+                            {(expanded.includes(unit.id)) ? (<>
                                 <Typography
                                 style={{marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(4),
+                                    marginLeft: appTheme.spacing(5),
                                     marginBottom: appTheme.spacing(1)}}
                                 variant="subtitle1"
                                 component="div"
@@ -185,7 +176,7 @@ const ListofUnits = () => {
 
                             <Typography
                                 style={{marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(4),
+                                    marginLeft: appTheme.spacing(5),
                                     marginBottom: appTheme.spacing(1)}}
                                 variant="subtitle1"
                                 component="div"
@@ -196,7 +187,7 @@ const ListofUnits = () => {
 
                             <Typography
                                 style={{marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(4),
+                                    marginLeft: appTheme.spacing(5),
                                     marginBottom: appTheme.spacing(1)}}
                                 variant="subtitle1"
                                 component="div"
@@ -204,13 +195,26 @@ const ListofUnits = () => {
                             >
                                 Utilities included: {unit.AmenitiesInc}
                             </Typography>
-                            {/* </>): (<>
-                            </>)} */}
 
-                            {/* <Button onClick={expandUnit(unit.id)}
-                                variant="contained">
-                                 {unit.buttonText}
-                            </Button> */}
+                            <Button
+                                    onClick={() => removeFromExpanded(unit.id)}
+                                    variant="contained"
+                                    style={{marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(3),
+                                        marginBottom: appTheme.spacing(2)}}>
+                                    Hide Details
+                                </Button>
+                            
+                            </>): (<>
+                                <Button
+                                    onClick={() => addToExpanded(unit.id)}
+                                    variant="contained"
+                                    style={{marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(3),
+                                        marginBottom: appTheme.spacing(2)}}>
+                                    Show Details
+                                </Button>
+                            </>)}
                         </AppPaper>
                     </Grid>
                 );
