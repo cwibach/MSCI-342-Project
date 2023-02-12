@@ -5,9 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, Paper} from '@mui/material';
 import {appTheme} from "../../themes/theme";
 import history from '../Navigation/history';
-import {appPaper} from "../../themes/paper";
-
-const ThisPaper = appPaper;
+import {AppPaper} from "../../themes/paper";
 
 const SearchUnits = () => {
     const tempUnits = [
@@ -99,7 +97,7 @@ const SearchUnits = () => {
 
             {(unitMode) ? (<>
                 <Button onClick={() => setUnitMode(false)}
-                variant="outlined">
+                variant="outlined" >
                     <Typography variant="h5" color="inherit" noWrap>
                         Return to Search
                     </Typography>
@@ -122,7 +120,7 @@ const SearchUnits = () => {
 
 const ListofUnits = ({units}) => {
     return(
-            <ThisPaper elevation={5}>
+            <AppPaper>
             {units.map((unit) => {
                 return(
                     <Grid item key={unit.id}>
@@ -149,7 +147,7 @@ const ListofUnits = ({units}) => {
                     </Grid>
                 );
             })}
-        </ThisPaper>
+        </AppPaper>
     );
 }
 
