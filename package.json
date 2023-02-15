@@ -21,6 +21,11 @@
     "yarn": "^1.22.18"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^24.9.0",
+    "concurrently": "^4.0.1",
+    "jest": "^24.9.0",
+    "react-dom": "^16.8.6",
+    "react-test-renderer": "^16.8.6"
   }
 }
