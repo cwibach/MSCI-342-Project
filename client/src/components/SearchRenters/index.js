@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider} from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@mui/material';
 import {appTheme} from "../../themes/theme";
 import history from '../Navigation/history';
 import RenterList from '../RenterList/index';
 
 const SearchRenters = () => {
     const [renters, setRenters] = React.useState([]);
+    const [renterMode, setRenterMode] = React.useState(false);
 
     const tempRenters = [
         {id: 1,
@@ -120,7 +120,29 @@ const SearchRenters = () => {
                 </Toolbar>
             </AppBar>
 
-            <RenterList renters={renters}/>
+            <Grid margin={appTheme.spacing(2)}>
+
+            {(renterMode) ? (<>
+                    <Button onClick={() => setRenterMode(false)}
+                        variant="outlined" >
+                        <Typography variant="h5" color="inherit" noWrap>
+                            Return to Search
+                        </Typography>
+                    </Button>
+
+                    <RenterList renters={renters}/>
+                </>) : (<>
+                    <Button onClick={() => setRenterMode(true)}
+                        variant="outlined">
+                        <Typography variant="h5" color="inherit" noWrap>
+                            See Renters
+                        </Typography>
+                    </Button>
+                </>)}
+
+            </Grid>
+
+
 
         </ThemeProvider>
     );

@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, Paper }
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
+import RenterList from '../RenterList/index';
 
 const SearchUnits = () => {
     const tempUnits = [
@@ -90,7 +91,7 @@ const SearchUnits = () => {
     ];
 
     const [unitList, setUnitList] = React.useState([]);
-    const [unitMode, setUnitMode] = React.useState(true);
+    const [unitMode, setUnitMode] = React.useState(false);
     const [renters, setRenters] = React.useState([]);
 
 
@@ -166,7 +167,7 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <ListofUnits units={unitList} />
+                    <ListofUnits units={unitList} renters={renters} />
                 </>) : (<>
                     <Button onClick={() => setUnitMode(true)}
                         variant="outlined">
@@ -277,6 +278,8 @@ const ListofUnits = ({ units, renters }) => {
 
             {(anyExpanded) ? (<>
                 <UnitDetails unitDetails={expandedDetails} />
+
+                <RenterList renters={renters} />
             </>) : (<>
             </>)}
         </Grid>
