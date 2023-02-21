@@ -42,7 +42,8 @@ const SearchUnits = () => {
         }
     ];
 
-    const tempRenters = [{id: 1,
+    const tempRenters = [{
+        id: 1,
         name: "Renter 1",
         age: 21,
         gender: "male",
@@ -51,7 +52,8 @@ const SearchUnits = () => {
         maxrent: 900,
         bedtime: "11:15 PM",
         cooking: "never"
-    },{id: 2,
+    }, {
+        id: 2,
         name: "Renter 2",
         age: 21,
         gender: "helicopter",
@@ -60,7 +62,8 @@ const SearchUnits = () => {
         maxrent: 915,
         bedtime: "11:15 AM",
         cooking: "always"
-    },{id: 3,
+    }, {
+        id: 3,
         name: "Renter 3",
         age: 21,
         gender: "none",
@@ -69,7 +72,8 @@ const SearchUnits = () => {
         maxrent: 930,
         bedtime: "4:00 PM",
         cooking: "daily"
-    },{id: 4,
+    }, {
+        id: 4,
         name: "Renter 4",
         age: 21,
         gender: "all",
@@ -78,7 +82,8 @@ const SearchUnits = () => {
         maxrent: 945,
         bedtime: "4:00 AM",
         cooking: "weekly"
-    },{id: 5,
+    }, {
+        id: 5,
         name: "Renter 5",
         age: 21,
         gender: "female",
@@ -108,8 +113,8 @@ const SearchUnits = () => {
 
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h4" color="inherit" >
-                        Profile
+                    <Typography variant="h3" >
+                        PurplePages
                     </Typography>
 
                     <Box
@@ -124,8 +129,8 @@ const SearchUnits = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => history.push('/RenterProfile')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Profile
                             </Typography>
                         </Button>
@@ -135,8 +140,8 @@ const SearchUnits = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => history.push('/Community')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Community
                             </Typography>
                         </Button>
@@ -144,10 +149,21 @@ const SearchUnits = () => {
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterLogin')}
+                            onClick={() => history.push('/SearchUnits')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
+                                <strong>Search Units</strong>
+                            </Typography>
+                        </Button>
+
+                        <Button
+                            color="inherit"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => history.push('/')}
+                            size='medium'
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Logout
                             </Typography>
                         </Button>
@@ -191,7 +207,7 @@ const ListofUnits = ({ units, renters }) => {
         setExpanded(unitID);
         setAnyExpanded(true);
 
-        for (let i=0; i < units.length; i++) {
+        for (let i = 0; i < units.length; i++) {
             if (units[i].id === unitID) {
                 setExpandedDetails(units[i]);
             }
@@ -313,7 +329,7 @@ const UnitDetails = ({ unitDetails }) => {
                 color="inherit"
             >
                 Bedrooms: {unitDetails.NumRooms}
-            </Typography>            
+            </Typography>
             <Typography
                 style={{
                     marginTop: appTheme.spacing(1),
