@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@mui/material';
-import {appTheme} from "../../themes/theme";
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
+import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import RenterList from '../RenterList/index';
 
@@ -14,7 +14,8 @@ const SearchRenters = () => {
     const [renterMode, setRenterMode] = React.useState(false);
 
     const tempRenters = [
-        {id: 1,
+        {
+            id: 1,
             name: "Renter 1",
             age: 21,
             gender: "male",
@@ -23,7 +24,8 @@ const SearchRenters = () => {
             maxrent: 900,
             bedtime: "11:15 PM",
             cooking: "never"
-        },{id: 2,
+        }, {
+            id: 2,
             name: "Renter 2",
             age: 21,
             gender: "helicopter",
@@ -32,7 +34,8 @@ const SearchRenters = () => {
             maxrent: 915,
             bedtime: "11:15 AM",
             cooking: "always"
-        },{id: 3,
+        }, {
+            id: 3,
             name: "Renter 3",
             age: 21,
             gender: "none",
@@ -41,7 +44,8 @@ const SearchRenters = () => {
             maxrent: 930,
             bedtime: "4:00 PM",
             cooking: "daily"
-        },{id: 4,
+        }, {
+            id: 4,
             name: "Renter 4",
             age: 21,
             gender: "all",
@@ -50,7 +54,8 @@ const SearchRenters = () => {
             maxrent: 945,
             bedtime: "4:00 AM",
             cooking: "weekly"
-        },{id: 5,
+        }, {
+            id: 5,
             name: "Renter 5",
             age: 21,
             gender: "female",
@@ -72,8 +77,8 @@ const SearchRenters = () => {
 
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h4" color="inherit" >
-                        Profile
+                    <Typography variant="h3" >
+                        PurplePages
                     </Typography>
 
                     <Box
@@ -88,9 +93,20 @@ const SearchRenters = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => history.push('/RenterProfile')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Profile
+                            </Typography>
+                        </Button>
+
+                        <Button
+                            color="inherit"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => history.push('/Community')}
+                            size='medium'
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
+                                <strong>Community</strong>
                             </Typography>
                         </Button>
 
@@ -99,8 +115,8 @@ const SearchRenters = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => history.push('/SearchUnits')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Search Units
                             </Typography>
                         </Button>
@@ -108,10 +124,10 @@ const SearchRenters = () => {
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterLogin')}
+                            onClick={() => history.push('/')}
                             size='medium'
-                            sx={{ p: 5 }}>
-                            <Typography variant="h5" color="inherit" noWrap>
+                            sx={{ p: 3 }}>
+                            <Typography variant="h5" noWrap>
                                 Logout
                             </Typography>
                         </Button>
@@ -122,7 +138,7 @@ const SearchRenters = () => {
 
             <Grid margin={appTheme.spacing(2)}>
 
-            {(renterMode) ? (<>
+                {(renterMode) ? (<>
                     <Button onClick={() => setRenterMode(false)}
                         variant="outlined" >
                         <Typography variant="h5" color="inherit" noWrap>
@@ -130,7 +146,7 @@ const SearchRenters = () => {
                         </Typography>
                     </Button>
 
-                    <RenterList renters={renters}/>
+                    <RenterList renters={renters} />
                 </>) : (<>
                     <Button onClick={() => setRenterMode(true)}
                         variant="outlined">

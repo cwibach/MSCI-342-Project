@@ -6,17 +6,17 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider} from '@mui/material';
-import {appTheme} from "../../themes/theme";
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+import { appTheme } from "../../themes/theme";
 
-class AddUnit extends Component {
-    render () {
-        return(
+class RenterProfile extends Component {
+    render() {
+        return (
             <ThemeProvider theme={appTheme}>
-            <CssBaseline enableColorScheme/>
+                <CssBaseline enableColorScheme />
 
-            <AppBar position="static">
-            <Toolbar>
+                <AppBar position="static">
+                    <Toolbar>
                         <Typography variant="h3" >
                             PurplePages
                         </Typography>
@@ -31,33 +31,33 @@ class AddUnit extends Component {
                             <Button
                                 color="inherit"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => history.push('/LandlordProfile')}
+                                onClick={() => history.push('/RenterProfile')}
                                 size='medium'
                                 sx={{ p: 3 }}>
                                 <Typography variant="h5" noWrap>
-                                    Profile
+                                    <strong>Profile</strong>
                                 </Typography>
                             </Button>
 
                             <Button
                                 color="inherit"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => history.push('/AddUnit')}
+                                onClick={() => history.push('/Community')}
                                 size='medium'
                                 sx={{ p: 3 }}>
                                 <Typography variant="h5" noWrap>
-                                    <strong>Add Posting</strong>
+                                    Community
                                 </Typography>
                             </Button>
 
                             <Button
                                 color="inherit"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => history.push('/MyUnits')}
+                                onClick={() => history.push('/SearchUnits')}
                                 size='medium'
                                 sx={{ p: 3 }}>
                                 <Typography variant="h5" noWrap>
-                                    My Units
+                                    Search Units
                                 </Typography>
                             </Button>
 
@@ -74,10 +74,10 @@ class AddUnit extends Component {
 
                         </Box>
                     </Toolbar>
-            </AppBar>
+                </AppBar>
             </ThemeProvider>
         );
     }
 }
 
-export default AddUnit;
+export default RenterProfile;
