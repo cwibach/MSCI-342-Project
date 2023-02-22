@@ -4,7 +4,7 @@ import Home from '../Home';
 import history from './history';
 import LandLordLogin from '../LandlordLogin';
 import RenterLogin from '../RenterLogin';
-import LandLordProfile from '../LandlordProfile';
+import LandlordProfile from '../LandlordProfile';
 import RenterProfile from '../RenterProfile';
 import SearchRenters from '../SearchRenters';
 import SearchUnits from '../SearchUnits';
@@ -22,7 +22,7 @@ export default function PrivateRoute({
       <Route path="/" exact component={Home} />
       <Route path="/LandLordLogin" exact component={LandLordLogin} />
       <Route path="/RenterLogin" exact component={RenterLogin} />
-      <Route path="/LandLordProfile" exact component={LandLordProfile} />
+      <Route path="/LandLordProfile" exact component={LandlordProfile} />
       <Route path="/RenterProfile" exact component={RenterProfile} />
       <Route path="/Community" exact component={SearchRenters} />
       <Route path="/SearchUnits" exact component={SearchUnits} />

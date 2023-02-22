@@ -21,6 +21,72 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 */
 
+// Get Renter Profile Info Api
+app.post('/api/getRenterProfileInfo', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT * FROM osellner.Renters
+	WHERE osellner.Renters.renter_id = ?
+	`;
+	console.log(sql);
+	let data = [req.body.renter_id];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
+	});
+	connection.end();
+});
+
+// Get Landlord Profile Info Api
+app.post('/api/getLandlordProfileInfo', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT * FROM osellner.Landlords
+	WHERE osellner.Landlords.landlord_id = ?
+	`;
+	console.log(sql);
+	let data = [req.body.landlord_id];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
+	});
+	connection.end();
+});
+
+// Get Posting Info Api
+app.post('/api/getPostingInfo', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT * FROM osellner.Landlords
+	WHERE osellner.Renters.landlord_id = ?
+	`;
+	console.log(sql);
+	let data = [req.body.posting_id];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
+	});
+	connection.end();
+});
+
 // Get Renters Api
 app.post('/api/getRenters', (req, res) => {
 
@@ -100,7 +166,7 @@ app.post('/api/addRenter', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `INSERT INTO osellner.Renters (username, password, email, phone, bedtime, birthday, gender, cook) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+	let sql = `INSERT INTO osellner.Renters (username, password, email, phone, bedtime, birthday, gender, cook, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 	let data = [req.body.username, req.body.password, req.body.email, req.body.phone, req.body.bedtime, req.body.birthday, req.body.gender, req.body.cook];
 	
 	connection.query(sql, data, (error, results, fields) => {
@@ -120,7 +186,7 @@ app.post('/api/addLandlord', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `INSERT INTO osellner.Landlords (username, password, email, phone) VALUES (?, ?, ?, ?)`;
+	let sql = `INSERT INTO osellner.Landlords (username, password, email, phone, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)`;
 	let data = [req.body.username, req.body.password, req.body.email, req.body.phone];
 	
 	connection.query(sql, data, (error, results, fields) => {
