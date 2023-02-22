@@ -44,7 +44,7 @@ class LandLordLogin extends Component {
                         <br />
 
                         <Button variant="contained"
-                            onClick={() => history.push('/LandlordProfile')}>
+                            onClick={() => history.push('/LandlordSignup')}>
                             Sign Up
                         </Button>
 

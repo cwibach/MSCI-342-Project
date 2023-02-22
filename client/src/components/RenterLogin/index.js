@@ -8,65 +8,66 @@ import Paper from "@material-ui/core/Paper";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
+import Modal from '@mui/material/Modal';
 
-class RenterLogin extends Component {
-    render() {
-        return (
-            <ThemeProvider theme={appTheme}>
-                <CssBaseline enableColorScheme />
+function RenterLogin() {
+   
+    return (
 
-                <Box
-                    margin={6}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    flexGrow={4}
-                    alignItems={"flex-start"}
-                    sx={{
-                        height: 1000
-                    }}
-                >
-                    <Grid container
-                        spacing={50}
-                        direction="column"
-                        style={{ maxWidth: "20%" }}>
 
-                        <Button variant="contained"
-                            onClick={() => history.push('/')}>
-                            Back to Home
-                        </Button>
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
 
-                        <br />
+            <Box
+                margin={6}
+                display={"flex"}
+                justifyContent={"center"}
+                flexGrow={4}
+                alignItems={"flex-start"}
+                sx={{
+                    height: 1000
+                }}
+            >
+                <Grid container
+                    spacing={50}
+                    direction="column"
+                    style={{ maxWidth: "20%" }}>
 
-                        <Typography variant="h4" color="primary">
-                            Sign up as a Renter
-                        </Typography>
+                    <Button variant="contained"
+                        onClick={() => history.push('/')}>
+                        Back to Home
+                    </Button>
 
-                        <br />
+                    <br />
 
-                        <Button variant="contained"
-                            onClick={() => history.push('/LandlordProfile')}>
-                            Sign Up
-                        </Button>
+                    <Typography variant="h4" color="primary">
+                        Sign Up as a Renter
+                    </Typography>
 
-                        <br />
+                    <br />
 
-                        <br />
+                    <Button variant="contained"
+                        onClick={() => history.push('/RenterSignup')}>
+                        Sign Up
+                    </Button>
+                    
+                    <br />
 
-                        <Typography variant="h4" color="primary">
-                            Login as a Renter
-                        </Typography>
+                    <Typography variant="h4" color="primary">
+                        Login as a Renter
+                    </Typography>
 
-                        <br />
+                    <br />
 
-                        <Button variant="contained"
-                            onClick={() => history.push('/RenterProfile')}>
-                            Login
-                        </Button>
-                    </Grid>
-                </Box>
-            </ThemeProvider>
-        );
-    }
+                    <Button variant="contained"
+                        onClick={() => history.push('/RenterProfile')}>
+                        Login
+                    </Button>
+                </Grid>
+            </Box>
+        </ThemeProvider>
+    );
+
 }
 
 export default RenterLogin;
