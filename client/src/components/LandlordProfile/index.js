@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
@@ -20,7 +20,7 @@ function LandlordProfile() {
 
     // Template Object 
     const initialProfile = [{
-        landlord_id: '',
+        landlord_id: 0,
         username: '',
         password: '',
         email: '',
@@ -156,51 +156,57 @@ function LandlordProfile() {
                     <Box sx={{ display: 'flex', pb: 2 }}></Box>
                 </Grid>
 
-                {/* Profile Information */}
-                <Grid container
-                    alignContent="center"
-                    direction="row"
-                >
-                    {/* Row 1 */}
-                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h5">
-                            <b>First Name:</b> {profile[0].first_name}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12 - 8}></Grid>
-                    
-                    {/* Row 2 */}
-                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h5">
-                            <b>Last Name:</b> {profile[0].last_name}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12 - 8}></Grid>
-                    
-                    {/* Row 3 */}
-                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h5">
-                            <b>Email:</b> {profile[0].email}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12 - 8}></Grid>
-                    
-                    {/* Row 4 */}
-                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h5">
-                            <b>Phone:</b> {profile[0].phone}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12 - 8}></Grid>
-                </Grid>
+                {/* User Results */}
+                {profile.map((item) => {
+                    return (
+                        <Grid container
+                            alignContent="center"
+                            direction="row"
+                        >
+                            {/* Row 1 */}
+                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="h5">
+                                    <b>First Name:</b> {item.first_name != '' && item.first_name}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12 - 8}></Grid>
+
+                            {/* Row 2 */}
+                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="h5">
+                                    <b>Last Name:</b> {item.last_name != '' && item.last_name}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12 - 8}></Grid>
+
+                            {/* Row 3 */}
+                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="h5">
+                                    <b>Email:</b> {item.email != '' && item.email}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12 - 8}></Grid>
+
+                            {/* Row 4 */}
+                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                            <Grid item xs={4}></Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="h5">
+                                    <b>Phone:</b> {item.phone != '' && item.phone}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12 - 8}></Grid>
+
+                        </Grid>
+                    );
+                })}
+
             </Grid>
 
         </ThemeProvider>
