@@ -50,70 +50,73 @@ export default function RenterSignup() {
                     <Typography component="h1" variant="h5" color="primary">
                         Sign up
                     </Typography>
+                    <Box onSubmit={handleSubmit}>
 
-                    <TextField
-                        variant="filled"
-                        style={{ background: "#e6e6e6" }}
-                        color="primary"
-                        autoComplete="given-name"
-                        name="firstName"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="First Name"
-                        sx={{ mt: 3, mb: 2 }}
-                        autoFocus
-                    />
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            color="primary"
+                            autoComplete="given-name"
+                            name="firstName"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            sx={{ mt: 3, mb: 2 }}
+                            autoFocus
+                        />
 
-                    <TextField
-                        variant="filled"
-                        style={{ background: "#e6e6e6" }}
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="family-name"
-                        sx={{ mt: 3, mb: 2 }}
-                        color="primary"
-                    />
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="family-name"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
 
-                    <TextField
-                        variant="filled"
-                        style={{ background: "#e6e6e6" }}
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        sx={{ mt: 3, mb: 2 }}
-                        color="primary"
-                    />
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
 
-                    <TextField
-                        variant="filled"
-                        style={{ background: "#e6e6e6" }}
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                        sx={{ mt: 3, mb: 2 }}
-                        color="primary"
-                    />
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="new-password"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        color="primary"
-                    >
-                        Sign Up
-                    </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        >
+                            Sign Up
+                        </Button>
+                    </Box>
+
                 </Grid>
             </Box>
         </ThemeProvider>

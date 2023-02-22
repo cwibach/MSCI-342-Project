@@ -9,8 +9,19 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/m
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+
 
 function RenterLogin() {
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log({
+            email: data.get('email'),
+            password: data.get('password'),
+        });
+    };
    
     return (
 
@@ -59,10 +70,78 @@ function RenterLogin() {
 
                     <br />
 
-                    <Button variant="contained"
+                    <Box onSubmit={handleSubmit}>
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            color="primary"
+                            autoComplete="given-name"
+                            name="firstName"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            sx={{ mt: 3, mb: 2 }}
+                            autoFocus
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="family-name"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="new-password"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        >
+                            Log in
+                        </Button>
+                    </Box>
+
+                    {/* <Button variant="contained"
                         onClick={() => history.push('/RenterProfile')}>
                         Login
-                    </Button>
+                    </Button> */}
+
                 </Grid>
             </Box>
         </ThemeProvider>
