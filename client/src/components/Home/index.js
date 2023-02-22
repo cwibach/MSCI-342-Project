@@ -114,46 +114,11 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-
-    const mainMessage = (
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        justify="flex-start"
-        alignItems="flex-start"
-        style={{ minHeight: '100vh' }}
-        className={classes.mainMessageContainer}
-      >
-        <Grid item>
-
-          <Typography
-            variant={"h3"}
-            className={classes.mainMessage}
-            align="flex-start"
-          >
-            {this.state.mode === 0 ? (
-              <React.Fragment>
-              
-                Welcome to our MSCI 342 term project!
-
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                Take two of THESE and call me in the morning!
-                Not welcome to MSCI342! wheqdiwqheqhwqe
-              </React.Fragment>
-            )}
-          </Typography>
-
-        </Grid>
-      </Grid>
-    )
     
     return (
       <ThemeProvider theme={appTheme}>
           <CssBaseline enableColorScheme/>
-
+          
           <Box
             margin={3}
             display={"flex"}

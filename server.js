@@ -13,30 +13,33 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
+// ---------------------------------------------------------------------
 
-app.post('/api/loadUserSettings', (req, res) => {
+
+
+
+// Add Posting Api
+app.post('/api/addPosting', (req, res) => {
 
 	let connection = mysql.createConnection(config);
-	let userID = req.body.userID;
 
-	let sql = `SELECT mode FROM user WHERE userID = ?`;
-	console.log(sql);
-	let data = [userID];
-	console.log(data);
-
+	let sql = `INSERT INTO osellner.Postings (reviewTitle, reviewContent, reviewScore, userID, moviesID) VALUES (?, ?, ?, ?, ?)`;
+	let data = [req.body.reviewTitle, req.body.reviewContent, req.body.reviewScore, req.body.userID, req.body.moviesID];
+	
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
 			return console.error(error.message);
 		}
 
 		let string = JSON.stringify(results);
-		//let obj = JSON.parse(string);
+		// let obj = JSON.parse(string);
 		res.send({ express: string });
 	});
 	connection.end();
 });
 
 
+// ---------------------------------------------------------------------
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
 //app.listen(port, '129.97.25.211'); //for the deployed version, specify the IP address of the server
