@@ -9,67 +9,70 @@ import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import RenterList from '../RenterList/index';
 
-const SearchRenters = () => {
-    const [renters, setRenters] = React.useState([]);
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
+
+function SearchRenters() {
+
+    // Template Object 
+    const initialRenters = [{
+        renter_id: 0,
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+        bedtime: '',
+        birthday: '',
+        gender: '',
+        cook: '',
+        first_name: '',
+        last_name: '',
+    }]
+
+    // Profile List State
+    const [renters, setRenters] = React.useState(initialRenters);
+
+    // Button State
     const [renterMode, setRenterMode] = React.useState(false);
 
-    const tempRenters = [
-        {
-            id: 1,
-            name: "Renter 1",
-            age: 21,
-            gender: "male",
-            phone: "613-737-1111",
-            email: "my.name@email.com",
-            maxrent: 900,
-            bedtime: "11:15 PM",
-            cooking: "never"
-        }, {
-            id: 2,
-            name: "Renter 2",
-            age: 21,
-            gender: "helicopter",
-            phone: "613-737-1111",
-            email: "my.name@email.com",
-            maxrent: 915,
-            bedtime: "11:15 AM",
-            cooking: "always"
-        }, {
-            id: 3,
-            name: "Renter 3",
-            age: 21,
-            gender: "none",
-            phone: "613-737-1111",
-            email: "my.name@email.com",
-            maxrent: 930,
-            bedtime: "4:00 PM",
-            cooking: "daily"
-        }, {
-            id: 4,
-            name: "Renter 4",
-            age: 21,
-            gender: "all",
-            phone: "613-737-1111",
-            email: "my.name@email.com",
-            maxrent: 945,
-            bedtime: "4:00 AM",
-            cooking: "weekly"
-        }, {
-            id: 5,
-            name: "Renter 5",
-            age: 21,
-            gender: "female",
-            phone: "613-737-1111",
-            email: "my.name@email.com",
-            maxrent: 960,
-            bedtime: "11:15",
-            cooking: "what's that?"
-        }
-    ];
+    // User Id *** Temporary ***
+    const [userID, setUserID] = React.useState(1);
 
+    // Activates the intital APIs
     React.useEffect(() => {
-        setRenters(tempRenters);
-    }, [0]);
+        getRenters();
+    }, []);
+
+    const getRenters = () => {
+        callApiGetRenters()
+            .then(res => {
+                console.log("getRenters returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getRenters parsed: ", parsed);
+                setRenters(parsed);
+            });
+    }
+
+    const callApiGetRenters = async () => {
+        const url = serverURL + "/api/getRenters";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                renter_id: userID
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Renters: ", body);
+        return body;
+    }
 
     return (
         <ThemeProvider theme={appTheme}>

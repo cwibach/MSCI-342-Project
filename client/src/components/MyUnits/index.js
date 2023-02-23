@@ -8,7 +8,63 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
 
-const MyUnits = () => {
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
+
+function MyUnits() {
+
+    // Template Object 
+    const initialUnits = [{
+        posting_id: 0,
+        creator_id: 0,
+        rooms: 0,
+        apt_price: 0.0,
+        visible: true,
+        address: '',
+    }]
+
+    // Profile List State
+    const [unitList, setUnitList] = React.useState(initialUnits);
+
+    // User Id *** Temporary ***
+    const [userID, setUserID] = React.useState(1);
+
+    // Activates the intital APIs
+    React.useEffect(() => {
+        getMyUnits();
+    }, []);
+
+    const getMyUnits = () => {
+        callApiGetMyUnits()
+            .then(res => {
+                console.log("getMyUnits returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getMyUnits parsed: ", parsed);
+                setUnitList(parsed);
+            });
+    }
+
+    const callApiGetMyUnits = async () => {
+        const url = serverURL + "/api/getMyUnits";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                creator_id: userID
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("MyUnits: ", body);
+        return body;
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -74,77 +130,15 @@ const MyUnits = () => {
                 </Toolbar>
             </AppBar>
 
-            <ListofUnits />
+            <ListofUnits unitList={unitList} />
 
         </ThemeProvider>
     );
 }
 
-const ListofUnits = () => {
-    const tempUnits = [
-        {
-            id: 1,
-            Address: "First address",
-            NumRooms: 4,
-            Price: 850,
-            TotalPrice: 3400,
-            Visible: false,
-            PostingDate: "2023-01-12",
-            Bath: 2,
-            AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"
-        },
-        {
-            id: 2,
-            Address: "Second address",
-            NumRooms: 5,
-            Price: 1000,
-            TotalPrice: 3400,
-            Visible: false,
-            PostingDate: "2023-01-12",
-            Bath: 2,
-            AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"
-        },
-        {
-            id: 3,
-            Address: "Third address",
-            NumRooms: 3,
-            Price: 500,
-            TotalPrice: 3400,
-            Visible: false,
-            PostingDate: "2023-01-12",
-            Bath: 2,
-            AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"
-        },
-        {
-            id: 4,
-            Address: "Fourth address",
-            NumRooms: 2,
-            Price: 705,
-            TotalPrice: 3400,
-            Visible: false,
-            PostingDate: "2023-01-12",
-            Bath: 2,
-            AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"
-        },
-        {
-            id: 5,
-            Address: "Fifth address",
-            NumRooms: 4,
-            Price: 800,
-            TotalPrice: 3400,
-            Visible: false,
-            PostingDate: "2023-01-12",
-            Bath: 2,
-            AmenitiesInc: "Heating, Cooling, Water, Hydro, Internet"
-        }
-    ];
+const ListofUnits = ({unitList}) => {
 
-    const [unitList, setUnitList] = React.useState([]);
     const [expanded, setExpanded] = React.useState([]);
-
-    React.useEffect(() => {
-        setUnitList(tempUnits);
-    }, [0]);
 
     const addToExpanded = (unitID) => {
         let tempExpanded = [...expanded];
@@ -171,7 +165,7 @@ const ListofUnits = () => {
             {unitList.map((unit) => {
 
                 return (
-                    <Grid item key={unit.id}>
+                    <Grid item key={unit.posting_id}>
                         <AppPaper>
                             <Typography
                                 style={{
@@ -182,10 +176,10 @@ const ListofUnits = () => {
                                 component="div"
                                 color="inherit"
                             >
-                                {unit.Address}
+                                {unit.address}
                             </Typography>
 
-                            {(expanded.includes(unit.id)) ? (<>
+                            {(expanded.includes(unit.posting_id)) ? (<>
                                 <Typography
                                     style={{
                                         marginTop: appTheme.spacing(1),
@@ -196,7 +190,7 @@ const ListofUnits = () => {
                                     component="div"
                                     color="inherit"
                                 >
-                                    {unit.NumRooms} Bedrooms, {unit.Bath} Bathroooms, ${unit.Price}/person/month, Total Price: ${unit.TotalPrice}
+                                    {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
                                 </Typography>
 
                                 <Typography
@@ -209,24 +203,11 @@ const ListofUnits = () => {
                                     component="div"
                                     color="inherit"
                                 >
-                                    This Posting is currently: {unit.Visible} to potential renters. Posted on {unit.PostingDate}
-                                </Typography>
-
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    Utilities included: {unit.AmenitiesInc}
+                                    ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
                                 </Typography>
 
                                 <Button
-                                    onClick={() => removeFromExpanded(unit.id)}
+                                    onClick={() => removeFromExpanded(unit.posting_id)}
                                     variant="contained"
                                     style={{
                                         marginTop: appTheme.spacing(1),
@@ -238,7 +219,7 @@ const ListofUnits = () => {
 
                             </>) : (<>
                                 <Button
-                                    onClick={() => addToExpanded(unit.id)}
+                                    onClick={() => addToExpanded(unit.posting_id)}
                                     variant="contained"
                                     style={{
                                         marginTop: appTheme.spacing(1),

@@ -145,7 +145,7 @@ function LandlordProfile() {
                 alignItems="center"
                 display="flex"
                 style={{ color: "#e6e6e6" }}
-
+                
             >
 
                 {/* Page Title */}
