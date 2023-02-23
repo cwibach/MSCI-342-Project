@@ -8,104 +8,61 @@ import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
 import RenterList from '../RenterList/index';
 
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
+
 const SearchUnits = () => {
-    const tempUnits = [
-        {
-            id: 1,
-            Address: "First address",
-            NumRooms: 4,
-            Price: 850
-        },
-        {
-            id: 2,
-            Address: "Second address",
-            NumRooms: 5,
-            Price: 1000
-        },
-        {
-            id: 3,
-            Address: "Third address",
-            NumRooms: 3,
-            Price: 500
-        },
-        {
-            id: 4,
-            Address: "Fourth address",
-            NumRooms: 2,
-            Price: 705
-        },
-        {
-            id: 5,
-            Address: "Fifth address",
-            NumRooms: 4,
-            Price: 800
-        }
-    ];
 
-    const tempRenters = [{
-        id: 1,
-        name: "Renter 1",
-        age: 21,
-        gender: "male",
-        phone: "613-737-1111",
-        email: "my.name@email.com",
-        maxrent: 900,
-        bedtime: "11:15 PM",
-        cooking: "never"
-    }, {
-        id: 2,
-        name: "Renter 2",
-        age: 21,
-        gender: "helicopter",
-        phone: "613-737-1111",
-        email: "my.name@email.com",
-        maxrent: 915,
-        bedtime: "11:15 AM",
-        cooking: "always"
-    }, {
-        id: 3,
-        name: "Renter 3",
-        age: 21,
-        gender: "none",
-        phone: "613-737-1111",
-        email: "my.name@email.com",
-        maxrent: 930,
-        bedtime: "4:00 PM",
-        cooking: "daily"
-    }, {
-        id: 4,
-        name: "Renter 4",
-        age: 21,
-        gender: "all",
-        phone: "613-737-1111",
-        email: "my.name@email.com",
-        maxrent: 945,
-        bedtime: "4:00 AM",
-        cooking: "weekly"
-    }, {
-        id: 5,
-        name: "Renter 5",
-        age: 21,
-        gender: "female",
-        phone: "613-737-1111",
-        email: "my.name@email.com",
-        maxrent: 960,
-        bedtime: "11:15",
-        cooking: "what's that?"
-    }
-    ];
+    // Template Object 
+    const initialUnits = [{
+        posting_id: 0,
+        creator_id: 0,
+        rooms: 0,
+        apt_price: 0.0,
+        visible: true,
+        address: '',
+    }]
 
-    const [unitList, setUnitList] = React.useState([]);
-    const [unitMode, setUnitMode] = React.useState(false);
-    const [renters, setRenters] = React.useState([]);
+    // Profile List State
+    const [unitList, setUnitList] = React.useState(initialUnits);
 
+    // User Id *** Temporary ***
+    const [userID, setUserID] = React.useState(1);
 
+    // Activates the intital APIs
     React.useEffect(() => {
-        setUnitList(tempUnits);
-        setRenters(tempRenters);
+        getAllUnits();
     }, []);
 
+    const getAllUnits = () => {
+        callApiGetAllUnits()
+            .then(res => {
+                console.log("getAllUnits returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getAllUnits parsed: ", parsed);
+                setUnitList(parsed);
+            });
+    }
 
+    const callApiGetAllUnits = async () => {
+        const url = serverURL + "/api/getAllUnits";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("All Units: ", body);
+        return body;
+    }
+
+    const [unitMode, setUnitMode] = React.useState(false);
 
     return (
         <ThemeProvider theme={appTheme}>
@@ -183,7 +140,7 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <ListofUnits units={unitList} renters={renters} />
+                    <ListofUnits units={unitList} userID={userID} />
                 </>) : (<>
                     <Button onClick={() => setUnitMode(true)}
                         variant="outlined">
@@ -198,7 +155,7 @@ const SearchUnits = () => {
     );
 }
 
-const ListofUnits = ({ units, renters }) => {
+const ListofUnits = ({ units, userID }) => {
     const [anyExpanded, setAnyExpanded] = React.useState(false);
     const [expanded, setExpanded] = React.useState(0);
     const [expandedDetails, setExpandedDetails] = React.useState({});
@@ -224,44 +181,44 @@ const ListofUnits = ({ units, renters }) => {
             <AppPaper2>
                 {units.map((unit) => {
                     return (
-                        <Grid item key={unit.id}>
-                            <Typography
-                                style={{
-                                    marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(3)
-                                }}
-                                variant="h5"
-                                component="div"
-                                color="inherit"
-                            >
-                                {unit.Address}
-                            </Typography>
-
-                            <Typography
-                                style={{
-                                    marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(4),
-                                    marginBottom: appTheme.spacing(1)
-                                }}
-                                variant="subtitle1"
-                                component="div"
-                                color="inherit"
-                            >
-                                {unit.NumRooms} Rooms, ${unit.Price}/person/month
-                            </Typography>
-
-                            {(expanded === unit.id) ? (<>
+                        <Grid item key={unit.posting_id}>
+                            {(expanded === unit.posting_id) ? (<>
                                 <Typography
                                     style={{
                                         marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(4),
+                                        marginLeft: appTheme.spacing(3)
+                                    }}
+                                    variant="h5"
+                                    component="div"
+                                    color="inherit"
+                                >
+                                    {unit.address}
+                                </Typography>
+
+                                <Typography
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(5),
                                         marginBottom: appTheme.spacing(1)
                                     }}
                                     variant="subtitle1"
                                     component="div"
                                     color="inherit"
                                 >
-                                    Details below list
+                                    {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
+                                </Typography>
+
+                                <Typography
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(5),
+                                        marginBottom: appTheme.spacing(1)
+                                    }}
+                                    variant="subtitle1"
+                                    component="div"
+                                    color="inherit"
+                                >
+                                    ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
                                 </Typography>
 
                                 <Button
@@ -276,73 +233,211 @@ const ListofUnits = ({ units, renters }) => {
                                     Hide Details
                                 </Button>
                             </>) : (<>
-                                <Button onClick={() => expandUnit(unit.id)}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
+                                {(anyExpanded) ? (<>
+                                    <Typography></Typography>
+                                    </>) : (<>
+                                        <Typography
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginLeft: appTheme.spacing(3)
+                                            }}
+                                            variant="h5"
+                                            component="div"
+                                            color="inherit"
+                                        >
+                                            {unit.address}
+                                        </Typography>
+                                        <Button onClick={() => expandUnit(unit.posting_id)}
+                                            variant="contained"
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginLeft: appTheme.spacing(3),
+                                                marginBottom: appTheme.spacing(2)
+                                            }}>
 
-                                    See Details
-                                </Button>
+                                            See Details
+                                        </Button>
+                                </>)}
                             </>)}
                         </Grid>
                     );
                 })}
             </AppPaper2>
 
-            {(anyExpanded) ? (<>
-                <UnitDetails unitDetails={expandedDetails} />
 
-                <RenterList renters={renters} />
+            {(anyExpanded) ? (<>
+                <AppPaper>
+                    <Typography
+                        style={{
+                            marginTop: appTheme.spacing(1),
+                            marginLeft: appTheme.spacing(4),
+                            marginBottom: appTheme.spacing(1)
+                        }}
+                        variant="h5"
+                        component="div"
+                        color="inherit"
+                    >
+                        Interested Renters:
+                    </Typography>
+                </AppPaper>
+
+                <InterestedList unitID={expanded} userID={userID} />
             </>) : (<>
             </>)}
         </Grid>
     );
 }
 
-const UnitDetails = ({ unitDetails }) => {
-    return (
-        <AppPaper>
-            <Typography
-                style={{
-                    marginTop: appTheme.spacing(1),
-                    marginLeft: appTheme.spacing(4),
-                    marginBottom: appTheme.spacing(1)
-                }}
-                variant="h4"
-                component="div"
-                color="inherit"
-            >
-                {unitDetails.Address}
-            </Typography>
 
-            <Typography
-                style={{
-                    marginTop: appTheme.spacing(1),
-                    marginLeft: appTheme.spacing(4),
-                    marginBottom: appTheme.spacing(1)
-                }}
-                variant="subtitle1"
-                component="div"
-                color="inherit"
-            >
-                Bedrooms: {unitDetails.NumRooms}
-            </Typography>
-            <Typography
-                style={{
-                    marginTop: appTheme.spacing(1),
-                    marginLeft: appTheme.spacing(4),
-                    marginBottom: appTheme.spacing(1)
-                }}
-                variant="subtitle1"
-                component="div"
-                color="inherit"
-            >
-                Price/Person monthly: ${unitDetails.Price}
-            </Typography>
-        </AppPaper>
+const InterestedList = ({ unitID, userID }) => {
+
+    // Profile List State
+    const [renters, setRenters] = React.useState([]);
+
+    // Activates the intital APIs
+    React.useEffect(() => {
+        getInterestedRenters();
+    }, []);
+
+    const getInterestedRenters = () => {
+        callApiGetInterestedRenters()
+            .then(res => {
+                console.log("getInterestedRenters returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getInterestedRenters parsed: ", parsed);
+                setRenters(parsed);
+            });
+    }
+
+    const callApiGetInterestedRenters = async () => {
+        const url = serverURL + "/api/getInterestedRenters";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: unitID,
+                renter_id: userID
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Renters: ", body);
+        return body;
+    }
+
+
+
+    const [expanded, setExpanded] = React.useState([]);
+
+    const addToExpanded = (renterID) => {
+        let tempExpanded = [...expanded];
+
+        tempExpanded.push(renterID);
+
+        setExpanded(tempExpanded);
+    }
+
+    const removeFromExpanded = (renterID) => {
+        let tempExpanded = [...expanded];
+
+        for (let i = 0; i < tempExpanded.length; i++) {
+            if (tempExpanded[i] == renterID) {
+                tempExpanded.splice(i, 1);
+            }
+        }
+
+        setExpanded(tempExpanded);
+    }
+
+    return (
+        <Grid margin={appTheme.spacing(2)}>
+            {renters.map((renter) => {
+                return (
+                    <Grid item key={renter.renter_id}>
+                        <AppPaper>
+                            <Typography
+                                style={{
+                                    marginTop: appTheme.spacing(1),
+                                    marginLeft: appTheme.spacing(3)
+                                }}
+                                variant="h5"
+                                component="div"
+                                color="inherit"
+                            >
+                                {renter.first_name} {renter.last_name}
+                            </Typography>
+
+                            <Typography
+                                style={{
+                                    marginTop: appTheme.spacing(1),
+                                    marginLeft: appTheme.spacing(5),
+                                    marginBottom: appTheme.spacing(1)
+                                }}
+                                variant="subtitle1"
+                                component="div"
+                                color="inherit"
+                            >
+                                Birthday: {renter.birthday}, Gender: {renter.gender}
+                            </Typography>
+
+                            {(expanded.includes(renter.renter_id)) ? (<>
+                                <Typography
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(5),
+                                        marginBottom: appTheme.spacing(1)
+                                    }}
+                                    variant="subtitle1"
+                                    component="div"
+                                    color="inherit"
+                                >
+                                    Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cook}
+                                </Typography>
+
+                                <Typography
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(5),
+                                        marginBottom: appTheme.spacing(1)
+                                    }}
+                                    variant="subtitle1"
+                                    component="div"
+                                    color="inherit"
+                                >
+                                    Phone Number: {renter.phone}, Email address: {renter.email}
+                                </Typography>
+
+                                <Button
+                                    onClick={() => removeFromExpanded(renter.renter_id)}
+                                    variant="contained"
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(3),
+                                        marginBottom: appTheme.spacing(2)
+                                    }}>
+                                    Hide Details
+                                </Button>
+                            </>) : (<>
+                                <Button
+                                    onClick={() => addToExpanded(renter.renter_id)}
+                                    variant="contained"
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(3),
+                                        marginBottom: appTheme.spacing(2)
+                                    }}>
+                                    Show Details
+                                </Button>
+                            </>)}
+                        </AppPaper>
+                    </Grid>
+                );
+            })}
+        </Grid>
     );
 }
 

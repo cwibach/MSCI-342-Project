@@ -35,7 +35,7 @@ const RenterList = ({renters}) => {
         <Grid margin={appTheme.spacing(2)}>
             {renters.map((renter)=> {
                 return(
-                    <Grid item key={renter.id}>
+                    <Grid item key={renter.renter_id}>
                         <AppPaper>
                             <Typography
                                 style={{marginTop: appTheme.spacing(1),
@@ -44,7 +44,7 @@ const RenterList = ({renters}) => {
                                 component="div"
                                 color="inherit"
                             >
-                                {renter.name}
+                                {renter.first_name} {renter.last_name}
                             </Typography>
 
                             <Typography
@@ -55,10 +55,10 @@ const RenterList = ({renters}) => {
                                 component="div"
                                 color="inherit"
                             >
-                                Age: {renter.age}, Gender: {renter.gender}
+                                Birthday: {renter.birthday}, Gender: {renter.gender}
                             </Typography>
 
-                            {(expanded.includes(renter.id)) ? (<>
+                            {(expanded.includes(renter.renter_id)) ? (<>
                                 <Typography
                                     style={{marginTop: appTheme.spacing(1),
                                         marginLeft: appTheme.spacing(5),
@@ -67,7 +67,7 @@ const RenterList = ({renters}) => {
                                     component="div"
                                     color="inherit"
                                 >
-                                    Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cooking}, Max Rent: {renter.maxrent}
+                                    Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cook}
                                 </Typography>
 
                                 <Typography
@@ -78,11 +78,11 @@ const RenterList = ({renters}) => {
                                     component="div"
                                     color="inherit"
                                 >
-                                    Phone Num: {renter.phone}, e-mail address: {renter.email}
+                                    Phone Number: {renter.phone}, Email address: {renter.email}
                                 </Typography>
 
                                 <Button
-                                    onClick={() => removeFromExpanded(renter.id)}
+                                    onClick={() => removeFromExpanded(renter.renter_id)}
                                     variant="contained"
                                     style={{marginTop: appTheme.spacing(1),
                                         marginLeft: appTheme.spacing(3),
@@ -91,7 +91,7 @@ const RenterList = ({renters}) => {
                                 </Button>
                             </>):(<>
                                 <Button
-                                    onClick={() => addToExpanded(renter.id)}
+                                    onClick={() => addToExpanded(renter.renter_id)}
                                     variant="contained"
                                     style={{marginTop: appTheme.spacing(1),
                                         marginLeft: appTheme.spacing(3),
