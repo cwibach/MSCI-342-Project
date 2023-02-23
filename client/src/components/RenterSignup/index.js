@@ -1,19 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
-import { appTheme } from "../../themes/theme";
-import history from '../Navigation/history';
-import Modal from '@mui/material/Modal';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { appTheme } from "../../themes/theme";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
-function RenterLogin() {
+const theme = createTheme();
 
+export default function RenterSignup() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -22,9 +26,8 @@ function RenterLogin() {
             password: data.get('password'),
         });
     };
-   
-    return (
 
+    return (
 
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -40,36 +43,13 @@ function RenterLogin() {
                 }}
             >
                 <Grid container
-                    spacing={50}
+                    spacing={0}
                     direction="column"
                     style={{ maxWidth: "20%" }}>
 
-                    <Button variant="contained"
-                        onClick={() => history.push('/')}>
-                        Back to Home
-                    </Button>
-
-                    <br />
-
-                    <Typography variant="h4" color="primary">
-                        Sign Up as a Renter
+                    <Typography component="h1" variant="h5" color="primary">
+                        Sign up
                     </Typography>
-
-                    <br />
-
-                    <Button variant="contained"
-                        onClick={() => history.push('/RenterSignup')}>
-                        Sign Up
-                    </Button>
-                    
-                    <br />
-
-                    <Typography variant="h4" color="primary">
-                        Login as a Renter
-                    </Typography>
-
-                    <br />
-
                     <Box onSubmit={handleSubmit}>
 
                         <TextField
@@ -133,20 +113,15 @@ function RenterLogin() {
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         >
-                            Log in
+                            Sign Up
                         </Button>
                     </Box>
-
-                    {/* <Button variant="contained"
-                        onClick={() => history.push('/RenterProfile')}>
-                        Login
-                    </Button> */}
 
                 </Grid>
             </Box>
         </ThemeProvider>
+
+
+
     );
-
 }
-
-export default RenterLogin;
