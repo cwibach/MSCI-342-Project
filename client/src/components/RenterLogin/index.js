@@ -137,10 +137,10 @@ function RenterLogin() {
                         </Button>
                     </Box>
 
-                    {/* <Button variant="contained"
+                    <Button variant="contained"
                         onClick={() => history.push('/RenterProfile')}>
-                        Login
-                    </Button> */}
+                        Bypass Login
+                    </Button>
 
                 </Grid>
             </Box>
