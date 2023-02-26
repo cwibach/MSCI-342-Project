@@ -134,10 +134,10 @@ export default function LandlordLogin() {
                     </Box>
 
                     
-                    {/* <Button variant="contained"
+                    <Button variant="contained"
                         onClick={() => history.push('/LandlordProfile')}>
-                        Login
-                    </Button> */}
+                        Bypass Login
+                    </Button>
                     
 
 
