@@ -1,4 +1,4 @@
-import { Paper, styled } from "@mui/material"
+import { Paper, styled } from "@material-ui/core"
 
 export const AppPaper =  styled(Paper)(({theme}) => ({
     opacity: 0.8, // opacity of boxes for grid
