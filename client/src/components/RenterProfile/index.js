@@ -229,7 +229,7 @@ function RenterProfile() {
                             <Grid item xs={4}></Grid>
                             <Grid item xs={4}>
                                 <Typography variant="h5">
-                                    <b>Gender:</b> {item.gender != '' && item.gender}
+                                    <b>Roomate Gender:</b> {item.gender != '' && item.gender}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12 - 8}></Grid>

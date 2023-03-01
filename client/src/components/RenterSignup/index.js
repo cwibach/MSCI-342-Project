@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField, InputLabelProps } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 
 // SERVER MODE
@@ -213,6 +213,51 @@ function RenterSignup() {
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         />
+
+                        <FormControl 
+                            variant="filled" 
+                            fullWidth sx={{ mt: 3, mb: 2 }}
+                            style={{ background: "#e6e6e6" }}
+                            >
+                            <InputLabel id="gender-label">Roomate Gender*</InputLabel>
+                            <Select
+                                required
+                                fullWidth
+                                name="gender"
+                                value={gender}
+                                onChange={handleGender}
+                                label="Gender"
+                                id="gender"
+                                color="primary"
+                            >
+                                <MenuItem value="Coed">Coed</MenuItem>
+                                <MenuItem value="Male Only">Male Only</MenuItem>
+                                <MenuItem value="Female Only">Female Only</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl 
+                            variant="filled" 
+                            fullWidth sx={{ mt: 3, mb: 2 }}
+                            style={{ background: "#e6e6e6" }}
+                            >
+                            <InputLabel id="cook-label">Cooking Frequency*</InputLabel>
+                            <Select
+                                required
+                                fullWidth
+                                name="cook"
+                                value={cook}
+                                onChange={handleCook}
+                                label="Cook"
+                                id="cook"
+                                color="primary"
+                            >
+                                <MenuItem value="Always">Always</MenuItem>
+                                <MenuItem value="Often">Often</MenuItem>
+                                <MenuItem value="Sometimes">Sometimes</MenuItem>
+                                <MenuItem value="Never">Never</MenuItem>
+                            </Select>
+                        </FormControl>
 
                         <TextField
                             variant="filled"
