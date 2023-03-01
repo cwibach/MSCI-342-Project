@@ -11,7 +11,7 @@ describe('Landlord Profile Title', () => {
         );
     }
 
-    it('displays the renters', () => {
+    it('displays the title', () => {
         renderComponent();
         expect(screen.getByText('Profile Information')).toBeInTheDocument();
     });
