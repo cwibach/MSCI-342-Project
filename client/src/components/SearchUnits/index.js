@@ -14,7 +14,7 @@ import RenterList from '../RenterList/index';
 const serverURL = "";
 
 const SearchUnits = () => {
-    
+
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
 
@@ -371,7 +371,7 @@ const InterestedList = ({ unitID, userID }) => {
                                 component="div"
                                 color="inherit"
                             >
-                                Birthday: {renter.birthday}, Gender: {renter.gender}
+                                Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
                             </Typography>
 
                             {(expanded.includes(renter.renter_id)) ? (<>

@@ -55,7 +55,7 @@ const RenterList = ({renters}) => {
                                 component="div"
                                 color="inherit"
                             >
-                                Birthday: {renter.birthday}, Gender: {renter.gender}
+                                Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
                             </Typography>
 
                             {(expanded.includes(renter.renter_id)) ? (<>
