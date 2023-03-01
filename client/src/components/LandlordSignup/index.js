@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { appTheme } from "../../themes/theme";
+import history from '../Navigation/history';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
@@ -50,7 +51,16 @@ export default function LandlordSignup() {
                     <Typography component="h1" variant="h5" color="primary">
                         Sign up
                     </Typography>
+
                     <Box onSubmit={handleSubmit}>
+
+                        <Button  fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={() => history.push('/LandlordLogin')}>
+                            Back to Login
+                        </Button>
+
                         <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
