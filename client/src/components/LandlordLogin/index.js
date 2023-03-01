@@ -19,15 +19,15 @@ import { UserContext } from '../Navigation/PrivateRoute.js';
 // DEV MODE
 const serverURL = "";
 
-export default function LandlordLogin({setUserID}) {
+export default function LandlordLogin({ setUserID }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const { currentUser, login } = useAuth();
+    const { login } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
-    const { userId, setUserId } = React.useContext(UserContext);
+    const { setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -49,14 +49,14 @@ export default function LandlordLogin({setUserID}) {
 
     const getLandlordID = () => {
         callAPIGetLandlordID()
-        .then(res => {
-            console.log("callAPIGetLandlordID returned: ", res)
-            var parsed = JSON.parse(res.express);
-            console.log("parsed result: ", parsed)
-            let tempUserID = parsed[0].landlord_id;
-            console.log("landlord_id", tempUserID);
-            setUserId(tempUserID);
-        })
+            .then(res => {
+                console.log("callAPIGetLandlordID returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("parsed result: ", parsed)
+                let tempUserID = parsed[0].landlord_id;
+                console.log("landlord_id", tempUserID);
+                setUserId(tempUserID);
+            })
     }
 
     const callAPIGetLandlordID = async () => {
@@ -78,33 +78,18 @@ export default function LandlordLogin({setUserID}) {
         return body;
     }
 
-    // React.useEffect(() => {
-    //     if (currentUser) {
-    //         history.push("/");
-    //     }
-    // }, [currentUser,]);
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
-
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
             {(alertVisible) ? (<>
                 <Alert severity="error"
-                action={
-                    <Button color='inherit' size='small'
-                    onClick={() => {setAlertVisible(false)}}>
-                        CLOSE
-                    </Button>
-                }>
+                    action={
+                        <Button color='inherit' size='small'
+                            onClick={() => { setAlertVisible(false) }}>
+                            CLOSE
+                        </Button>
+                    }>
                     <AlertTitle>Error</AlertTitle>
                     {alertMessage}
                 </Alert>
@@ -130,7 +115,7 @@ export default function LandlordLogin({setUserID}) {
                         onClick={() => history.push('/')}>
                         Back to Home
                     </Button>
-                    
+
                     <br />
 
                     <Button variant="contained"
@@ -183,18 +168,13 @@ export default function LandlordLogin({setUserID}) {
                         </Button>
                     </form>
 
-
                     <Button variant="contained"
                         onClick={() => history.push('/LandlordProfile')}>
                         Bypass Login
                     </Button>
-
-
 
                 </Grid>
             </Box>
         </ThemeProvider>
     );
 }
-
-

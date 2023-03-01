@@ -22,7 +22,6 @@ export default function PrivateRoute({
   //...rest
 }) {
 
-
   const [userID, setUserID] = React.useState(1);
   return (
 

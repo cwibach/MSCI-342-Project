@@ -33,21 +33,12 @@ export default function LandlordSignup() {
     const [last_name, setLast_name] = React.useState('');
     const [username, setUsername] = React.useState('');
 
-    const { currentUser, register } = useAuth();
+    const { register } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
-    const { userId, setUserId } = React.useContext(UserContext);
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
+    const { setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -111,14 +102,14 @@ export default function LandlordSignup() {
 
     const getLandlordID = () => {
         callAPIGetLandlordID()
-        .then(res => {
-            console.log("callAPIGetLandlordID returned: ", res)
-            var parsed = JSON.parse(res.express);
-            console.log("parsed result: ", parsed)
-            let tempUserID = parsed[0].landlord_id;
-            console.log("landlord_id", tempUserID);
-            setUserId(tempUserID);
-        })
+            .then(res => {
+                console.log("callAPIGetLandlordID returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("parsed result: ", parsed)
+                let tempUserID = parsed[0].landlord_id;
+                console.log("landlord_id", tempUserID);
+                setUserId(tempUserID);
+            })
     }
 
     const callAPIGetLandlordID = async () => {
@@ -139,12 +130,6 @@ export default function LandlordSignup() {
         console.log("UserID: ", body);
         return body;
     }
-
-    // React.useEffect(() => {
-    //     if (currentUser) {
-    //         history.push('/')
-    //     }
-    // }, [currentUser]);
 
     return (
 
@@ -314,8 +299,5 @@ export default function LandlordSignup() {
                 </Grid>
             </Box>
         </ThemeProvider>
-
-
-
     );
 }
