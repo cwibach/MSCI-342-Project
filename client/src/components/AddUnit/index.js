@@ -19,15 +19,58 @@ function AddUnit() {
     // User Id *** Temporary ***
     const [userID, setUserID] = React.useState(1);
 
+    // Form Value States
+    const [rooms, setRooms] = React.useState('');
+    const [bathrooms, setBathrooms] = React.useState('');
+    const [apt_price, setApt_price] = React.useState('');
+    const [address, setAddress] = React.useState('');
+
     // Handles submitting the form
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        
+        setRooms(data.get('rooms'));
+        setBathrooms(data.get('bathrooms'));
+        setApt_price(data.get('apt_price'));
+        setAddress(data.get('address'));
+
+        addPosting();
     };
+
+    // Calling server API
+    const addPosting = () => {
+        callApiAddPosting()
+            .then(res => {
+            console.log("callApiAddPosting returned: ", res)
+            var parsed = JSON.parse(res.express);
+            console.log("callApiAddPosting parsed: ", parsed);
+            });
+    }
+    
+    const callApiAddPosting = async () => {
+    const url = serverURL + "/api/addPosting";
+    console.log(url);
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            creator_id: userID,
+            rooms: rooms,
+            bathrooms: bathrooms,
+            apt_price: apt_price,
+            visible: true, 
+            address: address
+        })
+    });
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    console.log("Review: ", body);
+    return body;
+    }
 
     return (
         <ThemeProvider theme={appTheme}>
@@ -108,7 +151,6 @@ function AddUnit() {
                     alignItems="center"
                     style={{ color: "#e6e6e6" }}
                     justifyContent="center"
-                    textAlign="center"
                     xs={4}
                 >
 
