@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAuth } from "../../contexts/AuthContext";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 const theme = createTheme();
@@ -22,6 +25,10 @@ export default function LandlordSignup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const { currentUser, register } = useAuth();
+    const [loading, setLoading] = React.useState(false);
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
 
     // const handleSubmit = (event) => {
     //     event.preventDefault();
@@ -33,16 +40,49 @@ export default function LandlordSignup() {
     // };
 
     async function handleFormSubmit(e) {
+        console.log("email: " + email);
+        console.log("p1: " + password);
+        console.log("p2: " + confirmPassword);
+
         e.preventDefault();
-    
-        // Here We will get form values and 
-            // invoke a function that will register the user
+
+        if (password !== confirmPassword) {
+            setAlertMessage("Error: Passwords do not match");
+            setAlertVisible(true);
+        } else {
+
+            try {
+                setLoading(true);
+                await register(email, password);
+                history.push('/LandlordProfile');
+            } catch (e) {
+                setAlertMessage("Error: Failed to Register");
+                setAlertVisible(true);
+            }
+            setLoading(false);
+        }
+
+
     }
+
+    React.useEffect(() => {
+        if (currentUser) {
+            history.push('/')
+        }
+    }, [currentUser]);
 
     return (
 
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
+
+            {(alertVisible) ? (<>
+                <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    {alertMessage}
+                </Alert>
+            </>) : (<>
+            </>)}
 
             <Box
                 margin={6}
@@ -63,9 +103,9 @@ export default function LandlordSignup() {
                         Sign up
                     </Typography>
 
-                    <Box onSubmit={handleSubmit}>
+                    <form>
 
-                        <Button  fullWidth
+                        <Button fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             onClick={() => history.push('/LandlordLogin')}>
@@ -135,7 +175,7 @@ export default function LandlordSignup() {
                             fullWidth
                             name="confirm-password"
                             label="Confirm Password"
-                            type="confirm-password"
+                            type="password"
                             id="confirmpassword"
                             autoComplete="confirm-password"
                             sx={{ mt: 3, mb: 2 }}
@@ -149,10 +189,12 @@ export default function LandlordSignup() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onClick={() => handleFormSubmit}
+                            disabled={loading}
                         >
                             Sign Up
                         </Button>
-                    </Box>
+                    </form>
                 </Grid>
             </Box>
         </ThemeProvider>

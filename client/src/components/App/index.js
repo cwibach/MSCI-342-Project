@@ -7,6 +7,7 @@ import {
 
 import Home from '../Home';
 import PrivateRoute from '../Navigation/PrivateRoute.js';
+import { AuthProvider } from "../../contexts/AuthContext.js"; // import this
 
 
 
@@ -31,11 +32,13 @@ class App extends Component {
 
   render() {
     return (
-	  <Router>
-	    <div>
-        <PrivateRoute exact path="/" component={Home}/>
-	    </div>
-	  </Router>
+    <AuthProvider>
+      <Router>
+        <div>
+          <PrivateRoute exact path="/" component={Home}/>
+        </div>
+      </Router>
+    </AuthProvider>
     );
   }
 }

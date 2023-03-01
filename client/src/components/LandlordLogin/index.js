@@ -9,18 +9,34 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/m
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
+import { useAuth } from "../../contexts/AuthContext";
 
 
 export default function LandlordLogin() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const { currentUser, login } = useAuth();
+    const [loading, setLoading] = React.useState(false);
 
     async function handleFormSubmit(e) {
         e.preventDefault();
-    
-        // Here We will get form values and 
-            // invoke a function that will register the user
+
+        try {
+            setLoading(true);
+            await login(email, password);
+            history.push('/LandlordProfile')
+        } catch (e) {
+            alert("Failed to login");
+        }
+
+        setLoading(false);
     }
+
+    React.useEffect(() => {
+        if (currentUser) {
+            history.push("/");
+        }
+    }, [currentUser,]);
 
     // const handleSubmit = (event) => {
     //     event.preventDefault();
@@ -46,7 +62,7 @@ export default function LandlordLogin() {
                 }}
             >
                 <Grid container
-                    spacing={50}
+                    spacing={5}
                     direction="column"
                     style={{ maxWidth: "20%" }}>
 
@@ -54,13 +70,7 @@ export default function LandlordLogin() {
                         onClick={() => history.push('/')}>
                         Back to Home
                     </Button>
-
-                    <br />
-
-                    <Typography variant="h4" color="primary">
-                        Sign up as a Landlord
-                    </Typography>
-
+                    
                     <br />
 
                     <Button variant="contained"
@@ -70,13 +80,7 @@ export default function LandlordLogin() {
 
                     <br />
 
-                    <Typography variant="h4" color="primary">
-                        Login as a Landlord
-                    </Typography>
-
-                    <br />
-
-                    <Box onSubmit={handleSubmit}>
+                    <form>
 
                         {/* <TextField
                             variant="filled"
@@ -140,17 +144,19 @@ export default function LandlordLogin() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onClick={() => handleFormSubmit}
+                            disabled={loading}
                         >
                             Log in
                         </Button>
-                    </Box>
+                    </form>
 
-                    
+
                     <Button variant="contained"
                         onClick={() => history.push('/LandlordProfile')}>
                         Bypass Login
                     </Button>
-                    
+
 
 
                 </Grid>

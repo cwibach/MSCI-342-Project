@@ -1,35 +1,26 @@
-import app from 'firebase/app';
-import 'firebase/auth';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  //Enter your firebase API details
-  };
+  apiKey: "AIzaSyCcQKfiRi5k6ewoKZ7-81am0pxbDTKicOI",
+  authDomain: "msci-342-test.firebaseapp.com",
+  projectId: "msci-342-test",
+  storageBucket: "msci-342-test.appspot.com",
+  messagingSenderId: "155034476519",
+  appId: "1:155034476519:web:9f3e770c25daa828a32742",
+  measurementId: "G-VHM3PN3NL6"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 class Firebase {
-  constructor() {
-    app.initializeApp(firebaseConfig);
-    this.auth = app.auth();
-  }
-  
-  // *** Auth API ***
-
-  doCreateUserWithEmailAndPassword = (email, password) =>
-  this.auth.createUserWithEmailAndPassword(email, password);
-
-  doSignInWithEmailAndPassword = (email, password) =>
-  this.auth.signInWithEmailAndPassword(email, password);
-
-  doSignOut = () => this.auth.signOut();
-
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-
-  doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
-
-  doGetIdToken = (bool) => {
-    return this.auth.currentUser.getIdToken(/* forceRefresh */ bool);
-  }
-
-  doGetUserByEmail = email => this.auth.getUserByEmail(email);
 
 }
 
