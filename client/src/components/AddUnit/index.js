@@ -8,7 +8,6 @@ import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AirlineSeatIndividualSuiteRounded } from '@mui/icons-material';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -57,7 +56,6 @@ function AddUnit() {
     }
     const handleAddress = (event) => {
         setAddress(event.target.value)
-        console.log(address)
     }
 
     // Calling server API
@@ -90,7 +88,7 @@ function AddUnit() {
         });
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
-        console.log("Review: ", body);
+        console.log("Posting: ", body);
         return body;
     }
 
