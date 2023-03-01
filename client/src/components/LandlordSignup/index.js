@@ -51,6 +51,13 @@ export default function LandlordSignup() {
             try {
                 setLoading(true);
                 await register(email, password);
+
+                // what to do if succesful
+
+                // Create new entry in database w/ f-name, l-name, email, phone
+                // Get ID from database for matching email
+                // Set global userID state variable
+
                 history.push('/LandlordProfile');
             } catch (e) {
                 setAlertMessage("Error: Failed to Register");
@@ -62,11 +69,11 @@ export default function LandlordSignup() {
 
     }
 
-    React.useEffect(() => {
-        if (currentUser) {
-            history.push('/')
-        }
-    }, [currentUser]);
+    // React.useEffect(() => {
+    //     if (currentUser) {
+    //         history.push('/')
+    //     }
+    // }, [currentUser]);
 
     return (
 

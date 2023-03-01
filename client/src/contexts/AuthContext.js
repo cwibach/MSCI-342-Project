@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     login,
     register,
+    logout
   };
 
   return (

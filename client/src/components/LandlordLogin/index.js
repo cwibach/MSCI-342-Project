@@ -28,10 +28,14 @@ export default function LandlordLogin() {
         try {
             setLoading(true);
             await login(email, password);
+
+            // get UserID
+            // Set global userID state variable
+
             history.push('/LandlordProfile')
         } catch (e) {
             setAlertVisible(true);
-            setAlertMessage("Error on login");
+            setAlertMessage("Error on login, please try again");
         }
 
         setLoading(false);
