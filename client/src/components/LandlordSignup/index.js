@@ -30,6 +30,7 @@ export default function LandlordSignup() {
     const [phone, setPhone] = React.useState('');
     const [first_name, setFirst_name] = React.useState('');
     const [last_name, setLast_name] = React.useState('');
+    const [username, setUsername] = React.useState('');
 
     const { currentUser, register } = useAuth();
     const [loading, setLoading] = React.useState(false);
@@ -158,6 +159,22 @@ export default function LandlordSignup() {
                             onClick={() => history.push('/LandlordLogin')}>
                             Back to Login
                         </Button>
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="username"
+                            type="text"
+                            label="Username"
+                            name="username"
+                            value={username}
+                            autoComplete="Username"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
 
                         <TextField
                             variant="filled"
