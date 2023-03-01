@@ -22,6 +22,10 @@ export default function LandlordSignup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState(" ");
+    const [phone, setPhone] = React.useState('');
+    const [first_name, setFirst_name] = React.useState('');
+    const [last_name, setLast_name] = React.useState('');
+
     const { currentUser, register } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
@@ -37,10 +41,6 @@ export default function LandlordSignup() {
     // };
 
     async function handleFormSubmit(e) {
-        console.log("email: " + email);
-        console.log("p1: " + password);
-        console.log("p2: " + confirmPassword);
-
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -121,6 +121,53 @@ export default function LandlordSignup() {
                             onClick={() => history.push('/LandlordLogin')}>
                             Back to Login
                         </Button>
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="first_name"
+                            type="text"
+                            label="First Name"
+                            name="first_name"
+                            value={first_name}
+                            autoComplete="First Name"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                            onChange={(e) => setFirst_name(e.target.value)}
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            id="last_name"
+                            type="text"
+                            label="Last Name"
+                            name="last_name"
+                            value={last_name}
+                            autoComplete="Last Name"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                            onChange={(e) => setLast_name(e.target.value)}
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="phone"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            label="Phone Number"
+                            id="phone"
+                            type="text"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
 
                         <TextField
                             variant="filled"

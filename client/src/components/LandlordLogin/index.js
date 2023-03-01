@@ -105,33 +105,6 @@ export default function LandlordLogin() {
 
                     <form onSubmit={handleFormSubmit}>
 
-                        {/* <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            color="primary"
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            sx={{ mt: 3, mb: 2 }}
-                            autoFocus
-                        /> */}
-
-                        {/* <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="family-name"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        /> */}
-
                         <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
