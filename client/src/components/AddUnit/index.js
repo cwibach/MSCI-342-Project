@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
+import { AirlineSeatIndividualSuiteRounded } from '@mui/icons-material';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -24,52 +25,73 @@ function AddUnit() {
     const [bathrooms, setBathrooms] = React.useState('');
     const [apt_price, setApt_price] = React.useState('');
     const [address, setAddress] = React.useState('');
+    const [visible, setVisible] = React.useState(true);
 
     // Handles submitting the form
     const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        
-        setRooms(data.get('rooms'));
-        setBathrooms(data.get('bathrooms'));
-        setApt_price(data.get('apt_price'));
-        setAddress(data.get('address'));
 
-        addPosting();
+        // Checks if every input was filled in
+        if (rooms !== '' && bathrooms !== '' && apt_price !== '' && address !== '') {
+            // Post to Database
+            addPosting();
+
+            // Reset Textfields
+            setRooms('');
+            setBathrooms('');
+            setApt_price('');
+            setAddress('');
+        }
+
     };
+
+    // Functions to handle the form values
+    const handleRooms = (event) => {
+        setRooms(event.target.value)
+    }
+
+    const handleBathrooms = (event) => {
+        setBathrooms(event.target.value)
+    }
+    const handleApt_price = (event) => {
+        setApt_price(event.target.value)
+    }
+    const handleAddress = (event) => {
+        setAddress(event.target.value)
+        console.log(address)
+    }
 
     // Calling server API
     const addPosting = () => {
         callApiAddPosting()
             .then(res => {
-            console.log("callApiAddPosting returned: ", res)
-            var parsed = JSON.parse(res.express);
-            console.log("callApiAddPosting parsed: ", parsed);
+                console.log("callApiAddPosting returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiAddPosting parsed: ", parsed);
             });
     }
-    
-    const callApiAddPosting = async () => {
-    const url = serverURL + "/api/addPosting";
-    console.log(url);
 
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            creator_id: userID,
-            rooms: rooms,
-            bathrooms: bathrooms,
-            apt_price: apt_price,
-            visible: true, 
-            address: address
-        })
-    });
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    console.log("Review: ", body);
-    return body;
+    const callApiAddPosting = async () => {
+        const url = serverURL + "/api/addPosting";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                creator_id: userID,
+                rooms: rooms,
+                bathrooms: bathrooms,
+                apt_price: apt_price,
+                visible: visible,
+                address: address
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Review: ", body);
+        return body;
     }
 
     return (
@@ -159,16 +181,17 @@ function AddUnit() {
                         <Typography variant="h3">
                             <b>Create New Posting</b>
                         </Typography>
-                        <Box sx={{ display: 'flex', pb: 2 }}></Box>
                     </Grid>
 
                     {/* Posting Information Input */}
-                    <Box onSubmit={handleSubmit}>
+                    <Box>
                         <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
                             color="primary"
                             name="address"
+                            value={address}
+                            onChange={handleAddress}
                             required
                             fullWidth
                             id="address"
@@ -186,6 +209,8 @@ function AddUnit() {
                             type="number"
                             label="Number of Rooms"
                             name="rooms"
+                            value={rooms}
+                            onChange={handleRooms}
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         />
@@ -199,6 +224,8 @@ function AddUnit() {
                             type="number"
                             label="Number of Bathrooms"
                             name="bathrooms"
+                            value={bathrooms}
+                            onChange={handleBathrooms}
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         />
@@ -209,6 +236,8 @@ function AddUnit() {
                             required
                             fullWidth
                             name="apt_price"
+                            value={apt_price}
+                            onChange={handleApt_price}
                             label="Monthly Rent of Apartment"
                             id="apt_price"
                             type="number"
@@ -222,6 +251,7 @@ function AddUnit() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onClick={handleSubmit}
                         >
                             Submit
                         </Button>
