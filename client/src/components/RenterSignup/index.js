@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField, InputLabelProps } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 
 // SERVER MODE
@@ -32,20 +32,25 @@ function RenterSignup() {
     const handleSubmit = (event) => {
 
         // Checks if every input was filled in
-        if (username !== '' && password !== '' && email !== '' && phone !== '' && first_name !== '' && last_name !== '') {
+        if (username !== '' && password !== '' && email !== '' && phone !== '' && first_name !== '' && last_name !== ''
+            && bedtime !== '' && birthday !== '' && gender !== '' && cook !== '') {
             // Post to Database
-            addLandlord();
+            addRenter();
 
             // Reset Textfields
             setUsername('');
             setPassword('');
             setEmail('');
             setPhone('');
+            setBedtime('');
+            setBirthday('');
+            setGender('');
+            setCook('');
             setFirst_name('');
             setLast_name('');
 
             // Go to profile page
-            history.push('/LandlordProfile')
+            history.push('/RenterProfile')
 
         }
 
@@ -62,6 +67,18 @@ function RenterSignup() {
     const handlePhone = (event) => {
         setPhone(event.target.value)
     }
+    const handleBedtime = (event) => {
+        setBedtime(event.target.value)
+    }
+    const handleBirthday = (event) => {
+        setBirthday(event.target.value)
+    }
+    const handleGender = (event) => {
+        setGender(event.target.value)
+    }
+    const handleCook = (event) => {
+        setCook(event.target.value)
+    }
     const handleFirst_name = (event) => {
         setFirst_name(event.target.value)
     }
@@ -70,17 +87,17 @@ function RenterSignup() {
     }
 
     // Calling server API
-    const addLandlord = () => {
-        callApiAddLandlord()
+    const addRenter = () => {
+        callApiAddRenter()
             .then(res => {
-                console.log("callApiAddLandlord returned: ", res)
+                console.log("callApiAddRenter returned: ", res)
                 var parsed = JSON.parse(res.express);
-                console.log("callApiAddLandlord parsed: ", parsed);
+                console.log("callApiAddRenter parsed: ", parsed);
             });
     }
 
-    const callApiAddLandlord = async () => {
-        const url = serverURL + "/api/addLandlord";
+    const callApiAddRenter = async () => {
+        const url = serverURL + "/api/addRenter";
         console.log(url);
 
         const response = await fetch(url, {
@@ -103,7 +120,7 @@ function RenterSignup() {
         });
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
-        console.log("Landlord: ", body);
+        console.log("Renter: ", body);
         return body;
     }
 
@@ -161,6 +178,38 @@ function RenterSignup() {
                             label="Last Name"
                             id="last_name"
                             type="text"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="bedtime"
+                            value={bedtime}
+                            onChange={handleBedtime}
+                            label="Bedtime"
+                            id="bedtime"
+                            type="time"
+                            InputLabelProps={{ shrink: true }}
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="birthday"
+                            value={birthday}
+                            onChange={handleBirthday}
+                            label="Birthday"
+                            id="birthday"
+                            type="date"
+                            InputLabelProps={{ shrink: true }}
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         />
