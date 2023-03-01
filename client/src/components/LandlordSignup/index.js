@@ -18,6 +18,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
+
 export default function LandlordSignup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -54,7 +59,7 @@ export default function LandlordSignup() {
 
                 // what to do if succesful
 
-                // Create new entry in database w/ f-name, l-name, email, phone
+                addLandlord();
                 // Get ID from database for matching email
                 // Set global userID state variable
 
@@ -65,8 +70,40 @@ export default function LandlordSignup() {
             }
             setLoading(false);
         }
+    }
 
+    // Calling server API
+    const addLandlord = () => {
+        callApiAddLandlord()
+            .then(res => {
+                console.log("callApiAddLandlord returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiAddLandlord parsed: ", parsed);
+            });
+    }
 
+    const callApiAddLandlord = async () => {
+        const url = serverURL + "/api/addLandlord";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                email: email,
+                phone: phone,
+                first_name: first_name,
+                last_name: last_name
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Landlord: ", body);
+        return body;
     }
 
     // React.useEffect(() => {
@@ -82,12 +119,12 @@ export default function LandlordSignup() {
 
             {(alertVisible) ? (<>
                 <Alert severity="error"
-                action={
-                    <Button color='inherit' size='small'
-                    onClick={() => {setAlertVisible(false)}}>
-                        CLOSE
-                    </Button>
-                }>
+                    action={
+                        <Button color='inherit' size='small'
+                            onClick={() => { setAlertVisible(false) }}>
+                            CLOSE
+                        </Button>
+                    }>
                     <AlertTitle>Error</AlertTitle>
                     {alertMessage}
                 </Alert>
