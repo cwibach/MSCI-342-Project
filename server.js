@@ -175,6 +175,50 @@ app.post('/api/getInterestedRenters', (req, res) => {
 	connection.end();
 });
 
+// Get Renter UserID Api
+app.post('/api/getRenterUserID', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT renter_id FROM osellner.Renters
+	WHERE osellner.Renters.email LIKE ?
+	`;
+	console.log(sql);
+	let data = [req.body.email];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
+	});
+	connection.end();
+});
+
+// Get Landlord UserID Api
+app.post('/api/getLandlordUserID', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT landlord_id FROM osellner.Landlords
+	WHERE osellner.Landlords.email LIKE ?
+	`;
+	console.log(sql);
+	let data = [req.body.landlord_id];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
+	});
+	connection.end();
+});
+
 /*
 
 	APIs To Edit Data

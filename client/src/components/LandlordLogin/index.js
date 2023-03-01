@@ -14,7 +14,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
-export default function LandlordLogin() {
+export default function LandlordLogin({setUserID}) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const { currentUser, login } = useAuth();
@@ -29,8 +29,7 @@ export default function LandlordLogin() {
             setLoading(true);
             await login(email, password);
 
-            // get UserID
-            // Set global userID state variable
+            getLandlordID();
 
             history.push('/LandlordProfile')
         } catch (e) {
@@ -39,6 +38,37 @@ export default function LandlordLogin() {
         }
 
         setLoading(false);
+    }
+
+    const getLandlordID = () => {
+        callAPIGetLandlordID()
+        .then(res => {
+            console.log("callAPIGetLandlordID returned: ", res)
+            var parsed = JSON.parse(res.express);
+            console.log("parsed result: ", parsed)
+            let userID = parsed[0].landlord_id;
+            console.log("landlord_id", userID);
+            setUserID(userID);
+        })
+    }
+
+    const callAPIGetLandlordID = async () => {
+        const url = serverURL + "/api/getLandlordID";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("UserID: ", body);
+        return body;
     }
 
     // React.useEffect(() => {

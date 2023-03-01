@@ -16,20 +16,23 @@ import LandlordLogout from '../LandlordLogout';
 
 
 export default function PrivateRoute({
+
   //authenticated,
   //...rest
 }) {
+  const [userID, setUserID] = React.useState(1);
+
   return (
 
     <Router history={history}>
       <Switch>
       <Route path="/" exact component={Home} />
-      <Route path="/LandLordLogin" exact component={LandLordLogin} />
+      <Route path="/LandLordLogin" exact component={LandLordLogin(userID, setUserID)} />
       <Route path="/RenterLogin" exact component={RenterLogin} />
       <Route path="/LandLordProfile" exact component={LandlordProfile} />
       <Route path="/RenterProfile" exact component={RenterProfile} />
       <Route path = "/RenterSignup" exact component ={RenterSignup} />
-      <Route path = "/LandlordSignup" exact component ={LandlordSignup} />
+      <Route path = "/LandlordSignup" exact component ={LandlordSignup(userID, setUserID)} />
       <Route path="/Community" exact component={SearchRenters} />
       <Route path="/SearchUnits" exact component={SearchUnits} />
       <Route path="/MyUnits" exact component={MyUnits} />
