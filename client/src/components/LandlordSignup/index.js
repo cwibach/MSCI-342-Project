@@ -19,14 +19,25 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 export default function LandlordSignup() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     console.log({
+    //         email: data.get('email'),
+    //         password: data.get('password'),
+    //     });
+    // };
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+    
+        // Here We will get form values and 
+            // invoke a function that will register the user
+    }
 
     return (
 
@@ -61,7 +72,7 @@ export default function LandlordSignup() {
                             Back to Login
                         </Button>
 
-                        <TextField
+                        {/* <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
                             color="primary"
@@ -73,9 +84,9 @@ export default function LandlordSignup() {
                             label="First Name"
                             sx={{ mt: 3, mb: 2 }}
                             autoFocus
-                        />
+                        /> */}
 
-                        <TextField
+                        {/* <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
                             required
@@ -86,7 +97,7 @@ export default function LandlordSignup() {
                             autoComplete="family-name"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                        />
+                        /> */}
 
                         <TextField
                             variant="filled"
@@ -99,6 +110,7 @@ export default function LandlordSignup() {
                             autoComplete="email"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
 
                         <TextField
@@ -113,6 +125,22 @@ export default function LandlordSignup() {
                             autoComplete="new-password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="confirm-password"
+                            label="Confirm Password"
+                            type="confirm-password"
+                            id="confirmpassword"
+                            autoComplete="confirm-password"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                         />
 
                         <Button
