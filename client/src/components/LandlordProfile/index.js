@@ -18,19 +18,8 @@ const serverURL = "";
 
 function LandlordProfile() {
 
-    // Template Object 
-    const initialProfile = [{
-        landlord_id: 0,
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        first_name: '',
-        last_name: '',
-    }]
-
     // Profile List State
-    const [profile, setProfile] = React.useState(initialProfile);
+    const [profile, setProfile] = React.useState([]);
 
     // User Id *** Temporary ***
     const [userID, setUserID] = React.useState(1);
