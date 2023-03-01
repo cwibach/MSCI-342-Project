@@ -17,13 +17,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
 // DEV MODE
 const serverURL = "";
 
-export default function LandlordSignup({setUserID}) {
+export default function LandlordSignup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState(" ");
@@ -36,6 +37,8 @@ export default function LandlordSignup({setUserID}) {
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
+
+    const { userId, setUserId } = React.useContext(UserContext);
 
     // const handleSubmit = (event) => {
     //     event.preventDefault();
@@ -112,9 +115,9 @@ export default function LandlordSignup({setUserID}) {
             console.log("callAPIGetLandlordID returned: ", res)
             var parsed = JSON.parse(res.express);
             console.log("parsed result: ", parsed)
-            let userID = parsed[0].landlord_id;
-            console.log("landlord_id", userID);
-            setUserID(userID);
+            let tempUserID = parsed[0].landlord_id;
+            console.log("landlord_id", tempUserID);
+            setUserId(tempUserID);
         })
     }
 

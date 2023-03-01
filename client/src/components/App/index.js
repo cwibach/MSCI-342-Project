@@ -11,6 +11,7 @@ import { AuthProvider } from "../../contexts/AuthContext.js"; // import this
 
 
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,15 +31,20 @@ class App extends Component {
   }
 
 
+
   render() {
+
+
+
     return (
-    <AuthProvider>
-      <Router>
-        <div>
-          <PrivateRoute exact path="/" component={Home}/>
-        </div>
-      </Router>
-    </AuthProvider>
+      <AuthProvider>
+        <Router>
+          <div>
+
+            <PrivateRoute exact path="/" component={Home} />
+          </div>
+        </Router>
+      </AuthProvider>
     );
   }
 }

@@ -12,7 +12,12 @@ import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
 
 export default function LandlordLogin({setUserID}) {
     const [email, setEmail] = React.useState("");
@@ -21,6 +26,8 @@ export default function LandlordLogin({setUserID}) {
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
+
+    const { userId, setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -46,9 +53,9 @@ export default function LandlordLogin({setUserID}) {
             console.log("callAPIGetLandlordID returned: ", res)
             var parsed = JSON.parse(res.express);
             console.log("parsed result: ", parsed)
-            let userID = parsed[0].landlord_id;
-            console.log("landlord_id", userID);
-            setUserID(userID);
+            let tempUserID = parsed[0].landlord_id;
+            console.log("landlord_id", tempUserID);
+            setUserId(tempUserID);
         })
     }
 
