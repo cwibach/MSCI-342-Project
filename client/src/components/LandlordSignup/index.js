@@ -18,13 +18,10 @@ import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
-
-const theme = createTheme();
-
 export default function LandlordSignup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState(" ");
     const { currentUser, register } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
@@ -77,7 +74,13 @@ export default function LandlordSignup() {
             <CssBaseline enableColorScheme />
 
             {(alertVisible) ? (<>
-                <Alert severity="error">
+                <Alert severity="error"
+                action={
+                    <Button color='inherit' size='small'
+                    onClick={() => {setAlertVisible(false)}}>
+                        CLOSE
+                    </Button>
+                }>
                     <AlertTitle>Error</AlertTitle>
                     {alertMessage}
                 </Alert>
@@ -103,7 +106,7 @@ export default function LandlordSignup() {
                         Sign up
                     </Typography>
 
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
 
                         <Button fullWidth
                             variant="contained"
@@ -111,33 +114,6 @@ export default function LandlordSignup() {
                             onClick={() => history.push('/LandlordLogin')}>
                             Back to Login
                         </Button>
-
-                        {/* <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            color="primary"
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            sx={{ mt: 3, mb: 2 }}
-                            autoFocus
-                        /> */}
-
-                        {/* <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="family-name"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        /> */}
 
                         <TextField
                             variant="filled"
@@ -189,7 +165,6 @@ export default function LandlordSignup() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onClick={() => handleFormSubmit}
                             disabled={loading}
                         >
                             Sign Up

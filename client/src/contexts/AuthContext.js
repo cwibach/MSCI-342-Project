@@ -4,6 +4,7 @@ import React from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 
 import auth from "../config/firebase";
@@ -17,7 +18,6 @@ export function useAuth() {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState();
   const [loading, setLoading] = React.useState(true);
-
   function register(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
@@ -25,6 +25,10 @@ export const AuthProvider = ({ children }) => {
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
+
+  function logout() {
+    return signOut(auth);
+    }
 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

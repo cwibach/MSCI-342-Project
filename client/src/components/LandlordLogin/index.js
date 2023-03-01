@@ -10,6 +10,8 @@ import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 export default function LandlordLogin() {
@@ -17,6 +19,8 @@ export default function LandlordLogin() {
     const [password, setPassword] = React.useState("");
     const { currentUser, login } = useAuth();
     const [loading, setLoading] = React.useState(false);
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -26,17 +30,18 @@ export default function LandlordLogin() {
             await login(email, password);
             history.push('/LandlordProfile')
         } catch (e) {
-            alert("Failed to login");
+            setAlertVisible(true);
+            setAlertMessage("Error on login");
         }
 
         setLoading(false);
     }
 
-    React.useEffect(() => {
-        if (currentUser) {
-            history.push("/");
-        }
-    }, [currentUser,]);
+    // React.useEffect(() => {
+    //     if (currentUser) {
+    //         history.push("/");
+    //     }
+    // }, [currentUser,]);
 
     // const handleSubmit = (event) => {
     //     event.preventDefault();
@@ -50,6 +55,20 @@ export default function LandlordLogin() {
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
+
+            {(alertVisible) ? (<>
+                <Alert severity="error"
+                action={
+                    <Button color='inherit' size='small'
+                    onClick={() => {setAlertVisible(false)}}>
+                        CLOSE
+                    </Button>
+                }>
+                    <AlertTitle>Error</AlertTitle>
+                    {alertMessage}
+                </Alert>
+            </>) : (<>
+            </>)}
 
             <Box
                 margin={6}
@@ -80,7 +99,7 @@ export default function LandlordLogin() {
 
                     <br />
 
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
 
                         {/* <TextField
                             variant="filled"
@@ -144,7 +163,6 @@ export default function LandlordLogin() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onClick={() => handleFormSubmit}
                             disabled={loading}
                         >
                             Log in

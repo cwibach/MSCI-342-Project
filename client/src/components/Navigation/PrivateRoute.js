@@ -12,6 +12,7 @@ import MyUnits from '../MyUnits';
 import AddUnit from "../AddUnit";
 import RenterSignup from '../RenterSignup';
 import LandlordSignup from '../LandlordSignup';
+import LandlordLogout from '../LandlordLogout';
 
 
 export default function PrivateRoute({
@@ -33,6 +34,7 @@ export default function PrivateRoute({
       <Route path="/SearchUnits" exact component={SearchUnits} />
       <Route path="/MyUnits" exact component={MyUnits} />
       <Route path="/AddUnit" exact component={AddUnit} />
+      <Route path="/LandlordLogout" exact component={LandlordLogout} />
       </Switch>
     </Router>
   );
