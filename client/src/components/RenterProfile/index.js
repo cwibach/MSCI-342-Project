@@ -16,23 +16,8 @@ const serverURL = "";
 
 function RenterProfile() {
 
-    // Template Object 
-    const initialProfile = [{
-        renter_id: 0,
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        bedtime: '',
-        birthday: '',
-        gender: '',
-        cook: '',
-        first_name: '',
-        last_name: '',
-    }]
-
     // Profile List State
-    const [profile, setProfile] = React.useState(initialProfile);
+    const [profile, setProfile] = React.useState([]);
 
     // User Id *** Temporary ***
     const [userID, setUserID] = React.useState(1);
@@ -229,7 +214,7 @@ function RenterProfile() {
                             <Grid item xs={4}></Grid>
                             <Grid item xs={4}>
                                 <Typography variant="h5">
-                                    <b>Gender:</b> {item.gender != '' && item.gender}
+                                    <b>Roomate Gender:</b> {item.gender != '' && item.gender}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12 - 8}></Grid>

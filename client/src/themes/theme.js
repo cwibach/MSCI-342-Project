@@ -1,6 +1,6 @@
 import { dark } from "@material-ui/core/styles/createPalette";
-import {purple, pink} from "@mui/material/colors";
-import {createTheme} from "@mui/material/styles";
+import {purple, pink} from "@material-ui/core/colors";
+import {createTheme} from "@material-ui/core/styles";
 
 export const appTheme = createTheme({
     palette: {

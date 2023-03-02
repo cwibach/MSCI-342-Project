@@ -1,16 +1,12 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import history from '../Navigation/history';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,6 +14,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { UserContext } from '../Navigation/PrivateRoute.js';
+
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -131,8 +128,60 @@ export default function LandlordSignup() {
         return body;
     }
 
-    return (
 
+    // Functions to handle the form values
+    const handlePassword = (event) => {
+        setPassword(event.target.value)
+    }
+    const handleEmail = (event) => {
+        setEmail(event.target.value)
+        setUsername(event.target.value.split("@")[0])
+    }
+    const handlePhone = (event) => {
+        setPhone(event.target.value)
+    }
+    const handleFirst_name = (event) => {
+        setFirst_name(event.target.value)
+    }
+    const handleLast_name = (event) => {
+        setLast_name(event.target.value)
+    }
+
+    // Calling server API
+    const addLandlord = () => {
+        callApiAddLandlord()
+            .then(res => {
+                console.log("callApiAddLandlord returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiAddLandlord parsed: ", parsed);
+            });
+    }
+
+    const callApiAddLandlord = async () => {
+        const url = serverURL + "/api/addLandlord";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                email: email,
+                phone: phone,
+                first_name: first_name,
+                last_name: last_name
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Landlord: ", body);
+        return body;
+    }
+
+    return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
@@ -154,16 +203,16 @@ export default function LandlordSignup() {
                 margin={6}
                 display={"flex"}
                 justifyContent={"center"}
-                flexGrow={4}
                 alignItems={"flex-start"}
-                sx={{
-                    height: 1000
-                }}
             >
+                {/* Creates a column grid for the body of the page */}
                 <Grid container
-                    spacing={0}
                     direction="column"
-                    style={{ maxWidth: "20%" }}>
+                    alignItems="center"
+                    style={{ color: "#e6e6e6" }}
+                    justifyContent="center"
+                    xs={4}
+                >
 
                     <Typography component="h1" variant="h5" color="primary">
                         Sign up
@@ -208,6 +257,7 @@ export default function LandlordSignup() {
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                             onChange={(e) => setFirst_name(e.target.value)}
+
                         />
 
                         <TextField
@@ -224,6 +274,7 @@ export default function LandlordSignup() {
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                             onChange={(e) => setLast_name(e.target.value)}
+
                         />
 
                         <TextField
@@ -246,10 +297,12 @@ export default function LandlordSignup() {
                             style={{ background: "#e6e6e6" }}
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
                             name="email"
-                            autoComplete="email"
+                            value={email}
+                            onChange={handleEmail}
+                            label="Email Address"
+                            id="email"
+                            type="text"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                             onChange={(e) => setEmail(e.target.value)}
@@ -261,10 +314,11 @@ export default function LandlordSignup() {
                             required
                             fullWidth
                             name="password"
+                            value={password}
+                            onChange={handlePassword}
                             label="Password"
-                            type="password"
                             id="password"
-                            autoComplete="new-password"
+                            type="text"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                             onChange={(e) => setPassword(e.target.value)}
@@ -293,7 +347,7 @@ export default function LandlordSignup() {
                             color="primary"
                             disabled={loading}
                         >
-                            Sign Up
+                            Submit
                         </Button>
                     </form>
                 </Grid>
@@ -301,3 +355,5 @@ export default function LandlordSignup() {
         </ThemeProvider>
     );
 }
+
+export default LandlordSignup;

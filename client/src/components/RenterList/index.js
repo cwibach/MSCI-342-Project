@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@material-ui/core';
 import {appTheme} from "../../themes/theme";
 import {AppPaper} from "../../themes/paper";
 
@@ -55,7 +55,7 @@ const RenterList = ({renters}) => {
                                 component="div"
                                 color="inherit"
                             >
-                                Birthday: {renter.birthday}, Gender: {renter.gender}
+                                Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
                             </Typography>
 
                             {(expanded.includes(renter.renter_id)) ? (<>

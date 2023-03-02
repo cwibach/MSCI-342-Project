@@ -203,7 +203,7 @@ const ListofUnits = ({unitList}) => {
                                     component="div"
                                     color="inherit"
                                 >
-                                    ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
+                                    ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
                                 </Typography>
 
                                 <Button

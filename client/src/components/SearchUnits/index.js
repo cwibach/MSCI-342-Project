@@ -15,18 +15,8 @@ const serverURL = "";
 
 const SearchUnits = () => {
 
-    // Template Object 
-    const initialUnits = [{
-        posting_id: 0,
-        creator_id: 0,
-        rooms: 0,
-        apt_price: 0.0,
-        visible: true,
-        address: '',
-    }]
-
     // Profile List State
-    const [unitList, setUnitList] = React.useState(initialUnits);
+    const [unitList, setUnitList] = React.useState([]);
 
     // User Id *** Temporary ***
     const [userID, setUserID] = React.useState(1);
@@ -381,7 +371,7 @@ const InterestedList = ({ unitID, userID }) => {
                                 component="div"
                                 color="inherit"
                             >
-                                Birthday: {renter.birthday}, Gender: {renter.gender}
+                                Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
                             </Typography>
 
                             {(expanded.includes(renter.renter_id)) ? (<>
