@@ -40,7 +40,7 @@ function RenterLogin() {
                 }}
             >
                 <Grid container
-                    spacing={50}
+                    spacing={5}
                     direction="column"
                     style={{ maxWidth: "20%" }}>
 
