@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import history from '../Navigation/history';
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -127,60 +125,7 @@ export default function LandlordSignup() {
         console.log("UserID: ", body);
         return body;
     }
-
-
-    // Functions to handle the form values
-    const handlePassword = (event) => {
-        setPassword(event.target.value)
-    }
-    const handleEmail = (event) => {
-        setEmail(event.target.value)
-        setUsername(event.target.value.split("@")[0])
-    }
-    const handlePhone = (event) => {
-        setPhone(event.target.value)
-    }
-    const handleFirst_name = (event) => {
-        setFirst_name(event.target.value)
-    }
-    const handleLast_name = (event) => {
-        setLast_name(event.target.value)
-    }
-
-    // Calling server API
-    const addLandlord = () => {
-        callApiAddLandlord()
-            .then(res => {
-                console.log("callApiAddLandlord returned: ", res)
-                var parsed = JSON.parse(res.express);
-                console.log("callApiAddLandlord parsed: ", parsed);
-            });
-    }
-
-    const callApiAddLandlord = async () => {
-        const url = serverURL + "/api/addLandlord";
-        console.log(url);
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                email: email,
-                phone: phone,
-                first_name: first_name,
-                last_name: last_name
-            })
-        });
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        console.log("Landlord: ", body);
-        return body;
-    }
-
+       
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -299,7 +244,6 @@ export default function LandlordSignup() {
                             fullWidth
                             name="email"
                             value={email}
-                            onChange={handleEmail}
                             label="Email Address"
                             id="email"
                             type="text"
@@ -315,7 +259,6 @@ export default function LandlordSignup() {
                             fullWidth
                             name="password"
                             value={password}
-                            onChange={handlePassword}
                             label="Password"
                             id="password"
                             type="text"
@@ -356,4 +299,3 @@ export default function LandlordSignup() {
     );
 }
 
-export default LandlordSignup;
