@@ -9,21 +9,92 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/m
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
+import { useAuth } from "../../contexts/AuthContext";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
+// SERVER MODE
+// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
+// DEV MODE
+const serverURL = "";
 
-export default function LandlordLogin() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+export default function LandlordLogin({ setUserID }) {
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const { login } = useAuth();
+    const [loading, setLoading] = React.useState(false);
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
+
+    const { setUserId } = React.useContext(UserContext);
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        try {
+            setLoading(true);
+            await login(email, password);
+
+            getLandlordID();
+
+            history.push('/LandlordProfile')
+        } catch (e) {
+            setAlertVisible(true);
+            setAlertMessage("Error on login, please try again");
+        }
+
+        setLoading(false);
+    }
+
+    const getLandlordID = () => {
+        callAPIGetLandlordID()
+            .then(res => {
+                console.log("callAPIGetLandlordID returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("parsed result: ", parsed)
+                let tempUserID = parsed[0].landlord_id;
+                console.log("landlord_id", tempUserID);
+                setUserId(tempUserID);
+            })
+    }
+
+    const callAPIGetLandlordID = async () => {
+        const url = serverURL + "/api/getLandlordID";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email
+            })
         });
-    };
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("UserID: ", body);
+        return body;
+    }
 
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
+
+            {(alertVisible) ? (<>
+                <Alert severity="error"
+                    action={
+                        <Button color='inherit' size='small'
+                            onClick={() => { setAlertVisible(false) }}>
+                            CLOSE
+                        </Button>
+                    }>
+                    <AlertTitle>Error</AlertTitle>
+                    {alertMessage}
+                </Alert>
+            </>) : (<>
+            </>)}
 
             <Box
                 margin={6}
@@ -36,7 +107,7 @@ export default function LandlordLogin() {
                 }}
             >
                 <Grid container
-                    spacing={50}
+                    spacing={5}
                     direction="column"
                     style={{ maxWidth: "20%" }}>
 
@@ -47,12 +118,6 @@ export default function LandlordLogin() {
 
                     <br />
 
-                    <Typography variant="h4" color="primary">
-                        Sign up as a Landlord
-                    </Typography>
-
-                    <br />
-
                     <Button variant="contained"
                         onClick={() => history.push('/LandlordSignup')}>
                         Sign Up
@@ -60,40 +125,7 @@ export default function LandlordLogin() {
 
                     <br />
 
-                    <Typography variant="h4" color="primary">
-                        Login as a Landlord
-                    </Typography>
-
-                    <br />
-
-                    <Box onSubmit={handleSubmit}>
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            color="primary"
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            sx={{ mt: 3, mb: 2 }}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="family-name"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
+                    <form onSubmit={handleFormSubmit}>
 
                         <TextField
                             variant="filled"
@@ -106,6 +138,7 @@ export default function LandlordLogin() {
                             autoComplete="email"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
 
                         <TextField
@@ -117,9 +150,10 @@ export default function LandlordLogin() {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="new-password"
+                            autoComplete="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
 
                         <Button
@@ -128,23 +162,19 @@ export default function LandlordLogin() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
+                            disabled={loading}
                         >
                             Log in
                         </Button>
-                    </Box>
+                    </form>
 
-                    
                     <Button variant="contained"
                         onClick={() => history.push('/LandlordProfile')}>
                         Bypass Login
                     </Button>
-                    
-
 
                 </Grid>
             </Box>
         </ThemeProvider>
     );
 }
-
-

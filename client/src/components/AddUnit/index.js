@@ -142,19 +142,19 @@ function AddUnit() {
                             </Typography>
                         </Button>
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Logout
-                            </Typography>
-                        </Button>
+                            <Button
+                                color="inherit"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => history.push('/LandlordLogout')}
+                                size='medium'
+                                sx={{ p: 3 }}>
+                                <Typography variant="h5" noWrap>
+                                    Logout
+                                </Typography>
+                            </Button>
 
-                    </Box>
-                </Toolbar>
+                        </Box>
+                    </Toolbar>
             </AppBar>
 
 
