@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 
 import auth from "../config/firebase";
+import authRenters from "../config/firebaseRenters";
 
 const AuthContext = React.createContext();
 
@@ -18,6 +19,7 @@ export function useAuth() {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState();
   const [loading, setLoading] = React.useState(true);
+
   function register(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
@@ -28,7 +30,19 @@ export const AuthProvider = ({ children }) => {
 
   function logout() {
     return signOut(auth);
-    }
+  }
+
+  function renterRegister(email, password) {
+    return createUserWithEmailAndPassword(authRenters, email, password);
+  }
+
+  function renterLogin(email, password) {
+    return signInWithEmailAndPassword(authRenters, email, password);
+  }
+
+  function renterLogout() {
+    return signOut(authRenters);
+  }
 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -43,7 +57,10 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     login,
     register,
-    logout
+    logout,
+    renterRegister,
+    renterLogin,
+    renterLogout
   };
 
   return (

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { appTheme } from "../../themes/theme";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { useAuth } from '../../contexts/AuthContext';
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -27,34 +28,35 @@ function RenterSignup() {
     const [cook, setCook] = React.useState('');
     const [first_name, setFirst_name] = React.useState('');
     const [last_name, setLast_name] = React.useState('');
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
+    const { renterRegister } = useAuth();
+    const { setUserId } = React.useContext(UserContext);
 
     // Handles submitting the form
-    const handleSubmit = (event) => {
+    async function handleFormSubmit(e) {
+        e.preventDefault();
 
-        // Checks if every input was filled in
-        if (username !== '' && password !== '' && email !== '' && phone !== '' && first_name !== '' && last_name !== ''
-            && bedtime !== '' && birthday !== '' && gender !== '' && cook !== '') {
-            // Post to Database
+        try {
+            setLoading(true);
+            await renterRegister(email, password);
+
+            // what to do if succesful
+
             addRenter();
+            getRenterID();
 
-            // Reset Textfields
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setPhone('');
-            setBedtime('');
-            setBirthday('');
-            setGender('');
-            setCook('');
-            setFirst_name('');
-            setLast_name('');
-
-            // Go to profile page
-            history.push('/RenterProfile')
-
+            history.push('/RenterProfile');
+        } catch (e) {
+            console.log(e);
+            setAlertMessage("Error: Failed to Register");
+            setAlertVisible(true);
         }
+        setLoading(false);
+    }
 
-    };
+
 
     // Functions to handle the form values
     const handlePassword = (event) => {
@@ -84,6 +86,10 @@ function RenterSignup() {
     }
     const handleLast_name = (event) => {
         setLast_name(event.target.value)
+    }
+
+    const handleReturn = () => {
+        history.push("RenterLogin");
     }
 
     // Calling server API
@@ -124,9 +130,54 @@ function RenterSignup() {
         return body;
     }
 
+    const getRenterID = () => {
+        callAPIGetRenterID()
+            .then(res => {
+                console.log("callAPIGetRenterID returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("parsed result: ", parsed)
+                let tempUserID = parsed[0].renter_id;
+                console.log("renter_id", tempUserID);
+                setUserId(tempUserID);
+            })
+    }
+
+    const callAPIGetRenterID = async () => {
+        const url = serverURL + "/api/getRenterID";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("UserID: ", body);
+        return body;
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
+
+            {(alertVisible) ? (<>
+                <Alert severity="error"
+                    action={
+                        <Button color='inherit' size='small'
+                            onClick={() => { setAlertVisible(false) }}>
+                            CLOSE
+                        </Button>
+                    }>
+                    <AlertTitle>Error</AlertTitle>
+                    {alertMessage}
+                </Alert>
+            </>) : (<>
+            </>)}
 
             <Box
                 margin={6}
@@ -135,23 +186,33 @@ function RenterSignup() {
                 alignItems={"flex-start"}
             >
                 {/* Creates a column grid for the body of the page */}
-                <Grid container
+                <Grid container xs={4}
                     direction="column"
                     alignItems="center"
                     style={{ color: "#e6e6e6" }}
                     justifyContent="center"
-                    xs={4}
                 >
 
                     {/* Page Title */}
-                    <Grid item>
+                    <Grid item xs={4}>
                         <Typography variant="h3">
                             <b>Renter Sign Up</b>
                         </Typography>
                     </Grid>
 
                     {/* Posting Information Input */}
-                    <Box>
+                    <form onSubmit={handleFormSubmit}>
+
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                            onClick={handleReturn}
+                        >
+                            Return to Login
+                        </Button>
+
                         <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
@@ -214,11 +275,11 @@ function RenterSignup() {
                             color="primary"
                         />
 
-                        <FormControl 
-                            variant="filled" 
+                        <FormControl
+                            variant="filled"
                             fullWidth sx={{ mt: 3, mb: 2 }}
                             style={{ background: "#e6e6e6" }}
-                            >
+                        >
                             <InputLabel id="gender-label">Roomate Gender*</InputLabel>
                             <Select
                                 required
@@ -236,11 +297,11 @@ function RenterSignup() {
                             </Select>
                         </FormControl>
 
-                        <FormControl 
-                            variant="filled" 
+                        <FormControl
+                            variant="filled"
                             fullWidth sx={{ mt: 3, mb: 2 }}
                             style={{ background: "#e6e6e6" }}
-                            >
+                        >
                             <InputLabel id="cook-label">Cooking Frequency*</InputLabel>
                             <Select
                                 required
@@ -310,11 +371,11 @@ function RenterSignup() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onClick={handleSubmit}
+                            disabled={loading}
                         >
                             Submit
                         </Button>
-                    </Box>
+                    </form>
                 </Grid>
             </Box>
 
