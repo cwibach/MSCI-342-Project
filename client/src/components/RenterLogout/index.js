@@ -14,15 +14,15 @@ import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
-export default function LandlordLogout() {
-    const { logout } = useAuth();
+export default function RenterLogout() {
+    const { renterLogout } = useAuth();
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
 
     async function handleLogout() {
         try {
-            await logout();
+            await renterLogout();
             history.push("/");
         } catch {
             setAlertVisible(true);
@@ -50,7 +50,7 @@ export default function LandlordLogout() {
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/LandlordProfile')}
+                            onClick={() => history.push('/RenterProfile')}
                             size='medium'
                             sx={{ p: 3 }}>
                             <Typography variant="h5" noWrap>
@@ -61,29 +61,29 @@ export default function LandlordLogout() {
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/MyUnits')}
+                            onClick={() => history.push('/Community')}
                             size='medium'
                             sx={{ p: 3 }}>
                             <Typography variant="h5" noWrap>
-                                My Units
+                                Community
                             </Typography>
                         </Button>
 
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/AddUnit')}
+                            onClick={() => history.push('/SearchUnits')}
                             size='medium'
                             sx={{ p: 3 }}>
                             <Typography variant="h5" noWrap>
-                                Add Unit
+                                Search Units
                             </Typography>
                         </Button>
 
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/LandlordLogout')}
+                            onClick={() => history.push('/RenterLogout')}
                             size='medium'
                             sx={{ p: 3 }}>
                             <Typography variant="h5" noWrap>

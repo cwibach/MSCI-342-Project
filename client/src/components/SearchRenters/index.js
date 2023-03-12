@@ -127,7 +127,7 @@ function SearchRenters() {
                         <Button
                             color="inherit"
                             style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/')}
+                            onClick={() => history.push('/RenterLogout')}
                             size='medium'
                             sx={{ p: 3 }}>
                             <Typography variant="h5" noWrap>
