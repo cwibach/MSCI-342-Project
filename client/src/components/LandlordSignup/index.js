@@ -7,9 +7,8 @@ import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { ThemeProvider } from '@mui/material/styles';
 import { useAuth } from "../../contexts/AuthContext";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import AlertBar from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -128,19 +127,7 @@ export default function LandlordSignup() {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            {(alertVisible) ? (<>
-                <Alert severity="error"
-                    action={
-                        <Button color='inherit' size='small'
-                            onClick={() => { setAlertVisible(false) }}>
-                            CLOSE
-                        </Button>
-                    }>
-                    <AlertTitle>Error</AlertTitle>
-                    {alertMessage}
-                </Alert>
-            </>) : (<>
-            </>)}
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible}/>
 
             <Box
                 margin={6}
@@ -259,7 +246,7 @@ export default function LandlordSignup() {
                             value={password}
                             label="Password"
                             id="password"
-                            type="text"
+                            type="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                             onChange={(e) => setPassword(e.target.value)}

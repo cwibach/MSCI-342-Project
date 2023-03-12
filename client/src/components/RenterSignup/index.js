@@ -5,10 +5,9 @@ import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import { useAuth } from '../../contexts/AuthContext';
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import AlertBar from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -20,6 +19,7 @@ function RenterSignup() {
     // Form Value States
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirm] = React.useState();
     const [email, setEmail] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [bedtime, setBedtime] = React.useState('');
@@ -38,22 +38,28 @@ function RenterSignup() {
     async function handleFormSubmit(e) {
         e.preventDefault();
 
-        try {
-            setLoading(true);
-            await renterRegister(email, password);
-
-            // what to do if succesful
-
-            addRenter();
-            getRenterID();
-
-            history.push('/RenterProfile');
-        } catch (e) {
-            console.log(e);
-            setAlertMessage("Error: Failed to Register");
+        if (password !== confirmPassword) {
+            setAlertMessage("Error: Passwords do not match");
             setAlertVisible(true);
+        } else {
+
+            try {
+                setLoading(true);
+                await renterRegister(email, password);
+
+                // what to do if succesful
+
+                addRenter();
+                getRenterID();
+
+                history.push('/RenterProfile');
+            } catch (e) {
+                console.log(e);
+                setAlertMessage("Error: Failed to Register");
+                setAlertVisible(true);
+            }
+            setLoading(false);
         }
-        setLoading(false);
     }
 
 
@@ -62,28 +68,40 @@ function RenterSignup() {
     const handlePassword = (event) => {
         setPassword(event.target.value)
     }
+
+    const handleConfirmPassword = (event) => {
+        setConfirm(event.target.value)
+    }
+
     const handleEmail = (event) => {
         setEmail(event.target.value)
         setUsername(event.target.value.split("@")[0])
     }
+
     const handlePhone = (event) => {
         setPhone(event.target.value)
     }
+
     const handleBedtime = (event) => {
         setBedtime(event.target.value)
     }
+
     const handleBirthday = (event) => {
         setBirthday(event.target.value)
     }
+
     const handleGender = (event) => {
         setGender(event.target.value)
     }
+
     const handleCook = (event) => {
         setCook(event.target.value)
     }
+
     const handleFirst_name = (event) => {
         setFirst_name(event.target.value)
     }
+
     const handleLast_name = (event) => {
         setLast_name(event.target.value)
     }
@@ -165,19 +183,7 @@ function RenterSignup() {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            {(alertVisible) ? (<>
-                <Alert severity="error"
-                    action={
-                        <Button color='inherit' size='small'
-                            onClick={() => { setAlertVisible(false) }}>
-                            CLOSE
-                        </Button>
-                    }>
-                    <AlertTitle>Error</AlertTitle>
-                    {alertMessage}
-                </Alert>
-            </>) : (<>
-            </>)}
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible}/>
 
             <Box
                 margin={6}
@@ -360,7 +366,22 @@ function RenterSignup() {
                             onChange={handlePassword}
                             label="Password"
                             id="password"
-                            type="text"
+                            type="password"
+                            sx={{ mt: 3, mb: 2 }}
+                            color="primary"
+                        />
+
+<TextField
+                            variant="filled"
+                            style={{ background: "#e6e6e6" }}
+                            required
+                            fullWidth
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={handleConfirmPassword}
+                            label="Confirm Password"
+                            id="password"
+                            type="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
                         />
