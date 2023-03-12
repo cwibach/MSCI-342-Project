@@ -1,18 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, Typography } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import AlertBar from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -22,11 +16,12 @@ const serverURL = "";
 export default function LandlordLogin({ setUserID }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const { login } = useAuth();
+
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
+    const { login } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {
@@ -78,52 +73,49 @@ export default function LandlordLogin({ setUserID }) {
         return body;
     }
 
+    const handleEmail = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const handlePassword = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const goHome = () => {
+        history.push('/')
+    }
+
+    const goProfile = () => {
+        history.push('/LandlordProfile')
+    }
+
+    const goSignUp = () => {
+        history.push('/LandlordSignup')
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            {(alertVisible) ? (<>
-                <Alert severity="error"
-                    action={
-                        <Button color='inherit' size='small'
-                            onClick={() => { setAlertVisible(false) }}>
-                            CLOSE
-                        </Button>
-                    }>
-                    <AlertTitle>Error</AlertTitle>
-                    {alertMessage}
-                </Alert>
-            </>) : (<>
-            </>)}
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
                 margin={6}
                 display={"flex"}
                 justifyContent={"center"}
-                flexGrow={4}
                 alignItems={"flex-start"}
-                sx={{
-                    height: 1000
-                }}
             >
-                <Grid container
-                    spacing={5}
+                <Grid container xs={4}
                     direction="column"
-                    style={{ maxWidth: "20%" }}>
+                    alignItems="center"
+                    style={{ color: "#e6e6e6" }}
+                    justifyContent="center"
+                >
 
-                    <Button variant="contained"
-                        onClick={() => history.push('/')}>
-                        Back to Home
-                    </Button>
-
-                    <br />
-
-                    <Button variant="contained"
-                        onClick={() => history.push('/LandlordSignup')}>
-                        Sign Up
-                    </Button>
-
-                    <br />
+                    {/* Page Title */}
+                    <Typography variant="h3">
+                        <b>Landlord login</b>
+                    </Typography>
 
                     <form onSubmit={handleFormSubmit}>
 
@@ -138,7 +130,7 @@ export default function LandlordLogin({ setUserID }) {
                             autoComplete="email"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmail}
                         />
 
                         <TextField
@@ -153,26 +145,41 @@ export default function LandlordLogin({ setUserID }) {
                             autoComplete="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
                         />
 
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
                             Log in
                         </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={goSignUp}>
+                            Don't Have an Account? Sign Up Here
+                        </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={goProfile}>
+                            Bypass Login
+                        </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={goHome}>
+                            Back to Home
+                        </Button>
                     </form>
-
-                    <Button variant="contained"
-                        onClick={() => history.push('/LandlordProfile')}>
-                        Bypass Login
-                    </Button>
-
                 </Grid>
             </Box>
         </ThemeProvider>

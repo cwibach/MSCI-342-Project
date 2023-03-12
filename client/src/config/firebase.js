@@ -11,7 +11,7 @@ const firebaseConfig = {
     measurementId: "G-VHM3PN3NL6"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, "Landlords");
 
 // gives us an auth instance
 const auth = getAuth(app);
