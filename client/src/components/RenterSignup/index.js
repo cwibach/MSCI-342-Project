@@ -183,7 +183,7 @@ function RenterSignup() {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible}/>
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
                 margin={6}
@@ -200,24 +200,12 @@ function RenterSignup() {
                 >
 
                     {/* Page Title */}
-                    <Grid item xs={4}>
-                        <Typography variant="h3">
-                            <b>Renter Sign Up</b>
-                        </Typography>
-                    </Grid>
+                    <Typography variant="h3">
+                        <b>Renter Sign Up</b>
+                    </Typography>
 
                     {/* Posting Information Input */}
                     <form onSubmit={handleFormSubmit}>
-
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onClick={handleReturn}
-                        >
-                            Return to Login
-                        </Button>
 
                         <TextField
                             variant="filled"
@@ -371,7 +359,7 @@ function RenterSignup() {
                             color="primary"
                         />
 
-<TextField
+                        <TextField
                             variant="filled"
                             style={{ background: "#e6e6e6" }}
                             required
@@ -390,11 +378,21 @@ function RenterSignup() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
-                            Submit
+                            Sign Up
+                        </Button>
+
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 2, mb: 1 }}
+                            color="primary"
+                            onClick={handleReturn}
+                        >
+                            Return to Login
                         </Button>
                     </form>
                 </Grid>

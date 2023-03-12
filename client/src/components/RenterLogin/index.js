@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, Typography } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
@@ -79,55 +78,32 @@ function RenterLogin() {
     const handleEmail = (event) => {
         setEmail(event.target.value);
     }
-   
+
     return (
 
 
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible}/>
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
                 margin={6}
                 display={"flex"}
                 justifyContent={"center"}
-                flexGrow={4}
                 alignItems={"flex-start"}
-                sx={{
-                    height: 1000
-                }}
             >
-                <Grid container
-                    spacing={5}
+                <Grid container xs={4}
                     direction="column"
-                    style={{ maxWidth: "20%" }}>
+                    alignItems="center"
+                    style={{ color: "#e6e6e6" }}
+                    justifyContent="center"
+                >
 
-                    <Button variant="contained"
-                        onClick={() => history.push('/')}>
-                        Back to Home
-                    </Button>
-
-                    <br />
-
-                    <Typography variant="h4" color="primary">
-                        Sign Up as a Renter
+                    {/* Page Title */}
+                    <Typography variant="h3">
+                        <b>Renter Login</b>
                     </Typography>
-
-                    <br />
-
-                    <Button variant="contained"
-                        onClick={() => history.push('/RenterSignup')}>
-                        Sign Up
-                    </Button>
-                    
-                    <br />
-
-                    <Typography variant="h4" color="primary">
-                        Login as a Renter
-                    </Typography>
-
-                    <br />
 
                     <form onSubmit={handleFormSubmit}>
 
@@ -164,24 +140,38 @@ function RenterLogin() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 1 }}
                             color="primary"
                         >
                             Log in
                         </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={() => history.push('/RenterSignup')}>
+                            Don't Have an Account? Sign Up Here
+                        </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={() => history.push('/RenterProfile')}
+                            disabled={loading}>
+                            Bypass Login
+                        </Button>
+
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={() => history.push('/')}>
+                            Back to Home
+                        </Button>
                     </form>
-
-                    <Button variant="contained"
-                        onClick={() => history.push('/RenterProfile')}
-                        disabled={loading}>
-                        Bypass Login
-                    </Button>
-
                 </Grid>
             </Box>
         </ThemeProvider>
     );
-
 }
 
 export default RenterLogin;

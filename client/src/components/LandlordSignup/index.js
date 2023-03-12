@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import { Box, Button, CssBaseline, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
@@ -9,7 +8,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import AlertBar from '../GeneralResources/alert.js';
-
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -25,12 +23,12 @@ export default function LandlordSignup() {
     const [last_name, setLast_name] = React.useState('');
     const [username, setUsername] = React.useState('');
 
-    const { register } = useAuth();
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
     const { setUserId } = React.useContext(UserContext);
+    const { register } = useAuth();
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -122,12 +120,12 @@ export default function LandlordSignup() {
         console.log("UserID: ", body);
         return body;
     }
-       
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible}/>
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
                 margin={6}
@@ -144,18 +142,11 @@ export default function LandlordSignup() {
                     xs={4}
                 >
 
-                    <Typography component="h1" variant="h5" color="primary">
-                        Sign up
+                    <Typography variant="h3">
+                        <b>Landlord Sign Up</b>
                     </Typography>
 
                     <form onSubmit={handleFormSubmit}>
-
-                        <Button fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={() => history.push('/LandlordLogin')}>
-                            Back to Login
-                        </Button>
 
                         <TextField
                             variant="filled"
@@ -271,11 +262,18 @@ export default function LandlordSignup() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
-                            Submit
+                            Sign Up
+                        </Button>
+
+                        <Button fullWidth
+                            variant="contained"
+                            sx={{ mt: 2, mb: 1 }}
+                            onClick={() => history.push('/LandlordLogin')}>
+                            Return to Login
                         </Button>
                     </form>
                 </Grid>
