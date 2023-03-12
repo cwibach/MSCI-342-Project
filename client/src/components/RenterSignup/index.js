@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import history from '../Navigation/history';
 import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { appTheme } from "../../themes/theme";
@@ -15,7 +14,6 @@ import AlertBar from '../GeneralResources/alert.js';
 const serverURL = "";
 
 function RenterSignup() {
-
     // Form Value States
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -28,9 +26,11 @@ function RenterSignup() {
     const [cook, setCook] = React.useState('');
     const [first_name, setFirst_name] = React.useState('');
     const [last_name, setLast_name] = React.useState('');
+
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
     const [loading, setLoading] = React.useState(false);
+
     const { renterRegister } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
@@ -61,8 +61,6 @@ function RenterSignup() {
             setLoading(false);
         }
     }
-
-
 
     // Functions to handle the form values
     const handlePassword = (event) => {

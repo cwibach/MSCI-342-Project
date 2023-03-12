@@ -16,10 +16,12 @@ const serverURL = "";
 function RenterLogin() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const { renterLogin } = useAuth();
+    
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
+
+    const { renterLogin } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {

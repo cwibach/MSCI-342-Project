@@ -16,11 +16,12 @@ const serverURL = "";
 export default function LandlordLogin({ setUserID }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const { login } = useAuth();
+
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
 
+    const { login } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
     async function handleFormSubmit(e) {
