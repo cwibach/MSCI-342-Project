@@ -121,6 +121,35 @@ export default function LandlordSignup() {
         return body;
     }
 
+    const handleEmail = (event) => {
+        setEmail(event.target.value);
+        setUsername(event.target.value.split("@")[0]);
+    }
+
+    const handlePassword = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const handleConfirm = (event) => {
+        setConfirmPassword(event.target.value);
+    }
+
+    const handleFirstName = (event) => {
+        setFirst_name(event.target.value);
+    }
+
+    const handleLastName = (event) => {
+        setLast_name(event.target.value);
+    }
+
+    const handlePhone = (event) => {
+        setPhone(event.target.value);
+    }
+
+    const goLogin = () => {
+        history.push('/LandlordLogin');
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -153,22 +182,6 @@ export default function LandlordSignup() {
                             style={{ background: "#e6e6e6" }}
                             required
                             fullWidth
-                            id="username"
-                            type="text"
-                            label="Username"
-                            name="username"
-                            value={username}
-                            autoComplete="Username"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
                             id="first_name"
                             type="text"
                             label="First Name"
@@ -177,7 +190,7 @@ export default function LandlordSignup() {
                             autoComplete="First Name"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setFirst_name(e.target.value)}
+                            onChange={handleFirstName}
 
                         />
 
@@ -194,7 +207,7 @@ export default function LandlordSignup() {
                             autoComplete="Last Name"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setLast_name(e.target.value)}
+                            onChange={handleLastName}
 
                         />
 
@@ -205,7 +218,7 @@ export default function LandlordSignup() {
                             fullWidth
                             name="phone"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={handlePhone}
                             label="Phone Number"
                             id="phone"
                             type="text"
@@ -225,7 +238,7 @@ export default function LandlordSignup() {
                             type="text"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmail}
                         />
 
                         <TextField
@@ -240,7 +253,7 @@ export default function LandlordSignup() {
                             type="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
                         />
 
                         <TextField
@@ -255,7 +268,7 @@ export default function LandlordSignup() {
                             autoComplete="confirm-password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={handleConfirm}
                         />
 
                         <Button
@@ -272,7 +285,7 @@ export default function LandlordSignup() {
                         <Button fullWidth
                             variant="contained"
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/LandlordLogin')}>
+                            onClick={goLogin}>
                             Return to Login
                         </Button>
                     </form>

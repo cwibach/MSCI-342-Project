@@ -79,9 +79,19 @@ function RenterLogin() {
         setEmail(event.target.value);
     }
 
+    const goHome = () => {
+        history.push('/')
+    }
+
+    const goSignUp = () => {
+        history.push('/RenterSignUp')
+    }
+
+    const goProfile = () => {
+        history.push('/RenterProfile')
+    }
+
     return (
-
-
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
@@ -149,14 +159,14 @@ function RenterLogin() {
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/RenterSignup')}>
+                            onClick={goSignUp}>
                             Don't Have an Account? Sign Up Here
                         </Button>
 
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/RenterProfile')}
+                            onClick={goProfile}
                             disabled={loading}>
                             Bypass Login
                         </Button>
@@ -164,7 +174,7 @@ function RenterLogin() {
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/')}>
+                            onClick={goHome}>
                             Back to Home
                         </Button>
                     </form>

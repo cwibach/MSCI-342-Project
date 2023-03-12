@@ -72,6 +72,26 @@ export default function LandlordLogin({ setUserID }) {
         return body;
     }
 
+    const handleEmail = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const handlePassword = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const goHome = () => {
+        history.push('/')
+    }
+
+    const goProfile = () => {
+        history.push('/LandlordProfile')
+    }
+
+    const goSignUp = () => {
+        history.push('/LandlordSignup')
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -109,7 +129,7 @@ export default function LandlordLogin({ setUserID }) {
                             autoComplete="email"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmail}
                         />
 
                         <TextField
@@ -124,7 +144,7 @@ export default function LandlordLogin({ setUserID }) {
                             autoComplete="password"
                             sx={{ mt: 3, mb: 2 }}
                             color="primary"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
                         />
 
                         <Button
@@ -141,21 +161,21 @@ export default function LandlordLogin({ setUserID }) {
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/LandlordSignup')}>
+                            onClick={goSignUp}>
                             Don't Have an Account? Sign Up Here
                         </Button>
 
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/LandlordProfile')}>
+                            onClick={goProfile}>
                             Bypass Login
                         </Button>
 
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={() => history.push('/')}>
+                            onClick={goHome}>
                             Back to Home
                         </Button>
                     </form>
