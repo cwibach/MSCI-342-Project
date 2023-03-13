@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, Paper } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, 
+    RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
@@ -138,6 +137,8 @@ const SearchUnits = () => {
                             See Units
                         </Typography>
                     </Button>
+
+                    <SearchMenuUnits setUnitList={setUnitList} />
                 </>)}
 
             </Grid>
@@ -225,28 +226,28 @@ const ListofUnits = ({ units, userID }) => {
                             </>) : (<>
                                 {(anyExpanded) ? (<>
                                     <Typography></Typography>
-                                    </>) : (<>
-                                        <Typography
-                                            style={{
-                                                marginTop: appTheme.spacing(1),
-                                                marginLeft: appTheme.spacing(3)
-                                            }}
-                                            variant="h5"
-                                            component="div"
-                                            color="inherit"
-                                        >
-                                            {unit.address}
-                                        </Typography>
-                                        <Button onClick={() => expandUnit(unit.posting_id)}
-                                            variant="contained"
-                                            style={{
-                                                marginTop: appTheme.spacing(1),
-                                                marginLeft: appTheme.spacing(3),
-                                                marginBottom: appTheme.spacing(2)
-                                            }}>
+                                </>) : (<>
+                                    <Typography
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(3)
+                                        }}
+                                        variant="h5"
+                                        component="div"
+                                        color="inherit"
+                                    >
+                                        {unit.address}
+                                    </Typography>
+                                    <Button onClick={() => expandUnit(unit.posting_id)}
+                                        variant="contained"
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(3),
+                                            marginBottom: appTheme.spacing(2)
+                                        }}>
 
-                                            See Details
-                                        </Button>
+                                        See Details
+                                    </Button>
                                 </>)}
                             </>)}
                         </Grid>
@@ -427,6 +428,39 @@ const InterestedList = ({ unitID, userID }) => {
                     </Grid>
                 );
             })}
+        </Grid>
+    );
+}
+
+const SearchMenuUnits = ({ setUnitList }) => {
+    const [sortMethod, setSortMethod] = React.useState(0);
+
+    const handleSearchUnits = () => {
+
+    }
+
+    const handleSortChange = (event) => {
+        setSortMethod(event.target.value);
+        console.log("Current Sort Method: " + event.target.value);
+    }
+
+    return (
+        <Grid>
+            <AppPaper2>
+                <FormControl onSubmit={handleSearchUnits}>
+                    <RadioGroup
+                        value={sortMethod}
+                        onChange={handleSortChange}
+                        sx={{ mt: 1, mb: 2, ml: 2 }}
+                    >
+                        <FormLabel sx={{ mt: 0, mb: 1, ml: 0 }}><strong>Order by:</strong></FormLabel>
+                        <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                    </RadioGroup>
+                </FormControl>
+            </AppPaper2>
         </Grid>
     );
 }
