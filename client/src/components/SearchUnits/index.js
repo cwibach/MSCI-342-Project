@@ -1,7 +1,9 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, 
-    RadioGroup, FormControlLabel, Radio, FormControl, FormLabel } from '@mui/material';
+import {
+    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
+    RadioGroup, FormControlLabel, Radio, FormLabel
+} from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
@@ -435,31 +437,64 @@ const InterestedList = ({ unitID, userID }) => {
 const SearchMenuUnits = ({ setUnitList }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
 
-    const handleSearchUnits = () => {
+    const handleSearchUnits = (event) => {
+        event.preventDefault();
 
+        getFilteredUnits();
     }
 
     const handleSortChange = (event) => {
         setSortMethod(event.target.value);
-        console.log("Current Sort Method: " + event.target.value);
+    }
+
+    const getFilteredUnits = () => {
+        callApiGetFilteredUnits()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                setUnitList(parsed);
+            });
+    }
+
+    const callApiGetFilteredUnits = async () => {
+        const url = serverURL + "/api/getFilteredUnits";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                sortMethod: sortMethod
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Filtered Units: ", body);
+        return body;
     }
 
     return (
         <Grid>
             <AppPaper2>
-                <FormControl onSubmit={handleSearchUnits}>
+                <form onSubmit={handleSearchUnits}>
+                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
+
                     <RadioGroup
-                        value={sortMethod}
+                        value={sortMethod} row
                         onChange={handleSortChange}
-                        sx={{ mt: 1, mb: 2, ml: 2 }}
+                        sx={{ mt: 0, mb: 1, ml: 2 }}
                     >
-                        <FormLabel sx={{ mt: 0, mb: 1, ml: 0 }}><strong>Order by:</strong></FormLabel>
                         <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
                         <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
                         <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                         <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                     </RadioGroup>
-                </FormControl>
+
+                    <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                        Search for Units
+                    </Button>
+                </form>
             </AppPaper2>
         </Grid>
     );
