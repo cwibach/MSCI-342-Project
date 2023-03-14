@@ -15,21 +15,29 @@ router.use(express.static(path.join(__dirname, "client/build")));
 
 // // ---------------------------------------------------------------------
 
-router.post('/api/addInterest', (req, res) => {
+router.post('/api/getFilteredUnits', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `INSERT INTO osellner.Interested (renter_id, posting_id) VALUES (?, ?)`;
-	let data = [req.body.renter_id, req.body.posting_id];
-	
+    const sortDict = {
+        0: "posting_id ASC",
+        1: "posting_id DESC",
+        2: "apt_price ASC",
+        3: "apt_price DESC"
+    }
+
+	let sql = `SELECT * FROM osellner.Postings
+                ORDER BY ` + sortDict[req.body.sortMethod];
+	console.log(sql);
+	let data = [];
+
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
 			return console.error(error.message);
 		}
 
-		let string = JSON.stringify(results);
-		// let obj = JSON.parse(string);
-		res.send({ express: string });
+		let obj = JSON.stringify(results);
+		res.send({ express: obj });
 	});
 	connection.end();
 });

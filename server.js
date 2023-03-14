@@ -45,6 +45,10 @@ app.use('/', getMyUnitsRouter);
 const getAllUnitsRouter = require('./routes/getAllUnits');
 app.use('/', getAllUnitsRouter);
 
+// Get Filtered Units Api
+const getFilteredUnitsRouter = require('./routes/getFilteredUnits.js');
+app.use('/', getFilteredUnitsRouter);
+
 // Get Interested Renters Api
 const getInterestedRentersRouter = require('./routes/getInterestedRenters');
 app.use('/', getInterestedRentersRouter);

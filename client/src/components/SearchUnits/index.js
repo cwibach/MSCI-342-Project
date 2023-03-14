@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, Paper } from '@mui/material';
+import {
+    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
+    RadioGroup, FormControlLabel, Radio, FormLabel
+} from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
+import { UserContext } from '../Navigation/PrivateRoute.js';
 import RenterList from '../RenterList/index';
 
 // SERVER MODE
@@ -14,12 +16,12 @@ import RenterList from '../RenterList/index';
 const serverURL = "";
 
 const SearchUnits = () => {
-
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
+    const [unitMode, setUnitMode] = React.useState(false);
 
     // User Id *** Temporary ***
-    const [userID, setUserID] = React.useState(1);
+    const { userID } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
@@ -51,8 +53,6 @@ const SearchUnits = () => {
         console.log("All Units: ", body);
         return body;
     }
-
-    const [unitMode, setUnitMode] = React.useState(false);
 
     return (
         <ThemeProvider theme={appTheme}>
@@ -119,8 +119,7 @@ const SearchUnits = () => {
                 </Toolbar>
             </AppBar>
 
-            <Grid margin={appTheme.spacing(2)}>
-
+            <Grid margin={appTheme.spacing(0.5)}>
 
                 {(unitMode) ? (<>
                     <Button onClick={() => setUnitMode(false)}
@@ -138,6 +137,8 @@ const SearchUnits = () => {
                             See Units
                         </Typography>
                     </Button>
+
+                    <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode} />
                 </>)}
 
             </Grid>
@@ -173,80 +174,10 @@ const ListofUnits = ({ units, userID }) => {
                     return (
                         <Grid item key={unit.posting_id}>
                             {(expanded === unit.posting_id) ? (<>
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3)
-                                    }}
-                                    variant="h5"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    {unit.address}
-                                </Typography>
-
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
-                                </Typography>
-
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
-                                </Typography>
-
-                                <Button
-                                    onClick={() => unExpandUnit()}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
-
-                                    Hide Details
-                                </Button>
+                                <ExpandedUnitInfo unit={unit} unExpandUnit={unExpandUnit} />
                             </>) : (<>
-                                {(anyExpanded) ? (<>
-                                    <Typography></Typography>
-                                    </>) : (<>
-                                        <Typography
-                                            style={{
-                                                marginTop: appTheme.spacing(1),
-                                                marginLeft: appTheme.spacing(3)
-                                            }}
-                                            variant="h5"
-                                            component="div"
-                                            color="inherit"
-                                        >
-                                            {unit.address}
-                                        </Typography>
-                                        <Button onClick={() => expandUnit(unit.posting_id)}
-                                            variant="contained"
-                                            style={{
-                                                marginTop: appTheme.spacing(1),
-                                                marginLeft: appTheme.spacing(3),
-                                                marginBottom: appTheme.spacing(2)
-                                            }}>
-
-                                            See Details
-                                        </Button>
+                                {(anyExpanded) ? (<> </>) : (<>
+                                    <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
                                 </>)}
                             </>)}
                         </Grid>
@@ -254,30 +185,98 @@ const ListofUnits = ({ units, userID }) => {
                 })}
             </AppPaper2>
 
-
             {(anyExpanded) ? (<>
-                <AppPaper>
-                    <Typography
-                        style={{
-                            marginTop: appTheme.spacing(1),
-                            marginLeft: appTheme.spacing(4),
-                            marginBottom: appTheme.spacing(1)
-                        }}
-                        variant="h5"
-                        component="div"
-                        color="inherit"
-                    >
-                        Interested Renters:
-                    </Typography>
-                </AppPaper>
-
                 <InterestedList unitID={expanded} userID={userID} />
-            </>) : (<>
-            </>)}
+            </>) : (<> </>)}
         </Grid>
     );
 }
 
+const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
+
+    return (
+        <>
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(3)
+                }}
+                variant="h5"
+                component="div"
+                color="inherit"
+            >
+                {unit.address}
+            </Typography>
+
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(5),
+                    marginBottom: appTheme.spacing(1)
+                }}
+                variant="subtitle1"
+                component="div"
+                color="inherit"
+            >
+                {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
+            </Typography>
+
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(5),
+                    marginBottom: appTheme.spacing(1)
+                }}
+                variant="subtitle1"
+                component="div"
+                color="inherit"
+            >
+                ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
+            </Typography>
+
+            <Button
+                onClick={() => unExpandUnit()}
+                variant="contained"
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(3),
+                    marginBottom: appTheme.spacing(2)
+                }}>
+
+                Hide Details
+            </Button>
+        </>
+    )
+}
+
+const UnexpandedUnitInfo = ({ unit, expandUnit }) => {
+
+    return (
+        <>
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(3)
+                }}
+                variant="h5"
+                component="div"
+                color="inherit"
+            >
+                {unit.address}
+            </Typography>
+
+            <Button onClick={() => expandUnit(unit.posting_id)}
+                variant="contained"
+                style={{
+                    marginTop: appTheme.spacing(1),
+                    marginLeft: appTheme.spacing(3),
+                    marginBottom: appTheme.spacing(2)
+                }}>
+                See Details
+            </Button>
+        </>
+    )
+}
 
 const InterestedList = ({ unitID, userID }) => {
 
@@ -319,114 +318,92 @@ const InterestedList = ({ unitID, userID }) => {
         return body;
     }
 
+    return (
+        <>
+            <AppPaper>
+                <Typography
+                    style={{
+                        marginTop: appTheme.spacing(1),
+                        marginLeft: appTheme.spacing(4),
+                        marginBottom: appTheme.spacing(1)
+                    }}
+                    variant="h5"
+                    component="div"
+                    color="inherit"
+                >
+                    Interested Renters:
+                </Typography>
+            </AppPaper>
 
+            <RenterList renters={renters} />
+        </>
+    );
+}
 
-    const [expanded, setExpanded] = React.useState([]);
+const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
+    const [sortMethod, setSortMethod] = React.useState(0);
 
-    const addToExpanded = (renterID) => {
-        let tempExpanded = [...expanded];
+    const handleSearchUnits = (event) => {
+        event.preventDefault();
 
-        tempExpanded.push(renterID);
+        getFilteredUnits();
 
-        setExpanded(tempExpanded);
+        setUnitMode(true);
     }
 
-    const removeFromExpanded = (renterID) => {
-        let tempExpanded = [...expanded];
+    const handleSortChange = (event) => {
+        setSortMethod(event.target.value);
+    }
 
-        for (let i = 0; i < tempExpanded.length; i++) {
-            if (tempExpanded[i] == renterID) {
-                tempExpanded.splice(i, 1);
-            }
-        }
+    const getFilteredUnits = () => {
+        callApiGetFilteredUnits()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                setUnitList(parsed);
+            });
+    }
 
-        setExpanded(tempExpanded);
+    const callApiGetFilteredUnits = async () => {
+        const url = serverURL + "/api/getFilteredUnits";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                sortMethod: sortMethod
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Filtered Units: ", body);
+        return body;
     }
 
     return (
-        <Grid margin={appTheme.spacing(2)}>
-            {renters.map((renter) => {
-                return (
-                    <Grid item key={renter.renter_id}>
-                        <AppPaper>
-                            <Typography
-                                style={{
-                                    marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(3)
-                                }}
-                                variant="h5"
-                                component="div"
-                                color="inherit"
-                            >
-                                {renter.first_name} {renter.last_name}
-                            </Typography>
+        <Grid>
+            <AppPaper2>
+                <form onSubmit={handleSearchUnits}>
+                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
 
-                            <Typography
-                                style={{
-                                    marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(5),
-                                    marginBottom: appTheme.spacing(1)
-                                }}
-                                variant="subtitle1"
-                                component="div"
-                                color="inherit"
-                            >
-                                Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
-                            </Typography>
+                    <RadioGroup
+                        value={sortMethod} row
+                        onChange={handleSortChange}
+                        sx={{ mt: 0, mb: 1, ml: 2 }}
+                    >
+                        <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                    </RadioGroup>
 
-                            {(expanded.includes(renter.renter_id)) ? (<>
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cook}
-                                </Typography>
-
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    Phone Number: {renter.phone}, Email address: {renter.email}
-                                </Typography>
-
-                                <Button
-                                    onClick={() => removeFromExpanded(renter.renter_id)}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
-                                    Hide Details
-                                </Button>
-                            </>) : (<>
-                                <Button
-                                    onClick={() => addToExpanded(renter.renter_id)}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
-                                    Show Details
-                                </Button>
-                            </>)}
-                        </AppPaper>
-                    </Grid>
-                );
-            })}
+                    <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                        Search for Units
+                    </Button>
+                </form>
+            </AppPaper2>
         </Grid>
     );
 }

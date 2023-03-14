@@ -15,7 +15,7 @@ router.use(express.static(path.join(__dirname, "client/build")));
 
 // // ---------------------------------------------------------------------
 
-app.post('/api/getInterestedRenters', (req, res) => {
+router.post('/api/getInterestedRenters', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
