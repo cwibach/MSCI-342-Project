@@ -5,10 +5,10 @@ import {
     RadioGroup, FormControlLabel, Radio, FormLabel
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import history from '../Navigation/history';
 import { AppPaper, AppPaper2 } from "../../themes/paper";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import RenterList from '../RenterList/index';
+import NavButton from "../GeneralResources/navButton";
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -71,50 +71,13 @@ const SearchUnits = () => {
                         flexGrow={1}
                         alignItems="center">
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterProfile')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Profile
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/RenterProfile" text="Profile" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/Community')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Community
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/Community" text="Community" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/SearchUnits')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                <strong>Search Units</strong>
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/SearchUnits" text="Search Units" strong={true} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterLogout')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Logout
-                            </Typography>
-                        </Button>
-
+                        <NavButton destination="/RenterLogout" text="Logout" strong={false} />
                     </Box>
                 </Toolbar>
             </AppBar>

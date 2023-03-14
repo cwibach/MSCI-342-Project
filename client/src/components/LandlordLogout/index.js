@@ -49,7 +49,6 @@ export default function LandlordLogout() {
                         <NavButton destination="/MyUnits" text="My Units" strong={false} />
 
                         <NavButton destination="/LandlordLogout" text="Logout" strong={true} />
-
                     </Box>
                 </Toolbar>
             </AppBar>
