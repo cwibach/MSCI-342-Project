@@ -201,8 +201,12 @@ const ListofUnits = ({ unitList }) => {
                                 </Button>
 
                                 <Button variant="contained"
-                                    fullWidth
-                                    sx={{ mt: 2, mb: 1 }}
+                                    
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginLeft: appTheme.spacing(13),
+                                        marginBottom: appTheme.spacing(2)
+                                    }}                                    
                                     onClick={goDelete}>
                                     Delete Posting
                                 </Button>
