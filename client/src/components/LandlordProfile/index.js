@@ -1,15 +1,9 @@
-import React, { Component} from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import history from '../Navigation/history';
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper } from "../../themes/paper";
-import { Container } from '@material-ui/core';
+import NavButton from "../GeneralResources/navButton";
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -76,50 +70,13 @@ function LandlordProfile() {
                         flexGrow={1}
                         alignItems="center">
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/LandlordProfile')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                <strong>Profile</strong>
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/LandlordProfile" text="Profile" strong={true}/>
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/AddUnit')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Add Posting
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/AddUnit" text="Add Posting" strong={false}/>
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/MyUnits')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                My Units
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/MyUnits" text="My Units" strong={false}/>
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/LandlordLogout')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Logout
-                            </Typography>
-                        </Button>
-
+                        <NavButton destination="/LandlordLogout" text="Logout" strong={false}/>
                     </Box>
                 </Toolbar>
             </AppBar>

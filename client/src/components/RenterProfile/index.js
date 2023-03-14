@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import history from '../Navigation/history';
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
+import NavButton from "../GeneralResources/navButton";
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -73,50 +69,13 @@ function RenterProfile() {
                         flexGrow={1}
                         alignItems="center">
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterProfile')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                <strong>Profile</strong>
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/RenterProfile" text="Profile" strong={true} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/Community')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Community
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/Community" text="Community" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/SearchUnits')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Search Units
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/SearchUnits" text="Search Units" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterLogout')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Logout
-                            </Typography>
-                        </Button>
-
+                        <NavButton destination="/RenterLogout" text="Logout" strong={false} />
                     </Box>
                 </Toolbar>
             </AppBar>

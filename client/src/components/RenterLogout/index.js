@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper, AppPaper2 } from "../../themes/paper";
+import { AppPaper} from "../../themes/paper";
 import history from '../Navigation/history';
-import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+import AlertBar from '../GeneralResources/alert.js';
+import NavButton from "../GeneralResources/navButton";
 
 export default function RenterLogout() {
     const { renterLogout } = useAuth();
@@ -47,67 +42,18 @@ export default function RenterLogout() {
                         flexGrow={1}
                         alignItems="center">
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterProfile')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Profile
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/RenterProfile" text="Profile" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/Community')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Community
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/Community" text="Community" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/SearchUnits')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                Search Units
-                            </Typography>
-                        </Button>
+                        <NavButton destination="/SearchUnits" text="Search Units" strong={false} />
 
-                        <Button
-                            color="inherit"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push('/RenterLogout')}
-                            size='medium'
-                            sx={{ p: 3 }}>
-                            <Typography variant="h5" noWrap>
-                                <strong> Logout </strong>
-                            </Typography>
-                        </Button>
-
+                        <NavButton destination="/RenterLogout" text="Logout" strong={true} />
                     </Box>
                 </Toolbar>
             </AppBar>
 
-            {(alertVisible) ? (<>
-                <Alert severity="error"
-                    action={
-                        <Button color='inherit' size='small'
-                            onClick={() => { setAlertVisible(false) }}>
-                            CLOSE
-                        </Button>
-                    }>
-                    <AlertTitle>Error</AlertTitle>
-                    {alertMessage}
-                </Alert>
-            </>) : (<>
-            </>)}
+            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
                 margin={6}
