@@ -3,7 +3,13 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
+import history from '../Navigation/history';
 import NavButton from "../GeneralResources/navButton";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -21,6 +27,11 @@ function MyUnits() {
         visible: true,
         address: '',
     }]
+
+    // Directs to Delete Page
+    // const goDelete = () => {
+    //     history.push('/DeletePosting')
+    // }
 
     // Profile List State
     const [unitList, setUnitList] = React.useState(initialUnits);
@@ -121,6 +132,20 @@ const ListofUnits = ({ unitList }) => {
         setExpanded(tempExpanded);
     }
 
+    const goDelete = () => {
+        history.push('/DeletePosting')
+    }
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleDeleteOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDeleteClose = () => {
+        setOpen(false);
+    }
+
     return (
         <Grid margin={appTheme.spacing(2)}>
             {unitList.map((unit) => {
@@ -189,6 +214,36 @@ const ListofUnits = ({ unitList }) => {
                                     }}>
                                     Show Details
                                 </Button>
+
+                                <Button variant="contained"
+                                    style={{
+                                        marginTop: appTheme.spacing(1),
+                                        marginRight: appTheme.spacing(3),
+                                        marginBottom: appTheme.spacing(2)
+                                    }}                                    
+                                    onClick={handleDeleteOpen}>
+                                    Delete Posting
+                                </Button>
+                                <Dialog
+                                    open={open}
+                                    onClose={handleDeleteClose}
+
+                                >
+                                    <DialogTitle id="alert-delete-posting">
+                                        {"Are You Sure You Want To Delete?"}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-delete-description">
+                                            Are you sure you want to delete your posting? This action
+                                            is permanent and postings cannot be recovered.
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleDeleteClose}>Cancel</Button>
+                                        <Button onClick={handleDeleteClose}>Delete</Button>
+                                    </DialogActions>
+
+                                </Dialog>
                             </>)}
                         </AppPaper>
                     </Grid>

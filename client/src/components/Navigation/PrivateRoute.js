@@ -14,6 +14,7 @@ import RenterSignup from '../RenterSignup';
 import LandlordSignup from '../LandlordSignup';
 import LandlordLogout from '../LandlordLogout';
 import RenterLogout from '../RenterLogout';
+import DeletePosting from "../DeletePosting";
 
 export const UserContext = React.createContext(null);
 
@@ -42,6 +43,7 @@ export default function PrivateRoute({
           <Route path="/AddUnit" exact component={AddUnit} />
           <Route path="/LandlordLogout" exact component={LandlordLogout} />
           <Route path="/RenterLogout" exact component={RenterLogout} />
+          <Route path="/DeletePosting" exact component={DeletePosting} />
         </Switch>
       </UserContext.Provider>
     </Router>
