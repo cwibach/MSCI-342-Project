@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
+import history from '../Navigation/history';
 import NavButton from "../GeneralResources/navButton";
 
 // SERVER MODE
@@ -21,6 +22,11 @@ function MyUnits() {
         visible: true,
         address: '',
     }]
+
+    // Directs to Delete Page
+    // const goDelete = () => {
+    //     history.push('/DeletePosting')
+    // }
 
     // Profile List State
     const [unitList, setUnitList] = React.useState(initialUnits);
@@ -121,6 +127,10 @@ const ListofUnits = ({ unitList }) => {
         setExpanded(tempExpanded);
     }
 
+    const goDelete = () => {
+        history.push('/DeletePosting')
+    }
+
     return (
         <Grid margin={appTheme.spacing(2)}>
             {unitList.map((unit) => {
@@ -188,6 +198,13 @@ const ListofUnits = ({ unitList }) => {
                                         marginBottom: appTheme.spacing(2)
                                     }}>
                                     Show Details
+                                </Button>
+
+                                <Button variant="contained"
+                                    fullWidth
+                                    sx={{ mt: 2, mb: 1 }}
+                                    onClick={goDelete}>
+                                    Delete Posting
                                 </Button>
                             </>)}
                         </AppPaper>
