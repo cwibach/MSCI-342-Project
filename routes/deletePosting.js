@@ -15,15 +15,14 @@ router.use(express.static(path.join(__dirname, "client/build")));
 
 // // ---------------------------------------------------------------------
 
-router.post('/api/getLandlordUserID', (req, res) => {
+router.post('/api/deletePosting', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `SELECT landlord_id FROM osellner.Landlords
-	WHERE osellner.Landlords.email LIKE ?
-	`;
+	let sql = `DELETE FROM osellner.Postings
+	WHERE osellner.Postings.posting_id LIKE ?`;
 	console.log(sql);
-	let data = [req.body.email];
+	let data = [req.body.posting_id];
 
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {

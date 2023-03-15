@@ -4,6 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
+import { UserContext } from '../Navigation/PrivateRoute.js';
+
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -12,8 +14,8 @@ const serverURL = "";
 
 function AddUnit() {
 
-    // User Id *** Temporary ***
-    const [userID, setUserID] = React.useState(1);
+    // User Id 
+    const { userId } = React.useContext(UserContext);
 
     // Form Value States
     const [rooms, setRooms] = React.useState('');
@@ -74,7 +76,7 @@ function AddUnit() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                creator_id: userID,
+                creator_id: userId,
                 rooms: rooms,
                 bathrooms: bathrooms,
                 apt_price: apt_price,
