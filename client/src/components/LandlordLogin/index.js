@@ -31,7 +31,7 @@ export default function LandlordLogin({ setUserID }) {
             setLoading(true);
             await login(email, password);
 
-            getLandlordID();
+            getLandlordUserID();
 
             history.push('/LandlordProfile')
         } catch (e) {
@@ -42,10 +42,10 @@ export default function LandlordLogin({ setUserID }) {
         setLoading(false);
     }
 
-    const getLandlordID = () => {
-        callAPIGetLandlordID()
+    const getLandlordUserID = () => {
+        callAPIGetLandlordUserID()
             .then(res => {
-                console.log("callAPIGetLandlordID returned: ", res)
+                console.log("callAPIGetLandlordUserID returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("parsed result: ", parsed)
                 let tempUserID = parsed[0].landlord_id;
@@ -54,8 +54,8 @@ export default function LandlordLogin({ setUserID }) {
             })
     }
 
-    const callAPIGetLandlordID = async () => {
-        const url = serverURL + "/api/getLandlordID";
+    const callAPIGetLandlordUserID = async () => {
+        const url = serverURL + "/api/getLandlordUserID";
         console.log(url);
 
         const response = await fetch(url, {

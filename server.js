@@ -92,6 +92,16 @@ app.use('/', addLandlordRouter);
 const addInterestRouter = require('./routes/addInterest');
 app.use('/', addInterestRouter);
 
+/*
+
+	APIs To Delete Data 
+
+*/
+
+// Delete Posting Api
+const deletePostingRouter = require('./routes/deletePosting');
+app.use('/', deletePostingRouter);
+
 
 // ---------------------------------------------------------------------
 

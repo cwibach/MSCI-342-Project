@@ -45,7 +45,7 @@ export default function LandlordSignup() {
                 // what to do if succesful
 
                 addLandlord();
-                getLandlordID();
+                getLandlordUserID();
 
                 history.push('/LandlordProfile');
             } catch (e) {
@@ -90,8 +90,8 @@ export default function LandlordSignup() {
         return body;
     }
 
-    const getLandlordID = () => {
-        callAPIGetLandlordID()
+    const getLandlordUserID = () => {
+        callAPIGetLandlordUserID()
             .then(res => {
                 console.log("callAPIGetLandlordID returned: ", res)
                 var parsed = JSON.parse(res.express);
@@ -102,8 +102,8 @@ export default function LandlordSignup() {
             })
     }
 
-    const callAPIGetLandlordID = async () => {
-        const url = serverURL + "/api/getLandlordID";
+    const callAPIGetLandlordUserID = async () => {
+        const url = serverURL + "/api/getLandlordUserID";
         console.log(url);
 
         const response = await fetch(url, {
