@@ -1,9 +1,10 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, autocompleteClasses } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
+import { border, borderColor } from '@mui/system';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -80,119 +81,114 @@ function RenterProfile() {
                 </Toolbar>
             </AppBar>
 
-            {/* Adds spacing */}
-            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-
-            {/* Creates a column grid for the body of the page */}
-            <Grid container
-                direction="column"
-                justifyContent="space-evenly"
+            <Box  
                 alignItems="center"
-                display="flex"
-                style={{ color: "#e6e6e6" }}
-
+                style={{
+                    backgroundColor: "#c785ec",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{pb: 7, mt: 5, mx: "auto", maxWidth: 3/8, overflow: "hidden"}}
             >
 
-                {/* Page Title */}
-                <Grid item>
-                    <Typography variant="h3">
-                        <b>Profile Information</b>
-                    </Typography>
-                    <Box sx={{ display: 'flex', pb: 2 }}></Box>
+                {/* Creates a column grid for the body of the page */}
+                <Grid container
+                    direction="column"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+
+                    display="flex"
+                    style={{
+                        marginTop: 45
+                    }}
+                >
+
+                    {/* Page Title */}
+                    <Grid item>
+                        <Typography variant="h3">
+                            <b>Profile Information</b>
+                        </Typography>
+                    </Grid>
+
+                    {/* User Results */}
+                    {profile.map((item) => {
+                        return (
+                            <Grid container
+                                alignContent="center"
+                                
+                                direction="row" style={{
+                                    marginTop: 20
+                                }}
+                            >
+                                {/* Row 1 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Name:</b> {item.first_name != '' && item.first_name} {item.last_name != '' && item.last_name}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 2 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="h5">
+                                        <b>Email:</b> {item.email != '' && item.email}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 3 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Phone:</b> {item.phone != '' && item.phone}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 4 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Bedtime:</b> {item.bedtime != '' && item.bedtime}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 5 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Birthday:</b> {item.birthday != '' && item.birthday}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 6 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Roomate Gender:</b> {item.gender != '' && item.gender}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Row 7 */}
+                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={9}>
+                                    <Typography variant="h5">
+                                        <b>Cooking Frequency:</b> {item.cook != '' && item.cook}
+                                    </Typography>
+                                </Grid>
+
+                            </Grid>
+                        );
+                    })}
+
                 </Grid>
-
-                {/* User Results */}
-                {profile.map((item) => {
-                    return (
-                        <Grid container
-                            alignContent="center"
-                            direction="row"
-                        >
-                            {/* Row 1 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>First Name:</b> {item.first_name != '' && item.first_name}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 2 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Last Name:</b> {item.last_name != '' && item.last_name}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 3 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Email:</b> {item.email != '' && item.email}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 4 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Phone:</b> {item.phone != '' && item.phone}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 5 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Bedtime:</b> {item.bedtime != '' && item.bedtime}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 6 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Birthday:</b> {item.birthday != '' && item.birthday}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 7 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Roomate Gender:</b> {item.gender != '' && item.gender}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                            {/* Row 8 */}
-                            <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                            <Grid item xs={4}></Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h5">
-                                    <b>Cooking Frequency:</b> {item.cook != '' && item.cook}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12 - 8}></Grid>
-
-                        </Grid>
-                    );
-                })}
-
-            </Grid>
+            </Box>
 
         </ThemeProvider>
     );
