@@ -1,14 +1,15 @@
 import React from 'react';
-import Typography from "@material-ui/core/Typography";
 import {
     AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
-    RadioGroup, FormControlLabel, Radio, FormLabel
+    RadioGroup, FormControlLabel, Radio, FormLabel, TextField, Typography,
+    InputAdornment, InputLabel
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper, AppPaper2 } from "../../themes/paper";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
+import AlertBar from '../GeneralResources/alert';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -19,6 +20,8 @@ const SearchUnits = () => {
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
     const [unitMode, setUnitMode] = React.useState(false);
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
 
     // User Id *** Temporary ***
     const { userID } = React.useContext(UserContext);
@@ -82,6 +85,8 @@ const SearchUnits = () => {
                 </Toolbar>
             </AppBar>
 
+            <AlertBar alertMessage={alertMessage} alertVisible={alertVisible} setAlertVisible={setAlertVisible} />
+
             <Grid margin={appTheme.spacing(0.5)}>
 
                 {(unitMode) ? (<>
@@ -101,7 +106,8 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode} />
+                    <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} />
                 </>)}
 
             </Grid>
@@ -303,15 +309,23 @@ const InterestedList = ({ unitID, userID }) => {
     );
 }
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
+    const [minPrice, setMinPrice] = React.useState(0);
+    const [maxPrice, setMaxPrice] = React.useState(1000000);
 
     const handleSearchUnits = (event) => {
         event.preventDefault();
 
-        getFilteredUnits();
+        if (maxPrice < minPrice) {
+            setAlertMessage("Maximum price must be greater than minimum price");
+            setAlertVisible(true);
+        } else {
 
-        setUnitMode(true);
+            getFilteredUnits();
+
+            setUnitMode(true);
+        }
     }
 
     const handleSortChange = (event) => {
@@ -345,11 +359,30 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
         return body;
     }
 
+    const handleMinPriceChange = (event) => {
+        if (isNaN(event.target.value)) {
+            setAlertMessage("Please enter a number for minimum price");
+            setAlertVisible(true);
+        } else {
+            setMinPrice(event.target.value);
+        }
+    }
+
+    const handleMaxPriceChange = (event) => {
+        if (isNaN(event.target.value)) {
+            setAlertMessage("Please enter a number for maximum price");
+            setAlertVisible(true);
+        } else {
+            setMaxPrice(event.target.value);
+        }
+
+    }
+
     return (
         <Grid>
             <AppPaper2>
                 <form onSubmit={handleSearchUnits}>
-                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
+                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2}}><strong>Order by:</strong></FormLabel>
 
                     <RadioGroup
                         value={sortMethod} row
@@ -361,6 +394,37 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
                         <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                         <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                     </RadioGroup>
+
+                    <Box columnGap={2} sx={{ display: "flex", flexwrap: 'wrap', p: 1, backgroundColor: 'primary.background',
+                     width:2/3, alignItems: 'center', justifyContent: 'center'}}>
+                        <TextField
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
+                            }}
+                            value={minPrice}
+                            onChange={handleMinPriceChange}
+                            sx={{width: 3/7 }}
+                            label="Minimum Price"
+                        />
+
+                        <Typography
+                            sx={{width: 1/7}}
+                            variant="h6"
+                            gutterBottom
+                        >
+                            &lt;= Price &lt;=
+                        </Typography>
+
+                        <TextField
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
+                            }}
+                            value={maxPrice}
+                            onChange={handleMaxPriceChange}
+                            label="Maximum Price"
+                            sx={{width: 3/7}}
+                        />
+                    </Box>
 
                     <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                         Search for Units
