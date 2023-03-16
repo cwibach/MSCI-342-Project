@@ -350,7 +350,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
             <AppPaper2>
                 <form onSubmit={handleSearchUnits}>
                     <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
-
+                    
                     <RadioGroup
                         value={sortMethod} row
                         onChange={handleSortChange}
