@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid} from '@mui/material';
-import {appTheme} from "../../themes/theme";
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
+import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 
 
@@ -19,24 +19,24 @@ const serverURL = ""; //enable for dev mode
 //env | grep "PORT"
 //copy the number only and paste it in the serverURL in place of PORT, e.g.: const serverURL = "http://ov-research-4.uwaterloo.ca:3000";
 
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 
 const opacityValue = 0.9;
 
-const theme = createTheme({
-  palette: {
-    type: 'dark',
-    background: {
-      default: "#000000"
-    },
-    primary: {
-      main: "#8549a7",
-    },
-    secondary: {
-      main: "#deb7ff",
-    },
-  },
-});
+// const theme = createTheme({
+//   palette: {
+//     type: 'dark',
+//     background: {
+//       default: "#000000"
+//     },
+//     primary: {
+//       main: "#8549a7",
+//     },
+//     secondary: {
+//       main: "#deb7ff",
+//     },
+//   },
+// });
 
 const styles = theme => ({
   root: {
@@ -114,41 +114,60 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-    
+
     return (
       <ThemeProvider theme={appTheme}>
-          <CssBaseline enableColorScheme/>
-          
-          <Box
-            margin={3}
-            display={"flex"}
-            justifyContent={"center"}
-            flexGrow={4}
-            alignItems={"center"}
-            sx={{
-              height: 500
-            }}
-          >
-            <Grid
+        <CssBaseline enableColorScheme />
+
+        <Box
+          style={{
+            backgroundColor: "#a86add",
+            padding: 10,
+            textAlign: "center"
+          }}
+        >
+          <Typography
+            variant="h1"
+            style={{
+              textAlign: "center",
+              margin: 10,
+              color: "#e6e6e6"
+            }}>
+            Purple Pages
+          </Typography>
+        </Box>
+
+
+        <Box
+          margin={3}
+          display={"flex"}
+          justifyContent={"center"}
+          flexGrow={4}
+          alignItems={"center"}
+          sx={{
+            height: 350
+          }}
+        >
+          <Grid
             container
             spacing={5}
             direction="column"
-            style={{maxWidth: "20%"}}>
+            style={{ maxWidth: "20%" }}>
 
-              <Button variant="contained" size="large" sx={{height:100}}
+            <Button variant="contained" size="large" sx={{ height: 100 }}
               onClick={() => history.push('/LandlordLogin')}>
-                Landlord
-              </Button>
-              
-              <br/>
+              Landlord
+            </Button>
 
-              <Button variant="contained" size="large" sx={{height:100}}
-                onClick={() => history.push('/RenterLogin')}>
-                  Renter
-              </Button>
-            </Grid>
+            <br />
 
-          </Box>
+            <Button variant="contained" size="large" sx={{ height: 100 }}
+              onClick={() => history.push('/RenterLogin')}>
+              Renter
+            </Button>
+          </Grid>
+
+        </Box>
 
       </ThemeProvider>
     );

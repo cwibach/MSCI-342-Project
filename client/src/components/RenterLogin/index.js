@@ -13,7 +13,7 @@ import AlertBar from '../GeneralResources/alert.js';
 // DEV MODE
 const serverURL = "";
 
-function RenterLogin() {
+export default function RenterLogin({ setUserID }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     
@@ -31,7 +31,7 @@ function RenterLogin() {
             setLoading(true);
             await renterLogin(email, password);
 
-            getRenterID();
+            getRenterUserID();
 
             history.push('/RenterProfile')
         } catch (e) {
@@ -42,10 +42,10 @@ function RenterLogin() {
         setLoading(false);
     };
 
-    const getRenterID = () => {
-        callAPIGetRenterID()
+    const getRenterUserID = () => {
+        callAPIGetRenterUserID()
             .then(res => {
-                console.log("callAPIGetRenterID returned: ", res)
+                console.log("callAPIGetRenterUserID returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("parsed result: ", parsed)
                 let tempUserID = parsed[0].renter_id;
@@ -54,8 +54,8 @@ function RenterLogin() {
             })
     }
 
-    const callAPIGetRenterID = async () => {
-        const url = serverURL + "/api/getRenterID";
+    const callAPIGetRenterUserID = async () => {
+        const url = serverURL + "/api/getRenterUserID";
         console.log(url);
 
         const response = await fetch(url, {
@@ -154,6 +154,7 @@ function RenterLogin() {
                             variant="contained"
                             sx={{ mt: 2, mb: 1 }}
                             color="primary"
+                            disabled={loading}
                         >
                             Log in
                         </Button>
@@ -168,8 +169,7 @@ function RenterLogin() {
                         <Button variant="contained"
                             fullWidth
                             sx={{ mt: 2, mb: 1 }}
-                            onClick={goProfile}
-                            disabled={loading}>
+                            onClick={goProfile}>
                             Bypass Login
                         </Button>
 
@@ -185,5 +185,3 @@ function RenterLogin() {
         </ThemeProvider>
     );
 }
-
-export default RenterLogin;
