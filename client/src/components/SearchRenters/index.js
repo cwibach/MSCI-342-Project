@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper, AppPaper2 } from "../../themes/paper";
-import { UserContext } from '../Navigation/PrivateRoute.js';
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
 import InputLabel from '@mui/material/InputLabel';
@@ -15,6 +14,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -44,13 +44,13 @@ function SearchRenters() {
     // Button State
     const [renterMode, setRenterMode] = React.useState(false);
 
-    // User Id *** Temporary ***
-    const [userID, setUserID] = React.useState(1);
+    // User Id 
+    const { userId } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
         getRenters();
-    }, []);
+    }, [userId]);
 
     const getRenters = () => {
         callApiGetRenters()
@@ -72,7 +72,7 @@ function SearchRenters() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                renter_id: userID
+                renter_id: userId
             })
         });
         const body = await response.json();
@@ -109,7 +109,7 @@ function SearchRenters() {
                 </Toolbar>
             </AppBar>
 
-            <Grid margin={appTheme.spacing(0.5)}>
+            <Grid margin={appTheme.spacing(1)}>
 
                 {(renterMode) ? (<>
                     <Button onClick={() => setRenterMode(false)}
@@ -256,19 +256,6 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
                             </FormControl>
 
                         </div>
-                        {/* <RadioGroup
-                        // value={sortMethod} 
-                        row
-                        // onChange={handleSortChange}
-                        sx={{ mt: 0, mb: 1, ml: 2 }}
-                    >
-                        <FormControlLabel value={0} control={<Radio />} label="Female Only" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={1} control={<Radio />} label="Male Only" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={2} control={<Radio />} label="Coed" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={3} control={<Radio />} label="17 years old" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                    </RadioGroup> */}
-
-
 
                         <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                             Search for Units

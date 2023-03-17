@@ -20,8 +20,8 @@ const SearchUnits = () => {
     const [unitList, setUnitList] = React.useState([]);
     const [unitMode, setUnitMode] = React.useState(false);
 
-    // User Id *** Temporary ***
-    const { userID } = React.useContext(UserContext);
+    // User Id
+    const { userId } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
@@ -92,7 +92,7 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <ListofUnits units={unitList} userID={userID} />
+                    <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
                     <Button onClick={() => setUnitMode(true)}
                         variant="outlined">
@@ -109,7 +109,7 @@ const SearchUnits = () => {
     );
 }
 
-const ListofUnits = ({ units, userID }) => {
+const ListofUnits = ({ units, userId }) => {
     const [anyExpanded, setAnyExpanded] = React.useState(false);
     const [expanded, setExpanded] = React.useState(0);
     const [expandedDetails, setExpandedDetails] = React.useState({});
@@ -149,7 +149,7 @@ const ListofUnits = ({ units, userID }) => {
             </AppPaper2>
 
             {(anyExpanded) ? (<>
-                <InterestedList unitID={expanded} userID={userID} />
+                <InterestedList unitID={expanded} userId={userId} />
             </>) : (<> </>)}
         </Grid>
     );
@@ -194,7 +194,7 @@ const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
                 component="div"
                 color="inherit"
             >
-                ${unit.apt_price / unit.rooms}/person/month, Total Price: ${unit.apt_price}/month
+                ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
             </Typography>
 
             <Button
@@ -241,7 +241,7 @@ const UnexpandedUnitInfo = ({ unit, expandUnit }) => {
     )
 }
 
-const InterestedList = ({ unitID, userID }) => {
+const InterestedList = ({ unitID, userId }) => {
 
     // Profile List State
     const [renters, setRenters] = React.useState([]);
@@ -272,7 +272,7 @@ const InterestedList = ({ unitID, userID }) => {
             },
             body: JSON.stringify({
                 posting_id: unitID,
-                renter_id: userID
+                renter_id: userId
             })
         });
         const body = await response.json();
@@ -283,22 +283,26 @@ const InterestedList = ({ unitID, userID }) => {
 
     return (
         <>
-            <AppPaper>
-                <Typography
-                    style={{
-                        marginTop: appTheme.spacing(1),
-                        marginLeft: appTheme.spacing(4),
-                        marginBottom: appTheme.spacing(1)
-                    }}
-                    variant="h5"
-                    component="div"
-                    color="inherit"
-                >
-                    Interested Renters:
-                </Typography>
-            </AppPaper>
+            {renters.length > 0 &&
+                <>
+                    <AppPaper>
+                        <Typography
+                            style={{
+                                marginTop: appTheme.spacing(1),
+                                marginLeft: appTheme.spacing(4),
+                                marginBottom: appTheme.spacing(1)
+                            }}
+                            variant="h5"
+                            component="div"
+                            color="inherit"
+                        >
+                            Interested Renters:
+                        </Typography>
+                    </AppPaper>
 
-            <RenterList renters={renters} />
+                    <RenterList renters={renters} />
+                </>
+            }
         </>
     );
 }
