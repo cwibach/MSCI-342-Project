@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -15,13 +16,13 @@ function RenterProfile() {
     // Profile List State
     const [profile, setProfile] = React.useState([]);
 
-    // User Id *** Temporary ***
-    const [userID, setUserID] = React.useState(1);
+    // User Id 
+    const { userId } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
         getProfile();
-    }, []);
+    }, [userId]);
 
     const getProfile = () => {
         callApiGetRenterProfileInfo()
@@ -43,7 +44,7 @@ function RenterProfile() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                renter_id: userID
+                renter_id: userId
             })
         });
         const body = await response.json();

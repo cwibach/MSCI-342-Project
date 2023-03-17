@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '
 import { appTheme } from "../../themes/theme";
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
+import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -33,13 +34,13 @@ function SearchRenters() {
     // Button State
     const [renterMode, setRenterMode] = React.useState(false);
 
-    // User Id *** Temporary ***
-    const [userID, setUserID] = React.useState(1);
+    // User Id 
+    const { userId } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
         getRenters();
-    }, []);
+    }, [userId]);
 
     const getRenters = () => {
         callApiGetRenters()
@@ -61,7 +62,7 @@ function SearchRenters() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                renter_id: userID
+                renter_id: userId
             })
         });
         const body = await response.json();
@@ -98,7 +99,7 @@ function SearchRenters() {
                 </Toolbar>
             </AppBar>
 
-            <Grid margin={appTheme.spacing(2)}>
+            <Grid margin={appTheme.spacing(1)}>
 
                 {(renterMode) ? (<>
                     <Button onClick={() => setRenterMode(false)}
