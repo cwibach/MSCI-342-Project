@@ -3,13 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
-import history from '../Navigation/history';
 import NavButton from "../GeneralResources/navButton";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { UserContext } from '../Navigation/PrivateRoute.js';
 
 
@@ -33,16 +27,13 @@ function MyUnits() {
     // Profile List State
     const [unitList, setUnitList] = React.useState(initialUnits);
 
-    // Delete Posting Id State
-    const [deletePostingID, setDeletePostingID] = React.useState("");
-
     // User Id 
     const { userId } = React.useContext(UserContext);
 
     // Activates the intital APIs
     React.useEffect(() => {
         getMyUnits();
-    }, [userId, deletePostingID]);
+    }, [userId]);
 
     const getMyUnits = () => {
         callApiGetMyUnits()
@@ -104,13 +95,13 @@ function MyUnits() {
                 </Toolbar>
             </AppBar>
 
-            <ListofUnits deletePostingID={deletePostingID} setDeletePostingID={setDeletePostingID} unitList={unitList} />
+            <ListofUnits getMyUnits={getMyUnits} unitList={unitList} />
 
         </ThemeProvider>
     );
 }
 
-const ListofUnits = ({ unitList, deletePostingID, setDeletePostingID }) => {
+const ListofUnits = ({ unitList, getMyUnits }) => {
 
     const [expanded, setExpanded] = React.useState([]);
 
@@ -134,9 +125,12 @@ const ListofUnits = ({ unitList, deletePostingID, setDeletePostingID }) => {
         setExpanded(tempExpanded);
     }
 
-    // Activates the delete API
+    // Delete Posting Id State
+    const [deletePostingID, setDeletePostingID] = React.useState("");
+
     React.useEffect(() => {
-        deletePosting();
+        console.log(deletePostingID)
+        deletePosting()
     }, [deletePostingID]);
 
     const handleDelete = (event) => {
@@ -149,6 +143,7 @@ const ListofUnits = ({ unitList, deletePostingID, setDeletePostingID }) => {
                 console.log("callApiDeletePosting returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiDeletePosting parsed: ", parsed);
+                getMyUnits()
             });
     }
 
