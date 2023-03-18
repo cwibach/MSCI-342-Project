@@ -313,6 +313,10 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     const [sortMethod, setSortMethod] = React.useState(0);
     const [minPrice, setMinPrice] = React.useState(0);
     const [maxPrice, setMaxPrice] = React.useState(1000000);
+    const [minBed, setMinBed] = React.useState(0);
+    const [maxBed, setMaxBed] = React.useState(100);
+    const [minBath, setMinBath] = React.useState(0);
+    const [maxBath, setMaxBath] = React.useState(100);
 
     const handleSearchUnits = (event) => {
         event.preventDefault();
@@ -352,7 +356,11 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             body: JSON.stringify({
                 sortMethod: sortMethod,
                 minPrice: minPrice,
-                maxPrice: maxPrice
+                maxPrice: maxPrice,
+                minBed: minBed,
+                maxBed: maxBed,
+                minBath: minBath,
+                maxBath: maxBath
             })
         });
         const body = await response.json();
@@ -362,29 +370,34 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     }
 
     const handleMinPriceChange = (event) => {
-        if (isNaN(event.target.value)) {
-            setAlertMessage("Please enter a number for minimum price");
-            setAlertVisible(true);
-        } else {
-            setMinPrice(parseInt(event.target.value));
-        }
+        setMinPrice(parseInt(event.target.value));
     }
 
     const handleMaxPriceChange = (event) => {
-        if (isNaN(event.target.value)) {
-            setAlertMessage("Please enter a number for maximum price");
-            setAlertVisible(true);
-        } else {
-            setMaxPrice(parseInt(event.target.value));
-        }
+        setMaxPrice(parseInt(event.target.value));
+    }
 
+    const handleMinBedChange = (event) => {
+        setMinBed(parseInt(event.target.value));
+    }
+
+    const handleMaxBedChange = (event) => {
+        setMaxBed(parseInt(event.target.value));
+    }
+
+    const handleMinBathChange = (event) => {
+        setMinBath(parseInt(event.target.value));
+    }
+
+    const handleMaxBathChange = (event) => {
+        setMaxBath(parseInt(event.target.value));
     }
 
     return (
         <Grid>
             <AppPaper2>
                 <form onSubmit={handleSearchUnits}>
-                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2}}><strong>Order by:</strong></FormLabel>
+                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
 
                     <RadioGroup
                         value={sortMethod} row
@@ -397,38 +410,20 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                         <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                     </RadioGroup>
 
-                    <Box columnGap={2} sx={{ display: "flex", flexwrap: 'wrap', p: 1, backgroundColor: 'primary.background',
-                     width:2/3, alignItems: 'center', justifyContent: 'center'}}>
-                        <TextField
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
-                            }}
-                            value={minPrice}
-                            onChange={handleMinPriceChange}
-                            sx={{width: 3/7 }}
-                            label="Minimum Price"
-                            type="number"
-                        />
+                    <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
+                        maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
+                        centreLabel={"Total Price"}
+                    />
 
-                        <Typography
-                            sx={{width: 1/7}}
-                            variant="h6"
-                            gutterBottom
-                        >
-                            &lt;= Price &lt;=
-                        </Typography>
+                    <LessGreaterNumericBox minValue={minBed} maxValue={maxBed} minChange={handleMinBedChange}
+                        maxChange={handleMaxBedChange} minLabel={"Minimum # of Bedrooms"} maxLabel={"Maximum # of Bedrooms"}
+                        centreLabel={"# of Bedrooms"}
+                    />
 
-                        <TextField
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
-                            }}
-                            value={maxPrice}
-                            onChange={handleMaxPriceChange}
-                            label="Maximum Price"
-                            sx={{width: 3/7}}
-                            type="number"
-                        />
-                    </Box>
+                    <LessGreaterNumericBox minValue={minBath} maxValue={maxBath} minChange={handleMinBathChange}
+                        maxChange={handleMaxBathChange} minLabel={"Minimum # of Bathrooms"} maxLabel={"Maximum # of Bathrooms"}
+                        centreLabel={"# of Bathrooms"}
+                    />
 
                     <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                         Search for Units
@@ -437,6 +432,42 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             </AppPaper2>
         </Grid>
     );
+}
+
+const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLabel, maxLabel, centreLabel }) => {
+    return (
+        <Box columnGap={2} sx={{
+            display: "flex", flexwrap: 'wrap', p: 1, backgroundColor: 'primary.background',
+            width: 2 / 3, alignItems: 'center', justifyContent: 'space-between', ml: 4, mt: 1
+        }}>
+
+            <NumericTextField value={minValue} onChange={minChange} label={minLabel} />
+
+            <Typography
+                variant="h6"
+                gutterBottom
+            >
+                &lt;= {centreLabel} &lt;=
+            </Typography>
+
+            <NumericTextField value={maxValue} onChange={maxChange} lavel={maxLabel} />
+        </Box>
+    )
+}
+
+const NumericTextField = ({ value, onChange, label }) => {
+    return (
+        <TextField
+            InputProps={{
+                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
+            }}
+            value={value}
+            onChange={onChange}
+            label={label}
+            sx={{ width: 2 / 7 }}
+            type="number"
+        />
+    )
 }
 
 export default SearchUnits;
