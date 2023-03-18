@@ -350,7 +350,9 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                sortMethod: sortMethod
+                sortMethod: sortMethod,
+                minPrice: minPrice,
+                maxPrice: maxPrice
             })
         });
         const body = await response.json();
@@ -364,7 +366,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             setAlertMessage("Please enter a number for minimum price");
             setAlertVisible(true);
         } else {
-            setMinPrice(event.target.value);
+            setMinPrice(parseInt(event.target.value));
         }
     }
 
@@ -373,7 +375,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             setAlertMessage("Please enter a number for maximum price");
             setAlertVisible(true);
         } else {
-            setMaxPrice(event.target.value);
+            setMaxPrice(parseInt(event.target.value));
         }
 
     }
@@ -405,6 +407,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                             onChange={handleMinPriceChange}
                             sx={{width: 3/7 }}
                             label="Minimum Price"
+                            type="number"
                         />
 
                         <Typography
@@ -423,6 +426,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                             onChange={handleMaxPriceChange}
                             label="Maximum Price"
                             sx={{width: 3/7}}
+                            type="number"
                         />
                     </Box>
 

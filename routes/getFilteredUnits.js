@@ -26,8 +26,9 @@ router.post('/api/getFilteredUnits', (req, res) => {
         3: "apt_price DESC"
     }
 
-	let sql = `SELECT * FROM osellner.Postings
-                ORDER BY ` + sortDict[req.body.sortMethod];
+	let sql = "SELECT * FROM osellner.Postings " +
+				"WHERE apt_price BETWEEN " + req.body.minPrice + " AND " + req.body.maxPrice + 
+				" ORDER BY " + sortDict[req.body.sortMethod];
 	console.log(sql);
 	let data = [];
 
