@@ -1,9 +1,19 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
+import {
+    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
+    RadioGroup, FormControlLabel, Radio, FormLabel
+} from '@mui/material';
 import { appTheme } from "../../themes/theme";
+import { AppPaper, AppPaper2 } from "../../themes/paper";
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 import { UserContext } from '../Navigation/PrivateRoute.js';
 
 // SERVER MODE
@@ -117,6 +127,8 @@ function SearchRenters() {
                             See Renters
                         </Typography>
                     </Button>
+
+                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
                 </>)}
 
             </Grid>
@@ -124,6 +136,136 @@ function SearchRenters() {
 
 
         </ThemeProvider>
+    );
+}
+
+const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+
+    return (
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
+            <Grid
+                style={{ color: "#e6e6e6" }}
+
+            >
+                <AppPaper2>
+                    <form /*onSubmit={handleSearchUnits}*/>
+                        <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Filter by:</strong></FormLabel>
+                        <div>
+                            <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                                <Select
+                                    variant="filled"
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    // value={age}
+                                    label="Age"
+                                    
+                                // onChange={handleChange}
+                                >
+                                    <MenuItem value={10}>Coed</MenuItem>
+                                    <MenuItem value={20}>Male Only</MenuItem>
+                                    <MenuItem value={30}>Female Only</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, minWidth: 80 }}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#e6e6e6" }}
+                                    // required
+                                    // fullWidth
+                                    id="Price"
+                                    label="Price"
+                                    name="Price"
+                                    // sx={{ mt: 3, mb: 2 }}
+                                    color="primary"
+                                    
+                                // onChange={handleEmail}
+                                />
+                            </FormControl>
+                
+                            <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#e6e6e6" }}
+                                    // required
+                                    // fullWidth
+                                    id="Location"
+                                    label="Location"
+                                    name="Location"
+                                    // sx={{ mt: 3, mb: 2 }}
+                                    color="primary"
+                                    
+                                // onChange={handleEmail}
+                                />
+                            </FormControl>
+                            <FormControl sx={{ m: 1, minWidth: 80}}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#e6e6e6" }}
+                                    // required
+                                    // fullWidth
+                                    id="Age"
+                                    label="Age"
+                                    name="Age"
+                                    // sx={{ mt: 3, mb: 2 }}
+                                    color="primary"
+                                    
+                                // onChange={handleEmail}
+                                />
+                            </FormControl>
+                            <FormControl sx={{ m: 1, minWidth: 120 }}>
+
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#e6e6e6" }}
+                                    required
+                                    fullWidth
+                                    name="bedtime"
+                                    // value={bedtime}
+                                    // onChange={handleBedtime}
+                                    label="Bedtime"
+                                    id="bedtime"
+                                    type="time"
+                                    // InputLabelProps={{ shrink: true }}
+                                    // sx={{ mt: 3, mb: 2 }}
+                                    color="primary"
+                                    
+                                />
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, minWidth: 200 }}>
+                                <InputLabel id="demo-simple-select-label">Cooking Frequency</InputLabel>
+                                <Select
+                                    variant = "filled"
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    // value={age}
+                                    label="Age"
+                                    
+                                // onChange={handleChange}
+                                >
+                                    <MenuItem value={10}>Always</MenuItem>
+                                    <MenuItem value={20}>Often</MenuItem>
+                                    <MenuItem value={30}>Sometimes</MenuItem>
+                                    <MenuItem value={30}>Never</MenuItem>
+
+                                </Select>
+                            </FormControl>
+
+                        </div>
+
+                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                            Search for Units
+                        </Button>
+                    </form>
+                </AppPaper2>
+            </Grid>
+        </ThemeProvider>
+
+
     );
 }
 
