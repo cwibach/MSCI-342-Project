@@ -1,14 +1,15 @@
 import React from 'react';
-import Typography from "@material-ui/core/Typography";
 import {
     AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
-    RadioGroup, FormControlLabel, Radio, FormLabel
+    RadioGroup, FormControlLabel, Radio, FormLabel, TextField, Typography,
+    InputAdornment, InputLabel
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper, AppPaper2 } from "../../themes/paper";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
+import AlertBar from '../GeneralResources/alert';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -19,6 +20,8 @@ const SearchUnits = () => {
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
     const [unitMode, setUnitMode] = React.useState(false);
+    const [alertVisible, setAlertVisible] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
 
     // User Id
     const { userId } = React.useContext(UserContext);
@@ -82,6 +85,8 @@ const SearchUnits = () => {
                 </Toolbar>
             </AppBar>
 
+            <AlertBar alertMessage={alertMessage} alertVisible={alertVisible} setAlertVisible={setAlertVisible} />
+
             <Grid margin={appTheme.spacing(0.5)}>
 
                 {(unitMode) ? (<>
@@ -101,7 +106,8 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode} />
+                    <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} />
                 </>)}
 
             </Grid>
@@ -307,15 +313,27 @@ const InterestedList = ({ unitID, userId }) => {
     );
 }
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
+    const [minPrice, setMinPrice] = React.useState(0);
+    const [maxPrice, setMaxPrice] = React.useState(1000000);
+    const [minBed, setMinBed] = React.useState(0);
+    const [maxBed, setMaxBed] = React.useState(100);
+    const [minBath, setMinBath] = React.useState(0);
+    const [maxBath, setMaxBath] = React.useState(100);
 
     const handleSearchUnits = (event) => {
         event.preventDefault();
 
-        getFilteredUnits();
+        if (maxPrice < minPrice) {
+            setAlertMessage("Maximum price must be greater than minimum price");
+            setAlertVisible(true);
+        } else {
 
-        setUnitMode(true);
+            getFilteredUnits();
+
+            setUnitMode(true);
+        }
     }
 
     const handleSortChange = (event) => {
@@ -340,13 +358,43 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                sortMethod: sortMethod
+                sortMethod: sortMethod,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                minBed: minBed,
+                maxBed: maxBed,
+                minBath: minBath,
+                maxBath: maxBath
             })
         });
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
         console.log("Filtered Units: ", body);
         return body;
+    }
+
+    const handleMinPriceChange = (event) => {
+        setMinPrice(parseInt(event.target.value));
+    }
+
+    const handleMaxPriceChange = (event) => {
+        setMaxPrice(parseInt(event.target.value));
+    }
+
+    const handleMinBedChange = (event) => {
+        setMinBed(parseInt(event.target.value));
+    }
+
+    const handleMaxBedChange = (event) => {
+        setMaxBed(parseInt(event.target.value));
+    }
+
+    const handleMinBathChange = (event) => {
+        setMinBath(parseInt(event.target.value));
+    }
+
+    const handleMaxBathChange = (event) => {
+        setMaxBath(parseInt(event.target.value));
     }
 
     return (
@@ -366,6 +414,21 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
                         <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
                     </RadioGroup>
 
+                    <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
+                        maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
+                        centreLabel={"Total Price"}
+                    />
+
+                    <LessGreaterNumericBox minValue={minBed} maxValue={maxBed} minChange={handleMinBedChange}
+                        maxChange={handleMaxBedChange} minLabel={"Minimum # of Bedrooms"} maxLabel={"Maximum # of Bedrooms"}
+                        centreLabel={"# of Bedrooms"}
+                    />
+
+                    <LessGreaterNumericBox minValue={minBath} maxValue={maxBath} minChange={handleMinBathChange}
+                        maxChange={handleMaxBathChange} minLabel={"Minimum # of Bathrooms"} maxLabel={"Maximum # of Bathrooms"}
+                        centreLabel={"# of Bathrooms"}
+                    />
+
                     <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                         Search for Units
                     </Button>
@@ -373,6 +436,42 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode }) => {
             </AppPaper2>
         </Grid>
     );
+}
+
+const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLabel, maxLabel, centreLabel }) => {
+    return (
+        <Box columnGap={2} sx={{
+            display: "flex", flexwrap: 'wrap', p: 1, backgroundColor: 'primary.background',
+            width: 2 / 3, alignItems: 'center', justifyContent: 'space-between', ml: 4, mt: 1
+        }}>
+
+            <NumericTextField value={minValue} onChange={minChange} label={minLabel} />
+
+            <Typography
+                variant="h6"
+                gutterBottom
+            >
+                &lt;= {centreLabel} &lt;=
+            </Typography>
+
+            <NumericTextField value={maxValue} onChange={maxChange} lavel={maxLabel} />
+        </Box>
+    )
+}
+
+const NumericTextField = ({ value, onChange, label }) => {
+    return (
+        <TextField
+            InputProps={{
+                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
+            }}
+            value={value}
+            onChange={onChange}
+            label={label}
+            sx={{ width: 2 / 7 }}
+            type="number"
+        />
+    )
 }
 
 export default SearchUnits;
