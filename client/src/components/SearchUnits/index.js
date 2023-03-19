@@ -139,19 +139,34 @@ const ListofUnits = ({ units, userId }) => {
     return (
         <Grid>
             <AppPaper2>
-                {units.map((unit) => {
-                    return (
-                        <Grid item key={unit.posting_id}>
-                            {(expanded === unit.posting_id) ? (<>
-                                <ExpandedUnitInfo unit={unit} unExpandUnit={unExpandUnit} />
-                            </>) : (<>
-                                {(anyExpanded) ? (<> </>) : (<>
-                                    <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
+                {(units.length === 0) ? (<>
+                    <Typography
+                        style={{
+                            marginTop: appTheme.spacing(1),
+                            marginLeft: appTheme.spacing(3)
+                        }}
+                        variant="h4"
+                        component="div"
+                        color="inherit"
+                    >
+                        Sorry, no units found. Try different filters.
+                    </Typography>
+                </>) : (<>
+                    {units.map((unit) => {
+                        return (
+                            <Grid item key={unit.posting_id}>
+                                {(expanded === unit.posting_id) ? (<>
+                                    <ExpandedUnitInfo unit={unit} unExpandUnit={unExpandUnit} />
+                                </>) : (<>
+                                    {(anyExpanded) ? (<> </>) : (<>
+                                        <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
+                                    </>)}
                                 </>)}
-                            </>)}
-                        </Grid>
-                    );
-                })}
+                            </Grid>
+                        );
+                    })}
+                </>)}
+
             </AppPaper2>
 
             {(anyExpanded) ? (<>
@@ -328,8 +343,16 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
         if (maxPrice < minPrice) {
             setAlertMessage("Maximum price must be greater than minimum price");
             setAlertVisible(true);
+            setMinPrice(maxPrice);
+        } else if (maxBed < minBed) {
+            setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
+            setAlertVisible(true);
+            setMinBed(maxBed);
+        } else if (maxBath < minBath) {
+            setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
+            setAlertVisible(true);
+            setMinBath(maxBath);
         } else {
-
             getFilteredUnits();
 
             setUnitMode(true);
@@ -402,7 +425,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             <AppPaper2>
                 <form onSubmit={handleSearchUnits}>
                     <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
-                    
+
                     <RadioGroup
                         value={sortMethod} row
                         onChange={handleSortChange}
@@ -416,7 +439,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
 
                     <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
                         maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
-                        centreLabel={"Total Price"}
+                        centreLabel={"Total Price"} icon={"$"}
                     />
 
                     <LessGreaterNumericBox minValue={minBed} maxValue={maxBed} minChange={handleMinBedChange}
@@ -438,14 +461,14 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     );
 }
 
-const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLabel, maxLabel, centreLabel }) => {
+const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLabel, maxLabel, centreLabel, icon }) => {
     return (
         <Box columnGap={2} sx={{
             display: "flex", flexwrap: 'wrap', p: 1, backgroundColor: 'primary.background',
             width: 2 / 3, alignItems: 'center', justifyContent: 'space-between', ml: 4, mt: 1
         }}>
 
-            <NumericTextField value={minValue} onChange={minChange} label={minLabel} />
+            <NumericTextField value={minValue} onChange={minChange} label={minLabel} icon={icon} />
 
             <Typography
                 variant="h6"
@@ -454,16 +477,16 @@ const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLa
                 &lt;= {centreLabel} &lt;=
             </Typography>
 
-            <NumericTextField value={maxValue} onChange={maxChange} lavel={maxLabel} />
+            <NumericTextField value={maxValue} onChange={maxChange} label={maxLabel} icon={icon} />
         </Box>
     )
 }
 
-const NumericTextField = ({ value, onChange, label }) => {
+const NumericTextField = ({ value, onChange, label, icon }) => {
     return (
         <TextField
             InputProps={{
-                startAdornment: <InputAdornment position="start"> $ </InputAdornment>
+                startAdornment: <InputAdornment position="start"> {icon} </InputAdornment>
             }}
             value={value}
             onChange={onChange}
