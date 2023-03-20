@@ -120,103 +120,113 @@ function AddUnit() {
             </AppBar>
 
 
-
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#c785ec",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
             >
-                {/* Creates a column grid for the body of the page */}
-                <Grid container
-                    direction="column"
-                    alignItems="center"
-                    style={{ color: "#e6e6e6" }}
-                    justifyContent="center"
-                    xs={4}
+                <Box
+                    margin={5}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"flex-start"}
                 >
+                    {/* Creates a column grid for the body of the page */}
+                    <Grid container
+                        direction="column"
+                        alignItems="center"
+                        style={{ color: "#ffffff" }}
+                        justifyContent="center"
+                    >
 
-                    {/* Page Title */}
-                    <Grid item>
-                        <Typography variant="h3">
-                            <b>Create New Posting</b>
-                        </Typography>
+                        {/* Page Title */}
+                        <Grid item>
+                            <Typography variant="h3">
+                                <b>Create New Posting</b>
+                            </Typography>
+                        </Grid>
+
+                        {/* Posting Information Input */}
+                        <Box>
+                            <form onSubmit={handleSubmit}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    color="primary"
+                                    name="address"
+                                    value={address}
+                                    onChange={handleAddress}
+                                    required
+                                    fullWidth
+                                    id="address"
+                                    label="Address"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    autoFocus
+                                />
+
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    id="rooms"
+                                    type="number"
+                                    label="Number of Rooms"
+                                    name="rooms"
+                                    value={rooms}
+                                    onChange={handleRooms}
+                                    sx={{ mt: 2, mb: 2 }}
+                                    color="primary"
+                                />
+
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    id="bathrooms"
+                                    type="number"
+                                    label="Number of Bathrooms"
+                                    name="bathrooms"
+                                    value={bathrooms}
+                                    onChange={handleBathrooms}
+                                    sx={{ mt: 2, mb: 2 }}
+                                    color="primary"
+                                />
+
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    name="apt_price"
+                                    value={apt_price}
+                                    onChange={handleApt_price}
+                                    label="Monthly Rent of Apartment"
+                                    id="apt_price"
+                                    type="number"
+                                    sx={{ mt: 2, mb: 2 }}
+                                    color="primary"
+                                />
+
+                                <Button
+                                    type="submit"
+                                    style={{ background: "#a86add" }}
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 2, mb: 2 }}
+                                    color="primary"
+                                >
+                                    Submit
+                                </Button>
+                            </form>
+                        </Box>
                     </Grid>
-
-                    {/* Posting Information Input */}
-                    <Box>
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            color="primary"
-                            name="address"
-                            value={address}
-                            onChange={handleAddress}
-                            required
-                            fullWidth
-                            id="address"
-                            label="Address"
-                            sx={{ mt: 3, mb: 2 }}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="rooms"
-                            type="number"
-                            label="Number of Rooms"
-                            name="rooms"
-                            value={rooms}
-                            onChange={handleRooms}
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="bathrooms"
-                            type="number"
-                            label="Number of Bathrooms"
-                            name="bathrooms"
-                            value={bathrooms}
-                            onChange={handleBathrooms}
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            name="apt_price"
-                            value={apt_price}
-                            onChange={handleApt_price}
-                            label="Monthly Rent of Apartment"
-                            id="apt_price"
-                            type="number"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
-
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onClick={handleSubmit}
-                        >
-                            Submit
-                        </Button>
-                    </Box>
-                </Grid>
+                </Box>
             </Box>
 
         </ThemeProvider>
