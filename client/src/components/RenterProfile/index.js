@@ -81,41 +81,42 @@ function RenterProfile() {
                 </Toolbar>
             </AppBar>
 
-            <Box  
-                alignItems="center"
-                style={{
-                    backgroundColor: "#c785ec",
-                    color: "#ffffff",
-                    borderRadius: 12
-                }}
-                sx={{pb: 7, mt: 5, mx: "auto", maxWidth: 3/8, overflow: "hidden"}}
-            >
 
-                {/* Creates a column grid for the body of the page */}
-                <Grid container
-                    direction="column"
-                    justifyContent="space-evenly"
-                    alignItems="center"
 
-                    display="flex"
-                    style={{
-                        marginTop: 45
-                    }}
-                >
+            {/* User Results */}
+            {profile.map((item) => {
+                return (
+                    <Box
+                        alignItems="center"
+                        style={{
+                            backgroundColor: "#c785ec",
+                            color: "#ffffff",
+                            borderRadius: 12
+                        }}
+                        sx={{ pb: 7, mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
+                    >
 
-                    {/* Page Title */}
-                    <Grid item>
-                        <Typography variant="h3">
-                            <b>Profile Information</b>
-                        </Typography>
-                    </Grid>
+                        {/* Creates a column grid for the body of the page */}
+                        <Grid container
+                            direction="column"
+                            justifyContent="space-evenly"
+                            alignItems="center"
 
-                    {/* User Results */}
-                    {profile.map((item) => {
-                        return (
+                            display="flex"
+                            style={{
+                                marginTop: 45
+                            }}
+                        >
+
+                            {/* Page Title */}
+                            <Grid item>
+                                <Typography variant="h3">
+                                    <b>Profile Information</b>
+                                </Typography>
+                            </Grid>
                             <Grid container
                                 alignContent="center"
-                                
+
                                 direction="row" style={{
                                     marginTop: 20
                                 }}
@@ -184,11 +185,10 @@ function RenterProfile() {
                                 </Grid>
 
                             </Grid>
-                        );
-                    })}
-
-                </Grid>
-            </Box>
+                        </Grid>
+                    </Box>
+                );
+            })}
 
         </ThemeProvider>
     );
