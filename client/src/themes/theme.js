@@ -9,13 +9,13 @@ export const appTheme = createTheme({
             default: "#160B18"
         },
         primary: {
-            main: "#a86add",
+            main: "#5A189A",
             background: "#deb7ff",
             dark: "000000"
         },
         secondary: {
             main: "#634087",
-            background: "#c785ec",
+            background: "#9D4EDD",
             dark: "#483248"
         }
     }

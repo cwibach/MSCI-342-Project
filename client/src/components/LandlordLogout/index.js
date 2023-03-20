@@ -59,7 +59,7 @@ export default function LandlordLogout() {
                 alignItems="center"
                 textAlign={"center"}
                 style={{
-                    backgroundColor: "#c785ec",
+                    backgroundColor: "#9D4EDD",
                     color: "#ffffff",
                     borderRadius: 12
                 }}

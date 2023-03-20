@@ -123,7 +123,7 @@ function AddUnit() {
             <Box
                 alignItems="center"
                 style={{
-                    backgroundColor: "#c785ec",
+                    backgroundColor: "#9D4EDD",
                     color: "#ffffff",
                     borderRadius: 12
                 }}
@@ -215,7 +215,7 @@ function AddUnit() {
 
                                 <Button
                                     type="submit"
-                                    style={{ background: "#a86add" }}
+                                    style={{ background: "#5A189A" }}
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 2, mb: 2 }}

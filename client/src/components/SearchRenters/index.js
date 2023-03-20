@@ -136,7 +136,7 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
             <Box
                 alignItems="center"
                 style={{
-                    backgroundColor: "#c785ec",
+                    backgroundColor: "#9D4EDD",
                     color: "#ffffff",
                     borderRadius: 12
                 }}
