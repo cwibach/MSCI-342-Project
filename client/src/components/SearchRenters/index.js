@@ -37,6 +37,11 @@ function SearchRenters() {
         getRenters();
     }, [userId]);
 
+    // Handle method for searching renters
+    const handleSearchRenters = (event) => {
+        setRenterMode(true);
+    }
+
     const getRenters = () => {
         callApiGetRenters()
             .then(res => {
@@ -107,7 +112,7 @@ function SearchRenters() {
                     <RenterList renters={renters} />
                 </>) : (<>
 
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+                    <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} />
 
                 </>)}
 
@@ -119,7 +124,7 @@ function SearchRenters() {
     );
 }
 
-const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
     return (
         <Box
@@ -134,7 +139,7 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
             <Box
                 margin={2}
             >
-                <form /*onSubmit={handleSearchRenters}*/>
+                <form onSubmit={handleSearchRenters}>
                     <Box
                         display="flex"
                         alignItems={"center"}
