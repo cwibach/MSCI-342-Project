@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { Button, Grid, Box } from '@material-ui/core';
+import { Button, Grid, Box, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { appTheme } from "../../themes/theme";
 
 const RenterList = ({ renters }) => {
@@ -28,32 +28,35 @@ const RenterList = ({ renters }) => {
 
     return (
         <>
-            {renters.map((renter) => {
-                return (
-                    <Grid item key={renter.renter_id}>
-                        <Box
-                            alignItems="center"
-                            style={{
-                                backgroundColor: "#c785ec",
-                                color: "#ffffff",
-                                borderRadius: 12
-                            }}
-                            sx={{ mt: 3, mx: "auto", overflow: "hidden" }}
-                        >
+            <ThemeProvider theme={appTheme}>
+                <CssBaseline enableColorScheme />
+                {renters.map((renter) => {
+                    return (
+                        <Grid item key={renter.renter_id}>
                             <Box
-                                margin={3}
-                                marginLeft={5}
+                                alignItems="center"
+                                style={{
+                                    backgroundColor: "#c785ec",
+                                    color: "#ffffff",
+                                    borderRadius: 12
+                                }}
+                                sx={{ mt: 3, mx: "auto", overflow: "hidden" }}
                             >
-                                {(expanded.includes(renter.renter_id)) ? (<>
-                                    <ExpandedRenter renter={renter} removeFromExpanded={removeFromExpanded} />
-                                </>) : (<>
-                                    <UnExpandedRenter renter={renter} addToExpanded={addToExpanded} />
-                                </>)}
+                                <Box
+                                    margin={3}
+                                    marginLeft={5}
+                                >
+                                    {(expanded.includes(renter.renter_id)) ? (<>
+                                        <ExpandedRenter renter={renter} removeFromExpanded={removeFromExpanded} />
+                                    </>) : (<>
+                                        <UnExpandedRenter renter={renter} addToExpanded={addToExpanded} />
+                                    </>)}
+                                </Box>
                             </Box>
-                        </Box>
-                    </Grid>
-                );
-            })}
+                        </Grid>
+                    );
+                })}
+            </ThemeProvider>
         </>
     );
 }
@@ -61,33 +64,36 @@ const RenterList = ({ renters }) => {
 const ExpandedRenter = ({ renter, removeFromExpanded }) => {
     return (
         <>
-            <Typography variant="h5">
-                {renter.first_name} {renter.last_name}
-            </Typography>
-
-            <Box
-                marginLeft={4}
-                marginBottom={2}
-            >
-                <Typography variant="subtitle1">
-                    Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
+            <ThemeProvider theme={appTheme}>
+                <CssBaseline enableColorScheme />
+                <Typography variant="h5">
+                    {renter.first_name} {renter.last_name}
                 </Typography>
 
-                <Typography variant="subtitle1">
-                    Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cook}
-                </Typography>
+                <Box
+                    marginLeft={2}
+                    marginBottom={2}
+                >
+                    <Typography variant="subtitle1">
+                        Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
+                    </Typography>
 
-                <Typography variant="subtitle1">
-                    Phone Number: {renter.phone}, Email address: {renter.email}
-                </Typography>
-            </Box>
+                    <Typography variant="subtitle1">
+                        Typical bedtime: {renter.bedtime}, Cooking Frequency: {renter.cook}
+                    </Typography>
 
-            <Button
-                onClick={() => removeFromExpanded(renter.renter_id)}
-                variant="contained"
-                style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
-                Hide Details
-            </Button>
+                    <Typography variant="subtitle1">
+                        Phone Number: {renter.phone}, Email address: {renter.email}
+                    </Typography>
+                </Box>
+
+                <Button
+                    onClick={() => removeFromExpanded(renter.renter_id)}
+                    variant="contained"
+                    style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
+                    Hide Details
+                </Button>
+            </ThemeProvider>
         </>
     )
 }
@@ -95,25 +101,28 @@ const ExpandedRenter = ({ renter, removeFromExpanded }) => {
 const UnExpandedRenter = ({ renter, addToExpanded }) => {
     return (
         <>
-            <Typography variant="h5">
-                {renter.first_name} {renter.last_name}
-            </Typography>
-
-            <Box
-                marginLeft={4}
-                marginBottom={2}
-            >
-                <Typography variant="subtitle1">
-                    Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
+            <ThemeProvider theme={appTheme}>
+                <CssBaseline enableColorScheme />
+                <Typography variant="h5">
+                    {renter.first_name} {renter.last_name}
                 </Typography>
-            </Box>
 
-            <Button
-                onClick={() => addToExpanded(renter.renter_id)}
-                variant="contained"
-                style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
-                Show Details
-            </Button>
+                <Box
+                    marginLeft={2}
+                    marginBottom={2}
+                >
+                    <Typography variant="subtitle1">
+                        Birthday: {renter.birthday}, Roomate Gender: {renter.gender}
+                    </Typography>
+                </Box>
+
+                <Button
+                    onClick={() => addToExpanded(renter.renter_id)}
+                    variant="contained"
+                    style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
+                    Show Details
+                </Button>
+            </ThemeProvider>
 
         </>
     );
