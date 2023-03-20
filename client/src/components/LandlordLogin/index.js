@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import { Box, Button, CssBaseline, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, Typography, Link } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
@@ -100,28 +100,31 @@ export default function LandlordLogin({ setUserID }) {
             <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#9D4EDD",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 5, mt: 10, mx: "auto", maxWidth: 3 / 10, overflow: "hidden" }}
             >
-                <Grid container xs={4}
+                <Grid container
                     direction="column"
                     alignItems="center"
-                    style={{ color: "#e6e6e6" }}
+                    style={{ color: "#ffffff" }}
                     justifyContent="center"
                 >
 
                     {/* Page Title */}
                     <Typography variant="h3">
-                        <b>Landlord login</b>
+                        <b>Landlord Login</b>
                     </Typography>
 
                     <form onSubmit={handleFormSubmit}>
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             id="email"
@@ -135,7 +138,7 @@ export default function LandlordLogin({ setUserID }) {
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="password"
@@ -143,7 +146,7 @@ export default function LandlordLogin({ setUserID }) {
                             type="password"
                             id="password"
                             autoComplete="password"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 2, mb: 2 }}
                             color="primary"
                             onChange={handlePassword}
                         />
@@ -152,7 +155,7 @@ export default function LandlordLogin({ setUserID }) {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
@@ -161,24 +164,20 @@ export default function LandlordLogin({ setUserID }) {
 
                         <Button variant="contained"
                             fullWidth
-                            sx={{ mt: 2, mb: 1 }}
-                            onClick={goSignUp}>
-                            Don't Have an Account? Sign Up Here
-                        </Button>
-
-                        <Button variant="contained"
-                            fullWidth
-                            sx={{ mt: 2, mb: 1 }}
-                            onClick={goProfile}>
-                            Bypass Login
-                        </Button>
-
-                        <Button variant="contained"
-                            fullWidth
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             onClick={goHome}>
                             Back to Home
                         </Button>
+
+                        <Box
+                            textAlign={"center"}
+                            sx={{ mt: 2 }}
+                        >
+                            <Typography variant="p">
+                                Don't have an account? <Link onClick={goSignUp} style={{cursor: "pointer", color: "#5A189A"}}><b>Sign Up</b></Link>
+                            </Typography>
+                        </Box>
+
                     </form>
                 </Grid>
             </Box>
