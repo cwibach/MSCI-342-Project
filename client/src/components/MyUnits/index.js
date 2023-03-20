@@ -14,18 +14,8 @@ const serverURL = "";
 
 function MyUnits() {
 
-    // Template Object 
-    const initialUnits = [{
-        posting_id: 0,
-        creator_id: 0,
-        rooms: 0,
-        apt_price: 0.0,
-        visible: true,
-        address: '',
-    }]
-
     // Profile List State
-    const [unitList, setUnitList] = React.useState(initialUnits);
+    const [unitList, setUnitList] = React.useState([]);
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -129,7 +119,6 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
     const [deletePostingID, setDeletePostingID] = React.useState("");
 
     React.useEffect(() => {
-        console.log(deletePostingID)
         deletePosting()
     }, [deletePostingID]);
 
@@ -173,7 +162,15 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
 
                     return (
                         <Grid item key={unit.posting_id}>
-                            <AppPaper theme={appTheme}>
+                            <Box
+                                alignItems="center"
+                                style={{
+                                    backgroundColor: "#c785ec",
+                                    color: "#ffffff",
+                                    borderRadius: 12
+                                }}
+                                sx={{mt: 2, mx: "auto", overflow: "hidden" }}
+                            >
                                 <Box
                                     margin={1}
                                     display="flex"
@@ -203,7 +200,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                             style={{
                                                 marginTop: appTheme.spacing(1),
                                                 marginRight: appTheme.spacing(3),
-                                                marginBottom: appTheme.spacing(2)
+                                                backgroundColor: "#a86add"
                                             }}
                                             value={unit.posting_id}
                                             onClick={handleDelete}>
@@ -216,8 +213,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                     <Typography
                                         style={{
                                             marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(5),
-                                            marginBottom: appTheme.spacing(1)
+                                            marginLeft: appTheme.spacing(5)
                                         }}
                                         variant="subtitle1"
                                         component="div"
@@ -262,7 +258,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                         Show Details
                                     </Button>
                                 </>)}
-                            </AppPaper>
+                            </Box>
                         </Grid>
                     );
                 })}
