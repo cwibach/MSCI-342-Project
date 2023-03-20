@@ -56,47 +56,33 @@ export default function RenterLogout() {
             <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                flexGrow={4}
-                alignItems={"flex-start"}
-                sx={{
-                    height: 1000
+                alignItems="center"
+                textAlign={"center"}
+                style={{
+                    backgroundColor: "#c785ec",
+                    color: "#ffffff",
+                    borderRadius: 12
                 }}
+                sx={{ mt: 5, mx: "auto", maxWidth: 1 / 6, overflow: "hidden" }}
             >
+                <Box
+                    margin={2}
+                >
+                    <Typography variant="h5">
+                        Are you sure you want to Logout?
+                    </Typography>
 
-                <Grid container
-                    spacing={5}
-                    direction="column"
-                    style={{ maxWidth: "20%" }}>
-
-                    <AppPaper>
-
-                        <Typography
-                            style={{
-                                marginTop: appTheme.spacing(1),
-                                marginLeft: appTheme.spacing(3)
-                            }}
-                            variant="h5"
-                            component="div"
-                            color="inherit"
-                        >
-                            Are you sure you want to Logout?
-                        </Typography>
-
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onClick={() => { handleLogout() }}
-                        >
-                            Confirm Logout
-                        </Button>
-
-                    </AppPaper>
-                </Grid>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        color="primary"
+                        onClick={() => { handleLogout() }}
+                    >
+                        Confirm Logout
+                    </Button>
+                </Box>
             </Box>
+
         </ThemeProvider>);
 }
