@@ -3,13 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
-import history from '../Navigation/history';
 import NavButton from "../GeneralResources/navButton";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { UserContext } from '../Navigation/PrivateRoute.js';
 
 
@@ -20,23 +14,8 @@ const serverURL = "";
 
 function MyUnits() {
 
-    // Template Object 
-    const initialUnits = [{
-        posting_id: 0,
-        creator_id: 0,
-        rooms: 0,
-        apt_price: 0.0,
-        visible: true,
-        address: '',
-    }]
-
-    // Directs to Delete Page
-    // const goDelete = () => {
-    //     history.push('/DeletePosting')
-    // }
-
     // Profile List State
-    const [unitList, setUnitList] = React.useState(initialUnits);
+    const [unitList, setUnitList] = React.useState([]);
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -75,6 +54,8 @@ function MyUnits() {
         return body;
     }
 
+
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -104,13 +85,13 @@ function MyUnits() {
                 </Toolbar>
             </AppBar>
 
-            <ListofUnits unitList={unitList} />
+            <ListofUnits getMyUnits={getMyUnits} unitList={unitList} />
 
         </ThemeProvider>
     );
 }
 
-const ListofUnits = ({ unitList }) => {
+const ListofUnits = ({ unitList, getMyUnits }) => {
 
     const [expanded, setExpanded] = React.useState([]);
 
@@ -134,124 +115,155 @@ const ListofUnits = ({ unitList }) => {
         setExpanded(tempExpanded);
     }
 
-    const goDelete = () => {
-        history.push('/DeletePosting')
+    // Delete Posting Id State
+    const [deletePostingID, setDeletePostingID] = React.useState("");
+
+    React.useEffect(() => {
+        deletePosting()
+    }, [deletePostingID]);
+
+    const handleDelete = (event) => {
+        setDeletePostingID(event.target.value)
     }
 
-    const [open, setOpen] = React.useState(false);
+    const deletePosting = () => {
+        callApiDeletePosting()
+            .then(res => {
+                console.log("callApiDeletePosting returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiDeletePosting parsed: ", parsed);
+                getMyUnits()
+            });
+    }
 
-    const handleDeleteOpen = () => {
-        setOpen(true);
-    };
+    const callApiDeletePosting = async () => {
+        const url = serverURL + "/api/deletePosting";
+        console.log(url);
 
-    const handleDeleteClose = () => {
-        setOpen(false);
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: deletePostingID,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Landlord: ", body);
+        return body;
     }
 
     return (
-        <Grid margin={appTheme.spacing(2)}>
-            {unitList.map((unit) => {
+        <>
+            <Grid margin={appTheme.spacing(1)}>
+                {unitList.map((unit) => {
 
-                return (
-                    <Grid item key={unit.posting_id}>
-                        <AppPaper>
-                            <Typography
+                    return (
+                        <Grid item key={unit.posting_id}>
+                            <Box
+                                alignItems="center"
                                 style={{
-                                    marginTop: appTheme.spacing(1),
-                                    marginLeft: appTheme.spacing(3)
+                                    backgroundColor: "#c785ec",
+                                    color: "#ffffff",
+                                    borderRadius: 12
                                 }}
-                                variant="h5"
-                                component="div"
-                                color="inherit"
+                                sx={{mt: 2, mx: "auto", overflow: "hidden" }}
                             >
-                                {unit.address}
-                            </Typography>
-
-                            {(expanded.includes(unit.posting_id)) ? (<>
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
+                                <Box
+                                    margin={1}
+                                    display="flex"
+                                    justifyContent="flex-end"
+                                    flexGrow={1}
+                                    alignItems="flex-start"
                                 >
-                                    {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
-                                </Typography>
+                                    <Typography
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(3)
+                                        }}
+                                        variant="h5"
+                                        component="div"
+                                        color="inherit"
+                                    >
+                                        {unit.address}
+                                    </Typography>
 
-                                <Typography
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(5),
-                                        marginBottom: appTheme.spacing(1)
-                                    }}
-                                    variant="subtitle1"
-                                    component="div"
-                                    color="inherit"
-                                >
-                                    ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
-                                </Typography>
+                                    <Box
+                                        display="flex"
+                                        justifyContent="flex-end"
+                                        flexGrow={1}
+                                        alignItems="flex-start">
 
-                                <Button
-                                    onClick={() => removeFromExpanded(unit.posting_id)}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
-                                    Hide Details
-                                </Button>
+                                        <Button variant="contained"
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginRight: appTheme.spacing(3),
+                                                backgroundColor: "#a86add"
+                                            }}
+                                            value={unit.posting_id}
+                                            onClick={handleDelete}>
+                                            Delete
+                                        </Button>
+                                    </Box>
+                                </Box>
 
-                            </>) : (<>
-                                <Button
-                                    onClick={() => addToExpanded(unit.posting_id)}
-                                    variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginLeft: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}>
-                                    Show Details
-                                </Button>
+                                {(expanded.includes(unit.posting_id)) ? (<>
+                                    <Typography
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(5)
+                                        }}
+                                        variant="subtitle1"
+                                        component="div"
+                                        color="inherit"
+                                    >
+                                        {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
+                                    </Typography>
 
-                                <Button variant="contained"
-                                    style={{
-                                        marginTop: appTheme.spacing(1),
-                                        marginRight: appTheme.spacing(3),
-                                        marginBottom: appTheme.spacing(2)
-                                    }}                                    
-                                    onClick={handleDeleteOpen}>
-                                    Delete Posting
-                                </Button>
-                                <Dialog
-                                    open={open}
-                                    onClose={handleDeleteClose}
+                                    <Typography
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(5),
+                                            marginBottom: appTheme.spacing(1)
+                                        }}
+                                        variant="subtitle1"
+                                        component="div"
+                                        color="inherit"
+                                    >
+                                        ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
+                                    </Typography>
 
-                                >
-                                    <DialogTitle id="alert-delete-posting">
-                                        {"Are You Sure You Want To Delete?"}
-                                    </DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-delete-description">
-                                            Are you sure you want to delete your posting? This action
-                                            is permanent and postings cannot be recovered.
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button onClick={handleDeleteClose}>Cancel</Button>
-                                        <Button onClick={handleDeleteClose}>Delete</Button>
-                                    </DialogActions>
+                                    <Button
+                                        onClick={() => removeFromExpanded(unit.posting_id)}
+                                        variant="contained"
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(3),
+                                            marginBottom: appTheme.spacing(2)
+                                        }}>
+                                        Hide Details
+                                    </Button>
 
-                                </Dialog>
-                            </>)}
-                        </AppPaper>
-                    </Grid>
-                );
-            })}
-        </Grid>
+                                </>) : (<>
+                                    <Button
+                                        onClick={() => addToExpanded(unit.posting_id)}
+                                        variant="contained"
+                                        style={{
+                                            marginTop: appTheme.spacing(1),
+                                            marginLeft: appTheme.spacing(3),
+                                            marginBottom: appTheme.spacing(2)
+                                        }}>
+                                        Show Details
+                                    </Button>
+                                </>)}
+                            </Box>
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </>
     );
 }
 
