@@ -15,7 +15,7 @@ const NavButton = ({ destination, text, strong }) => {
                 style={{ cursor: "pointer" }}
                 onClick={goToPage}
                 size='medium'
-                sx={{ p: 3 }}>
+                sx={{ p: 2 }}>
                 <Typography variant="h5" noWrap>
                     {(strong) ? (<>
                         <strong>{text}</strong>

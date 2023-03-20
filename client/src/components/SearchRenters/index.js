@@ -23,23 +23,8 @@ const serverURL = "";
 
 function SearchRenters() {
 
-    // Template Object 
-    const initialRenters = [{
-        renter_id: 0,
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        bedtime: '',
-        birthday: '',
-        gender: '',
-        cook: '',
-        first_name: '',
-        last_name: '',
-    }]
-
     // Profile List State
-    const [renters, setRenters] = React.useState(initialRenters);
+    const [renters, setRenters] = React.useState([]);
 
     // Button State
     const [renterMode, setRenterMode] = React.useState(false);
@@ -51,6 +36,11 @@ function SearchRenters() {
     React.useEffect(() => {
         getRenters();
     }, [userId]);
+
+    // Handle method for searching renters
+    const handleSearchRenters = (event) => {
+        setRenterMode(true);
+    }
 
     const getRenters = () => {
         callApiGetRenters()
@@ -109,7 +99,7 @@ function SearchRenters() {
                 </Toolbar>
             </AppBar>
 
-            <Grid margin={appTheme.spacing(1)}>
+            <Grid margin={appTheme.spacing(3 / 4)}>
 
                 {(renterMode) ? (<>
                     <Button onClick={() => setRenterMode(false)}
@@ -121,14 +111,9 @@ function SearchRenters() {
 
                     <RenterList renters={renters} />
                 </>) : (<>
-                    <Button onClick={() => setRenterMode(true)}
-                        variant="outlined">
-                        <Typography variant="h5" color="inherit" noWrap>
-                            See Renters
-                        </Typography>
-                    </Button>
 
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+                    <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} />
+
                 </>)}
 
             </Grid>
@@ -139,133 +124,119 @@ function SearchRenters() {
     );
 }
 
-const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
     return (
-        <ThemeProvider theme={appTheme}>
-            <CssBaseline enableColorScheme />
-            <Grid
-                style={{ color: "#e6e6e6" }}
-
+        <Box
+            alignItems="center"
+            style={{
+                backgroundColor: "#c785ec",
+                color: "#ffffff",
+                borderRadius: 12
+            }}
+            sx={{ mt: 5, mx: "auto", overflow: "hidden" }}
+        >
+            <Box
+                margin={2}
             >
-                <AppPaper2>
-                    <form /*onSubmit={handleSearchUnits}*/>
-                        <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Filter by:</strong></FormLabel>
-                        <div>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                                <Select
+                <form onSubmit={handleSearchRenters}>
+                    <Box
+                        display="flex"
+                        alignItems={"center"}
+                        // flexGrow={1}
+                        // alignItems="flex-start"
+                    >
+                        <Typography variant="h5">
+                            <b>Filter by:</b>
+                        </Typography>
+
+                        <Box
+                            display="flex"
+                            justifyContent="flex-end"
+                            flexGrow={1}
+                            alignItems="flex-start"
+                        >
+                            <Button variant="contained">
+                                Reset Filters
+                            </Button>
+                        </Box>
+                    </Box>
+
+                    <Box>
+                        <Grid container spacing={2}>
+                            <Grid item xs={4}>
+                                <FormControl
                                     variant="filled"
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    // value={age}
-                                    label="Age"
-                                    
-                                // onChange={handleChange}
+                                    fullWidth
+                                    sx={{ mt: 3, mb: 2 }}
+                                    style={{ background: "#ffffff" }}
                                 >
-                                    <MenuItem value={10}>Coed</MenuItem>
-                                    <MenuItem value={20}>Male Only</MenuItem>
-                                    <MenuItem value={30}>Female Only</MenuItem>
-                                </Select>
-                            </FormControl>
-
-                            <FormControl sx={{ m: 1, minWidth: 80 }}>
+                                    <InputLabel id="gender-label">Roomate Gender</InputLabel>
+                                    <Select
+                                        name="gender"
+                                        // value={gender}
+                                        // onChange={handleGender}
+                                        label="Gender"
+                                        id="gender"
+                                        color="primary"
+                                    >
+                                        <MenuItem value="Coed">Coed</MenuItem>
+                                        <MenuItem value="Male Only">Male Only</MenuItem>
+                                        <MenuItem value="Female Only">Female Only</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={4}>
                                 <TextField
                                     variant="filled"
-                                    style={{ background: "#e6e6e6" }}
-                                    // required
-                                    // fullWidth
-                                    id="Price"
-                                    label="Price"
-                                    name="Price"
-                                    // sx={{ mt: 3, mb: 2 }}
-                                    color="primary"
-                                    
-                                // onChange={handleEmail}
-                                />
-                            </FormControl>
-                
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                <TextField
-                                    variant="filled"
-                                    style={{ background: "#e6e6e6" }}
-                                    // required
-                                    // fullWidth
-                                    id="Location"
-                                    label="Location"
-                                    name="Location"
-                                    // sx={{ mt: 3, mb: 2 }}
-                                    color="primary"
-                                    
-                                // onChange={handleEmail}
-                                />
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 80}}>
-                                <TextField
-                                    variant="filled"
-                                    style={{ background: "#e6e6e6" }}
-                                    // required
-                                    // fullWidth
-                                    id="Age"
-                                    label="Age"
-                                    name="Age"
-                                    // sx={{ mt: 3, mb: 2 }}
-                                    color="primary"
-                                    
-                                // onChange={handleEmail}
-                                />
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-
-                                <TextField
-                                    variant="filled"
-                                    style={{ background: "#e6e6e6" }}
-                                    required
+                                    style={{ background: "#ffffff" }}
                                     fullWidth
                                     name="bedtime"
                                     // value={bedtime}
                                     // onChange={handleBedtime}
-                                    label="Bedtime"
+                                    label="Bedtime Before"
                                     id="bedtime"
                                     type="time"
-                                    // InputLabelProps={{ shrink: true }}
-                                    // sx={{ mt: 3, mb: 2 }}
+                                    InputLabelProps={{ shrink: true }}
+                                    sx={{ mt: 3, mb: 2 }}
                                     color="primary"
-                                    
                                 />
-
-                            </FormControl>
-
-                            <FormControl sx={{ m: 1, minWidth: 200 }}>
-                                <InputLabel id="demo-simple-select-label">Cooking Frequency</InputLabel>
-                                <Select
-                                    variant = "filled"
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    // value={age}
-                                    label="Age"
-                                    
-                                // onChange={handleChange}
+                            </Grid>
+                            <Grid item xs={4}>
+                                <FormControl
+                                    variant="filled"
+                                    fullWidth
+                                    sx={{ mt: 3, mb: 2 }}
+                                    style={{ background: "#ffffff" }}
                                 >
-                                    <MenuItem value={10}>Always</MenuItem>
-                                    <MenuItem value={20}>Often</MenuItem>
-                                    <MenuItem value={30}>Sometimes</MenuItem>
-                                    <MenuItem value={30}>Never</MenuItem>
+                                    <InputLabel id="cook-label">Cooking Frequency</InputLabel>
+                                    <Select
+                                        name="cook"
+                                        // value={cook}
+                                        // onChange={handleCook}
+                                        label="Cook"
+                                        id="cook"
+                                        color="primary"
+                                    >
+                                        <MenuItem value="Always">Always</MenuItem>
+                                        <MenuItem value="Often">Often</MenuItem>
+                                        <MenuItem value="Sometimes">Sometimes</MenuItem>
+                                        <MenuItem value="Never">Never</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Box>
 
-                                </Select>
-                            </FormControl>
-
-                        </div>
-
+                    <Box>
                         <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
-                            Search for Units
+                            Search for Renters
                         </Button>
-                    </form>
-                </AppPaper2>
-            </Grid>
-        </ThemeProvider>
+                    </Box>
 
-
+                </form>
+            </Box>
+        </Box>
     );
 }
 

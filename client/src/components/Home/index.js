@@ -131,7 +131,7 @@ class Home extends Component {
             style={{
               textAlign: "center",
               margin: 10,
-              color: "#e6e6e6"
+              color: "#ffffff"
             }}>
             Purple Pages
           </Typography>
@@ -156,14 +156,18 @@ class Home extends Component {
 
             <Button variant="contained" size="large" sx={{ height: 100 }}
               onClick={() => history.push('/LandlordLogin')}>
-              Landlord
+              <Typography variant="h6">
+                Landlord
+              </Typography>
             </Button>
 
             <br />
 
             <Button variant="contained" size="large" sx={{ height: 100 }}
               onClick={() => history.push('/RenterLogin')}>
-              Renter
+              <Typography variant="h6">
+                Renter
+              </Typography>
             </Button>
           </Grid>
 
