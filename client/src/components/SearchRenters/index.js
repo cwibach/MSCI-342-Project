@@ -86,7 +86,8 @@ function SearchRenters() {
                         display="flex"
                         justifyContent="flex-end"
                         flexGrow={1}
-                        alignItems="center">
+                        alignItems="center"
+                    >
 
                         <NavButton destination="/RenterProfile" text="Profile" strong={false} />
 
@@ -102,14 +103,17 @@ function SearchRenters() {
             <Grid margin={appTheme.spacing(3 / 4)}>
 
                 {(renterMode) ? (<>
+
                     <Button onClick={() => setRenterMode(false)}
-                        variant="outlined" >
-                        <Typography variant="h5" color="inherit" noWrap>
+                        variant="outlined"
+                    >
+                        <Typography variant="h5" noWrap>
                             Return to Search
                         </Typography>
                     </Button>
 
                     <RenterList renters={renters} />
+
                 </>) : (<>
 
                     <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} />
@@ -127,24 +131,22 @@ function SearchRenters() {
 const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
     return (
-        <Box
-            alignItems="center"
-            style={{
-                backgroundColor: "#c785ec",
-                color: "#ffffff",
-                borderRadius: 12
-            }}
-            sx={{ mt: 5, mx: "auto", overflow: "hidden" }}
-        >
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
             <Box
-                margin={2}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#c785ec",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 2, mt: 5, mx: "auto", overflow: "hidden" }}
             >
+
                 <form onSubmit={handleSearchRenters}>
                     <Box
                         display="flex"
                         alignItems={"center"}
-                        // flexGrow={1}
-                        // alignItems="flex-start"
                     >
                         <Typography variant="h5">
                             <b>Filter by:</b>
@@ -236,7 +238,8 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
 
                 </form>
             </Box>
-        </Box>
+
+        </ThemeProvider>
     );
 }
 
