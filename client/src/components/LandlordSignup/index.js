@@ -234,7 +234,7 @@ export default function LandlordSignup() {
                             label="Phone Number"
                             id="phone"
                             type="text"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
@@ -248,7 +248,7 @@ export default function LandlordSignup() {
                             label="Email Address"
                             id="email"
                             type="text"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             onChange={handleEmail}
                         />
@@ -263,7 +263,7 @@ export default function LandlordSignup() {
                             label="Password"
                             id="password"
                             type="password"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             onChange={handlePassword}
                         />
@@ -278,7 +278,7 @@ export default function LandlordSignup() {
                             type="password"
                             id="confirmpassword"
                             autoComplete="confirm-password"
-                            sx={{ mt: 2, mb: 2 }}
+                            sx={{ mt: 1, mb: 2 }}
                             color="primary"
                             onChange={handleConfirm}
                         />
@@ -305,31 +305,12 @@ export default function LandlordSignup() {
                             textAlign={"center"}
                             sx={{ mt: 2 }}
                         >
-                            <Typography variant="p">
+                            <Typography>
                                 Already have an account? <Link onClick={goLogin} style={{ cursor: "pointer", color: "#5A189A" }}><b>Login</b></Link>
                             </Typography>
                         </Box>
 
                     </form>
-                </Grid>
-            </Box>
-
-            <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
-            >
-                {/* Creates a column grid for the body of the page */}
-                <Grid container
-                    direction="column"
-                    alignItems="center"
-                    style={{ color: "#e6e6e6" }}
-                    justifyContent="center"
-                    xs={4}
-                >
-
-
                 </Grid>
             </Box>
         </ThemeProvider>

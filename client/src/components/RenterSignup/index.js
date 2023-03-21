@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import history from '../Navigation/history';
-import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl, Link, Divider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { useAuth } from '../../contexts/AuthContext';
 import { UserContext } from '../Navigation/PrivateRoute.js';
@@ -104,8 +104,12 @@ function RenterSignup() {
         setLast_name(event.target.value)
     }
 
-    const handleReturn = () => {
-        history.push("RenterLogin");
+    const goLogin = () => {
+        history.push("/RenterLogin");
+    }
+
+    const goHome = () => {
+        history.push('/')
     }
 
     // Calling server API
@@ -184,60 +188,68 @@ function RenterSignup() {
             <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#9D4EDD",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
             >
-                {/* Creates a column grid for the body of the page */}
-                <Grid container xs={4}
+                <Grid container
                     direction="column"
                     alignItems="center"
-                    style={{ color: "#e6e6e6" }}
+                    style={{ color: "#ffffff" }}
                     justifyContent="center"
                 >
-
-                    {/* Page Title */}
                     <Typography variant="h3">
                         <b>Renter Sign Up</b>
                     </Typography>
 
-                    {/* Posting Information Input */}
                     <form onSubmit={handleFormSubmit}>
+                        <Grid container
+                            direction="row"
+                            spacing={1}
+                        >
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    name="first_name"
+                                    value={first_name}
+                                    onChange={handleFirst_name}
+                                    label="First Name"
+                                    id="first_name"
+                                    type="text"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    name="last_name"
+                                    value={last_name}
+                                    onChange={handleLast_name}
+                                    label="Last Name"
+                                    id="last_name"
+                                    type="text"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                />
+                            </Grid>
+
+                        </Grid>
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            name="first_name"
-                            value={first_name}
-                            onChange={handleFirst_name}
-                            label="First Name"
-                            id="first_name"
-                            type="text"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            name="last_name"
-                            value={last_name}
-                            onChange={handleLast_name}
-                            label="Last Name"
-                            id="last_name"
-                            type="text"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="bedtime"
@@ -247,13 +259,13 @@ function RenterSignup() {
                             id="bedtime"
                             type="time"
                             InputLabelProps={{ shrink: true }}
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="birthday"
@@ -263,16 +275,16 @@ function RenterSignup() {
                             id="birthday"
                             type="date"
                             InputLabelProps={{ shrink: true }}
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <FormControl
                             variant="filled"
-                            fullWidth sx={{ mt: 3, mb: 2 }}
-                            style={{ background: "#e6e6e6" }}
+                            fullWidth sx={{ mt: 1, mb: 1 }}
+                            style={{ background: "#ffffff" }}
                         >
-                            <InputLabel id="gender-label">Roomate Gender*</InputLabel>
+                            <InputLabel id="gender-label">Roommate Gender*</InputLabel>
                             <Select
                                 required
                                 fullWidth
@@ -291,8 +303,8 @@ function RenterSignup() {
 
                         <FormControl
                             variant="filled"
-                            fullWidth sx={{ mt: 3, mb: 2 }}
-                            style={{ background: "#e6e6e6" }}
+                            fullWidth sx={{ mt: 1, mb: 1 }}
+                            style={{ background: "#ffffff" }}
                         >
                             <InputLabel id="cook-label">Cooking Frequency*</InputLabel>
                             <Select
@@ -314,7 +326,7 @@ function RenterSignup() {
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="phone"
@@ -323,13 +335,13 @@ function RenterSignup() {
                             label="Phone Number"
                             id="phone"
                             type="text"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="email"
@@ -338,13 +350,13 @@ function RenterSignup() {
                             label="Email Address"
                             id="email"
                             type="text"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="password"
@@ -353,13 +365,13 @@ function RenterSignup() {
                             label="Password"
                             id="password"
                             type="password"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="confirmPassword"
@@ -368,7 +380,7 @@ function RenterSignup() {
                             label="Confirm Password"
                             id="password"
                             type="password"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
@@ -383,19 +395,25 @@ function RenterSignup() {
                             Sign Up
                         </Button>
 
-                        <Button
+                        <Button variant="contained"
                             fullWidth
-                            variant="contained"
-                            sx={{ mt: 2, mb: 1 }}
-                            color="primary"
-                            onClick={handleReturn}
-                        >
-                            Return to Login
+                            sx={{ mt: 1, mb: 1 }}
+                            onClick={goHome}>
+                            Back to Home
                         </Button>
+
+                        <Box
+                            textAlign={"center"}
+                            sx={{ mt: 2 }}
+                        >
+                            <Typography>
+                                Already have an account? <Link onClick={goLogin} style={{ cursor: "pointer", color: "#5A189A" }}><b>Login</b></Link>
+                            </Typography>
+                        </Box>
+
                     </form>
                 </Grid>
             </Box>
-
         </ThemeProvider>
     );
 }

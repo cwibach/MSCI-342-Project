@@ -169,7 +169,7 @@ export default function RenterLogin({ setUserID }) {
                             textAlign={"center"}
                             sx={{ mt: 2 }}
                         >
-                            <Typography variant="p">
+                            <Typography>
                                 Don't have an account? <Link onClick={goSignUp} style={{ cursor: "pointer", color: "#5A189A" }}><b>Sign Up</b></Link>
                             </Typography>
                         </Box>
