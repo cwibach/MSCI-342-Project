@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import { Box, Button, CssBaseline, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, Typography, Link } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
@@ -16,7 +16,7 @@ const serverURL = "";
 export default function RenterLogin({ setUserID }) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    
+
     const [loading, setLoading] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
@@ -89,10 +89,6 @@ export default function RenterLogin({ setUserID }) {
         history.push('/RenterSignUp')
     }
 
-    const goProfile = () => {
-        history.push('/RenterProfile')
-    }
-
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -100,15 +96,18 @@ export default function RenterLogin({ setUserID }) {
             <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#9D4EDD",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
             >
-                <Grid container xs={4}
+                <Grid container
                     direction="column"
                     alignItems="center"
-                    style={{ color: "#e6e6e6" }}
+                    style={{ color: "#ffffff" }}
                     justifyContent="center"
                 >
 
@@ -121,29 +120,29 @@ export default function RenterLogin({ setUserID }) {
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             id="email"
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 1 }}
                             color="primary"
                             onChange={handleEmail}
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="password"
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="new-password"
-                            sx={{ mt: 3, mb: 2 }}
+                            autoComplete="password"
+                            sx={{ mt: 2, mb: 3 }}
                             color="primary"
                             onChange={handlePassword}
                         />
@@ -152,7 +151,7 @@ export default function RenterLogin({ setUserID }) {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
@@ -161,24 +160,20 @@ export default function RenterLogin({ setUserID }) {
 
                         <Button variant="contained"
                             fullWidth
-                            sx={{ mt: 2, mb: 1 }}
-                            onClick={goSignUp}>
-                            Don't Have an Account? Sign Up Here
-                        </Button>
-
-                        <Button variant="contained"
-                            fullWidth
-                            sx={{ mt: 2, mb: 1 }}
-                            onClick={goProfile}>
-                            Bypass Login
-                        </Button>
-
-                        <Button variant="contained"
-                            fullWidth
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             onClick={goHome}>
                             Back to Home
                         </Button>
+
+                        <Box
+                            textAlign={"center"}
+                            sx={{ mt: 2 }}
+                        >
+                            <Typography variant="p">
+                                Don't have an account? <Link onClick={goSignUp} style={{ cursor: "pointer", color: "#5A189A" }}><b>Sign Up</b></Link>
+                            </Typography>
+                        </Box>
+
                     </form>
                 </Grid>
             </Box>
