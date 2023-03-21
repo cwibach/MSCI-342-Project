@@ -155,6 +155,47 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
         return body;
     }
 
+    // Edit Visible Posting Id State
+    const [visiblePostingID, setVisiblePostingID] = React.useState("");
+
+    React.useEffect(() => {
+        editVisibility()
+    }, [visiblePostingID]);
+
+    const handleToggleVisibility = (event) => {
+        setVisiblePostingID(event.target.value)
+    }
+
+    const editVisibility = () => {
+        callApiEditVisibility()
+            .then(res => {
+                console.log("callApiEditVisibility returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiEditVisibility parsed: ", parsed);
+                getMyUnits()
+                setVisiblePostingID("")
+            });
+    }
+
+    const callApiEditVisibility = async () => {
+        const url = serverURL + "/api/editVisibility";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: visiblePostingID,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Landlord: ", body);
+        return body;
+    }
+
     return (
         <>
             <Grid margin={appTheme.spacing(1)}>
@@ -169,7 +210,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                     color: "#ffffff",
                                     borderRadius: 12
                                 }}
-                                sx={{mt: 2, mx: "auto", overflow: "hidden" }}
+                                sx={{ mt: 2, mx: "auto", overflow: "hidden" }}
                             >
                                 <Box
                                     margin={1}
@@ -195,6 +236,18 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                         justifyContent="flex-end"
                                         flexGrow={1}
                                         alignItems="flex-start">
+
+                                        <Button variant="contained"
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginRight: appTheme.spacing(1),
+                                                backgroundColor: "#5A189A"
+                                            }}
+                                            value={unit.posting_id}
+                                            onClick={handleToggleVisibility}
+                                        >
+                                            {unit.visible ? "Visible" : "Hidden"}
+                                        </Button>
 
                                         <Button variant="contained"
                                             style={{

@@ -68,7 +68,9 @@ app.use('/', getLandlordUserIDRouter);
 
 */
 
-
+// Toggle Posting Visibility Api
+const editVisibilityRouter = require('./routes/editVisibility');
+app.use('/', editVisibilityRouter);
 
 /*
 
