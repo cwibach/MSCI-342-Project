@@ -60,7 +60,7 @@ const InterestedList = ({ unitID, userId }) => {
                         }}
                         sx={{ p: 3, mt: 3, mx: "auto", overflow: "hidden" }}
                     >
-                        <Typography variant="h4" color="inherit">
+                        <Typography variant="h5" color="inherit">
                             Interested Renters:
                         </Typography>
                     </Box>

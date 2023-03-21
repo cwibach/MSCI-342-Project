@@ -22,17 +22,19 @@ const ListofUnits = ({ units, userId }) => {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
             {(units.length === 0) ? (<>
-                <Typography
+                <Box
+                    alignItems="center"
                     style={{
-                        marginTop: appTheme.spacing(1),
-                        marginLeft: appTheme.spacing(3)
+                        backgroundColor: "#9D4EDD",
+                        color: "#ffffff",
+                        borderRadius: 12
                     }}
-                    variant="h4"
-                    component="div"
-                    color="inherit"
+                    sx={{ p: 3, mt: 2, mx: "auto", overflow: "hidden" }}
                 >
-                    Sorry, no units found. Try different filters.
-                </Typography>
+                    <Typography variant="h4">
+                        No Results
+                    </Typography>
+                </Box>
             </>) : (<>
                 {units.map((unit) => {
                     return (
@@ -52,7 +54,17 @@ const ListofUnits = ({ units, userId }) => {
                                 </Box>
                             </>) : (<>
                                 {(anyExpanded) ? (<> </>) : (<>
-                                    <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
+                                    <Box
+                                        alignItems="center"
+                                        style={{
+                                            backgroundColor: "#9D4EDD",
+                                            color: "#ffffff",
+                                            borderRadius: 12
+                                        }}
+                                        sx={{ p: 1, mt: 2, mx: "auto", overflow: "hidden" }}
+                                    >
+                                        <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
+                                    </Box>
                                 </>)}
                             </>)}
                         </Grid>

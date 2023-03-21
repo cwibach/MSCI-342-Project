@@ -1,10 +1,9 @@
 import React from 'react';
 import {
-    Button, Grid, RadioGroup, FormControlLabel, Radio, FormLabel,
-    ThemeProvider, CssBaseline
+    Button, Box, RadioGroup, FormControlLabel, Radio, FormLabel,
+    ThemeProvider, CssBaseline, Grid, Typography, TextField
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper2 } from "../../themes/paper";
 import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
@@ -17,6 +16,16 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     const [maxBed, setMaxBed] = React.useState(100);
     const [minBath, setMinBath] = React.useState(0);
     const [maxBath, setMaxBath] = React.useState(100);
+
+    const handleReset = () => {
+        setSortMethod(0)
+        setMinPrice(0)
+        setMaxPrice(1000000)
+        setMinBed(0)
+        setMaxBed(100)
+        setMinBath(0)
+        setMaxBath(100)
+    }
 
     const handleSearchUnits = (event) => {
         event.preventDefault();
@@ -103,21 +112,74 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
-            <Grid>
-                <AppPaper2>
-                    <form onSubmit={handleSearchUnits}>
-                        <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
+            <Box
+                alignItems="center"
+                style={{
+                    backgroundColor: "#9D4EDD",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 2, mt: 5, mx: "auto", overflow: "hidden" }}
+            >
 
-                        <RadioGroup
-                            value={sortMethod} row
-                            onChange={handleSortChange}
-                            sx={{ mt: 0, mb: 1, ml: 2 }}
+                <form onSubmit={handleSearchUnits}>
+                    <Box
+                        display="flex"
+                        alignItems={"center"}
+                    >
+                        <Typography variant="h5">
+                            <b>Order by:</b>
+                        </Typography>
+
+                        <Box
+                            display="flex"
+                            justifyContent="flex-end"
+                            flexGrow={1}
+                            alignItems="flex-start"
                         >
-                            <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                            <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                            <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                            <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                            <Button
+                                variant="contained"
+                                onClick={handleReset}
+                            >
+                                Reset Filters
+                            </Button>
+                        </Box>
+                    </Box>
+
+                    <Box
+                        textAlign={"center"}
+                        alignItems={"center"}
+                        alignContent={"center"}
+                        sx={{ mt: 1 }}
+                    >
+                        <RadioGroup
+                            value={sortMethod}
+                            onChange={handleSortChange}
+                        >
+                            <Grid container
+                                direction={"row"}>
+                                <Grid item xs={2}></Grid>
+                                <Grid item xs={2}>
+                                    <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" />
+                                </Grid>
+                                <Grid item xs={2}></Grid>
+                            </Grid>
                         </RadioGroup>
+                    </Box>
+
+                    <Box>
+                        <Typography variant="h5">
+                            <b>Filter by:</b>
+                        </Typography>
 
                         <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
                             maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
@@ -134,12 +196,16 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                             centreLabel={"# of Bathrooms"}
                         />
 
+                    </Box>
+
+                    <Box>
                         <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                             Search for Units
                         </Button>
-                    </form>
-                </AppPaper2>
-            </Grid>
+                    </Box>
+
+                </form>
+            </Box>
         </ThemeProvider>
     );
 }
