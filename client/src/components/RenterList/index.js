@@ -36,7 +36,7 @@ const RenterList = ({ renters }) => {
                             <Box
                                 alignItems="center"
                                 style={{
-                                    backgroundColor: "#c785ec",
+                                    backgroundColor: "#9D4EDD",
                                     color: "#ffffff",
                                     borderRadius: 12
                                 }}
@@ -90,7 +90,7 @@ const ExpandedRenter = ({ renter, removeFromExpanded }) => {
                 <Button
                     onClick={() => removeFromExpanded(renter.renter_id)}
                     variant="contained"
-                    style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
+                    style={{ backgroundColor: "#5A189A", color: "#ffffff" }}>
                     Hide Details
                 </Button>
             </ThemeProvider>
@@ -119,7 +119,7 @@ const UnExpandedRenter = ({ renter, addToExpanded }) => {
                 <Button
                     onClick={() => addToExpanded(renter.renter_id)}
                     variant="contained"
-                    style={{ backgroundColor: "#a86add", color: "#ffffff" }}>
+                    style={{ backgroundColor: "#5A189A", color: "#ffffff" }}>
                     Show Details
                 </Button>
             </ThemeProvider>

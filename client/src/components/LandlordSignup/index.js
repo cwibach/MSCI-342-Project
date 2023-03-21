@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Box, Button, CssBaseline, TextField } from '@mui/material';
+import { Box, Button, CssBaseline, TextField, Link } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import history from '../Navigation/history';
 import { ThemeProvider } from '@mui/material/styles';
@@ -150,6 +150,10 @@ export default function LandlordSignup() {
         history.push('/LandlordLogin');
     }
 
+    const goHome = () => {
+        history.push('/')
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -157,18 +161,19 @@ export default function LandlordSignup() {
             <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
 
             <Box
-                margin={6}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems="center"
+                style={{
+                    backgroundColor: "#9D4EDD",
+                    color: "#ffffff",
+                    borderRadius: 12
+                }}
+                sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
             >
-                {/* Creates a column grid for the body of the page */}
                 <Grid container
                     direction="column"
                     alignItems="center"
-                    style={{ color: "#e6e6e6" }}
+                    style={{ color: "#ffffff" }}
                     justifyContent="center"
-                    xs={4}
                 >
 
                     <Typography variant="h3">
@@ -176,44 +181,51 @@ export default function LandlordSignup() {
                     </Typography>
 
                     <form onSubmit={handleFormSubmit}>
+                        <Grid container
+                            direction="row"
+                            spacing={1}
+                        >
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    id="first_name"
+                                    type="text"
+                                    label="First Name"
+                                    name="first_name"
+                                    value={first_name}
+                                    autoComplete="First Name"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                    onChange={handleFirstName}
+                                />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    id="last_name"
+                                    type="text"
+                                    label="Last Name"
+                                    name="last_name"
+                                    value={last_name}
+                                    autoComplete="Last Name"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                    onChange={handleLastName}
+                                />
+                            </Grid>
+
+                        </Grid>
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="first_name"
-                            type="text"
-                            label="First Name"
-                            name="first_name"
-                            value={first_name}
-                            autoComplete="First Name"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onChange={handleFirstName}
-
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
-                            required
-                            fullWidth
-                            id="last_name"
-                            type="text"
-                            label="Last Name"
-                            name="last_name"
-                            value={last_name}
-                            autoComplete="Last Name"
-                            sx={{ mt: 3, mb: 2 }}
-                            color="primary"
-                            onChange={handleLastName}
-
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="phone"
@@ -222,13 +234,13 @@ export default function LandlordSignup() {
                             label="Phone Number"
                             id="phone"
                             type="text"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="email"
@@ -236,14 +248,14 @@ export default function LandlordSignup() {
                             label="Email Address"
                             id="email"
                             type="text"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             onChange={handleEmail}
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="password"
@@ -251,14 +263,14 @@ export default function LandlordSignup() {
                             label="Password"
                             id="password"
                             type="password"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             onChange={handlePassword}
                         />
 
                         <TextField
                             variant="filled"
-                            style={{ background: "#e6e6e6" }}
+                            style={{ background: "#ffffff" }}
                             required
                             fullWidth
                             name="confirm-password"
@@ -266,7 +278,7 @@ export default function LandlordSignup() {
                             type="password"
                             id="confirmpassword"
                             autoComplete="confirm-password"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1, mb: 2 }}
                             color="primary"
                             onChange={handleConfirm}
                         />
@@ -275,19 +287,29 @@ export default function LandlordSignup() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 2, mb: 1 }}
+                            sx={{ mt: 1, mb: 1 }}
                             color="primary"
                             disabled={loading}
                         >
                             Sign Up
                         </Button>
 
-                        <Button fullWidth
-                            variant="contained"
-                            sx={{ mt: 2, mb: 1 }}
-                            onClick={goLogin}>
-                            Return to Login
+                        <Button variant="contained"
+                            fullWidth
+                            sx={{ mt: 1, mb: 1 }}
+                            onClick={goHome}>
+                            Back to Home
                         </Button>
+
+                        <Box
+                            textAlign={"center"}
+                            sx={{ mt: 2 }}
+                        >
+                            <Typography>
+                                Already have an account? <Link onClick={goLogin} style={{ cursor: "pointer", color: "#5A189A" }}><b>Login</b></Link>
+                            </Typography>
+                        </Box>
+
                     </form>
                 </Grid>
             </Box>

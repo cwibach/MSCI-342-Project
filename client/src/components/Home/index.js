@@ -121,7 +121,7 @@ class Home extends Component {
 
         <Box
           style={{
-            backgroundColor: "#a86add",
+            backgroundColor: "#5A189A",
             padding: 10,
             textAlign: "center"
           }}

@@ -165,7 +165,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                             <Box
                                 alignItems="center"
                                 style={{
-                                    backgroundColor: "#c785ec",
+                                    backgroundColor: "#9D4EDD",
                                     color: "#ffffff",
                                     borderRadius: 12
                                 }}
@@ -200,7 +200,7 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
                                             style={{
                                                 marginTop: appTheme.spacing(1),
                                                 marginRight: appTheme.spacing(3),
-                                                backgroundColor: "#a86add"
+                                                backgroundColor: "#5A189A"
                                             }}
                                             value={unit.posting_id}
                                             onClick={handleDelete}>
