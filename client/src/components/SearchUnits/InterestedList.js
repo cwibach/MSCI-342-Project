@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography} from '@mui/material';
+import { Typography, ThemeProvider, CssBaseline } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
 import RenterList from '../RenterList/index';
@@ -47,7 +47,8 @@ const InterestedList = ({ unitID, userId }) => {
     }
 
     return (
-        <>
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
             {renters.length > 0 &&
                 <>
                     <AppPaper>
@@ -68,7 +69,7 @@ const InterestedList = ({ unitID, userId }) => {
                     <RenterList renters={renters} />
                 </>
             }
-        </>
+        </ThemeProvider>
     );
 }
 

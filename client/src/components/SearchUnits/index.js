@@ -59,7 +59,8 @@ const SearchUnits = () => {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AppBar position="static" theme={appTheme}>
+            <AppBar position="static">
+
                 <Toolbar>
                     <Typography variant="h3" >
                         PurplePages
@@ -81,6 +82,7 @@ const SearchUnits = () => {
                         <NavButton destination="/RenterLogout" text="Logout" strong={false} />
                     </Box>
                 </Toolbar>
+
             </AppBar>
 
             <AlertBar alertMessage={alertMessage} alertVisible={alertVisible} setAlertVisible={setAlertVisible} />

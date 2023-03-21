@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, ThemeProvider, CssBaseline } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 
 export const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
 
     return (
-        <>
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
             <Typography
                 style={{
                     marginTop: appTheme.spacing(1),
@@ -55,14 +56,15 @@ export const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
 
                 Hide Details
             </Button>
-        </>
+        </ThemeProvider>
     )
 }
 
 export const UnexpandedUnitInfo = ({ unit, expandUnit }) => {
 
     return (
-        <>
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
             <Typography
                 style={{
                     marginTop: appTheme.spacing(1),
@@ -84,6 +86,6 @@ export const UnexpandedUnitInfo = ({ unit, expandUnit }) => {
                 }}>
                 See Details
             </Button>
-        </>
+        </ThemeProvider>
     )
 }

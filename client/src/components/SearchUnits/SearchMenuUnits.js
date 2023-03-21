@@ -1,8 +1,10 @@
 import React from 'react';
-import {Button, Grid,RadioGroup, FormControlLabel, Radio, FormLabel
+import {
+    Button, Grid, RadioGroup, FormControlLabel, Radio, FormLabel,
+    ThemeProvider, CssBaseline
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import {AppPaper2 } from "../../themes/paper";
+import { AppPaper2 } from "../../themes/paper";
 import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
@@ -99,43 +101,46 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     }
 
     return (
-        <Grid>
-            <AppPaper2>
-                <form onSubmit={handleSearchUnits}>
-                    <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
+        <ThemeProvider theme={appTheme}>
+            <CssBaseline enableColorScheme />
+            <Grid>
+                <AppPaper2>
+                    <form onSubmit={handleSearchUnits}>
+                        <FormLabel sx={{ mt: 2, mb: 1, ml: 2 }}><strong>Order by:</strong></FormLabel>
 
-                    <RadioGroup
-                        value={sortMethod} row
-                        onChange={handleSortChange}
-                        sx={{ mt: 0, mb: 1, ml: 2 }}
-                    >
-                        <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                        <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
-                    </RadioGroup>
+                        <RadioGroup
+                            value={sortMethod} row
+                            onChange={handleSortChange}
+                            sx={{ mt: 0, mb: 1, ml: 2 }}
+                        >
+                            <FormControlLabel value={0} control={<Radio />} label="Oldest to Newest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                            <FormControlLabel value={1} control={<Radio />} label="Newest to Oldest" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                            <FormControlLabel value={2} control={<Radio />} label="Least to Most Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                            <FormControlLabel value={3} control={<Radio />} label="Most to Least Expensive" sx={{ mt: 0, mb: 0, ml: 1 }} />
+                        </RadioGroup>
 
-                    <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
-                        maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
-                        centreLabel={"Total Price"} icon={"$"}
-                    />
+                        <LessGreaterNumericBox minValue={minPrice} maxValue={maxPrice} minChange={handleMinPriceChange}
+                            maxChange={handleMaxPriceChange} minLabel={"Minimum Total Price"} maxLabel={"Maximum Total Price"}
+                            centreLabel={"Total Price"} icon={"$"}
+                        />
 
-                    <LessGreaterNumericBox minValue={minBed} maxValue={maxBed} minChange={handleMinBedChange}
-                        maxChange={handleMaxBedChange} minLabel={"Minimum # of Bedrooms"} maxLabel={"Maximum # of Bedrooms"}
-                        centreLabel={"# of Bedrooms"}
-                    />
+                        <LessGreaterNumericBox minValue={minBed} maxValue={maxBed} minChange={handleMinBedChange}
+                            maxChange={handleMaxBedChange} minLabel={"Minimum # of Bedrooms"} maxLabel={"Maximum # of Bedrooms"}
+                            centreLabel={"# of Bedrooms"}
+                        />
 
-                    <LessGreaterNumericBox minValue={minBath} maxValue={maxBath} minChange={handleMinBathChange}
-                        maxChange={handleMaxBathChange} minLabel={"Minimum # of Bathrooms"} maxLabel={"Maximum # of Bathrooms"}
-                        centreLabel={"# of Bathrooms"}
-                    />
+                        <LessGreaterNumericBox minValue={minBath} maxValue={maxBath} minChange={handleMinBathChange}
+                            maxChange={handleMaxBathChange} minLabel={"Minimum # of Bathrooms"} maxLabel={"Maximum # of Bathrooms"}
+                            centreLabel={"# of Bathrooms"}
+                        />
 
-                    <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
-                        Search for Units
-                    </Button>
-                </form>
-            </AppPaper2>
-        </Grid>
+                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                            Search for Units
+                        </Button>
+                    </form>
+                </AppPaper2>
+            </Grid>
+        </ThemeProvider>
     );
 }
 
