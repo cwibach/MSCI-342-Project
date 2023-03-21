@@ -85,10 +85,6 @@ export default function LandlordLogin({ setUserID }) {
         history.push('/')
     }
 
-    const goProfile = () => {
-        history.push('/LandlordProfile')
-    }
-
     const goSignUp = () => {
         history.push('/LandlordSignup')
     }
@@ -106,7 +102,7 @@ export default function LandlordLogin({ setUserID }) {
                     color: "#ffffff",
                     borderRadius: 12
                 }}
-                sx={{ p: 5, mt: 10, mx: "auto", maxWidth: 3 / 10, overflow: "hidden" }}
+                sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
             >
                 <Grid container
                     direction="column"
@@ -131,7 +127,7 @@ export default function LandlordLogin({ setUserID }) {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 1 }}
                             color="primary"
                             onChange={handleEmail}
                         />
@@ -146,7 +142,7 @@ export default function LandlordLogin({ setUserID }) {
                             type="password"
                             id="password"
                             autoComplete="password"
-                            sx={{ mt: 2, mb: 2 }}
+                            sx={{ mt: 2, mb: 3 }}
                             color="primary"
                             onChange={handlePassword}
                         />
@@ -174,7 +170,7 @@ export default function LandlordLogin({ setUserID }) {
                             sx={{ mt: 2 }}
                         >
                             <Typography variant="p">
-                                Don't have an account? <Link onClick={goSignUp} style={{cursor: "pointer", color: "#5A189A"}}><b>Sign Up</b></Link>
+                                Don't have an account? <Link onClick={goSignUp} style={{ cursor: "pointer", color: "#5A189A" }}><b>Sign Up</b></Link>
                             </Typography>
                         </Box>
 
