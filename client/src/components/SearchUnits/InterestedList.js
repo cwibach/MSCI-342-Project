@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, ThemeProvider, CssBaseline } from '@mui/material';
+import { Typography, ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
 import RenterList from '../RenterList/index';
@@ -51,22 +51,26 @@ const InterestedList = ({ unitID, userId }) => {
             <CssBaseline enableColorScheme />
             {renters.length > 0 &&
                 <>
-                    <AppPaper>
-                        <Typography
-                            style={{
-                                marginTop: appTheme.spacing(1),
-                                marginLeft: appTheme.spacing(4),
-                                marginBottom: appTheme.spacing(1)
-                            }}
-                            variant="h5"
-                            component="div"
-                            color="inherit"
-                        >
+                    <Box
+                        alignItems="center"
+                        style={{
+                            backgroundColor: "#9D4EDD",
+                            color: "#ffffff",
+                            borderRadius: 12
+                        }}
+                        sx={{ p: 3, mt: 3, mx: "auto", overflow: "hidden" }}
+                    >
+                        <Typography variant="h5" color="inherit">
                             Interested Renters:
                         </Typography>
-                    </AppPaper>
-
-                    <RenterList renters={renters} />
+                    </Box>
+                    
+                    <Box
+                        sx={{ ml: 4}}
+                    >
+                        <RenterList renters={renters} />
+                    </Box>
+                    
                 </>
             }
         </ThemeProvider>

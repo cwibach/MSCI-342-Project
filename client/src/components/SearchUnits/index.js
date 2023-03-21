@@ -87,25 +87,18 @@ const SearchUnits = () => {
 
             <AlertBar alertMessage={alertMessage} alertVisible={alertVisible} setAlertVisible={setAlertVisible} />
 
-            <Grid margin={appTheme.spacing(0.5)}>
+            <Grid margin={appTheme.spacing(3 / 4)}>
 
                 {(unitMode) ? (<>
                     <Button onClick={() => setUnitMode(false)}
                         variant="outlined" >
-                        <Typography variant="h5" color="inherit" noWrap>
+                        <Typography variant="h5" noWrap>
                             Return to Search
                         </Typography>
                     </Button>
 
                     <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
-                    <Button onClick={() => setUnitMode(true)}
-                        variant="outlined">
-                        <Typography variant="h5" color="inherit" noWrap>
-                            See Units
-                        </Typography>
-                    </Button>
-
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
                         setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} />
                 </>)}
