@@ -38,9 +38,9 @@ function SearchRenters() {
     }, [userId]);
 
     // Handle method for searching renters
-    const handleSearchRenters = (event) => {
-        setRenterMode(true);
-    }
+    // const handleSearchRenters = (event) => {
+    //     setRenterMode(true);
+    // }
 
     const getRenters = () => {
         callApiGetRenters()
@@ -116,7 +116,9 @@ function SearchRenters() {
 
                 </>) : (<>
 
-                    <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} />
+                    {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
+                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+
 
                 </>)}
 
@@ -128,7 +130,71 @@ function SearchRenters() {
     );
 }
 
-const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
+// const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
+
+const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+
+    const [renterCook, setRenterCook] = React.useState("");
+    const [renterGender, setRenterGender] = React.useState("");
+    const [renterBed, setRenterBed] = React.useState("");
+
+    const handleSearchRenters = (event) => {
+        event.preventDefault()
+
+        getFilteredRenters()
+        setRenterMode(true)
+    }
+
+    const handleReset = () => {
+        setRenterCook("")
+        setRenterGender("")
+        setRenterBed("")
+    }
+
+    const getFilteredRenters = () => {
+        callApiGetFilteredRenters()
+            .then(res => {
+                console.log("getFilteredRenters returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getFilteredRenters parsed: ", parsed);
+                setRenters(parsed);
+            });
+    }
+
+    const callApiGetFilteredRenters = async () => {
+        const url = serverURL + "/api/getFilteredRenters";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                renterCook: renterCook,
+                renterGender: renterGender,
+                renterBed: renterBed
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Renters: ", body);
+        return body;
+    }
+
+
+
+    const handleCookChange = (event) => {
+        setRenterCook(event.target.value)
+    }
+
+    const handleBedChange = (event) => {
+        setRenterBed(event.target.value)
+    }
+
+    const handleGenderChange = (event) => {
+        setRenterGender(event.target.value)
+    }
 
     return (
         <ThemeProvider theme={appTheme}>
@@ -158,7 +224,7 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
                             flexGrow={1}
                             alignItems="flex-start"
                         >
-                            <Button variant="contained">
+                            <Button variant="contained" onClick={handleReset}>
                                 Reset Filters
                             </Button>
                         </Box>
@@ -176,8 +242,8 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
                                     <InputLabel id="gender-label">Roomate Gender</InputLabel>
                                     <Select
                                         name="gender"
-                                        // value={gender}
-                                        // onChange={handleGender}
+                                        value={renterGender}
+                                        onChange={handleGenderChange}
                                         label="Gender"
                                         id="gender"
                                         color="primary"
@@ -194,8 +260,8 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
                                     style={{ background: "#ffffff" }}
                                     fullWidth
                                     name="bedtime"
-                                    // value={bedtime}
-                                    // onChange={handleBedtime}
+                                    value={renterBed}
+                                    onChange={handleBedChange}
                                     label="Bedtime Before"
                                     id="bedtime"
                                     type="time"
@@ -214,8 +280,8 @@ const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) =
                                     <InputLabel id="cook-label">Cooking Frequency</InputLabel>
                                     <Select
                                         name="cook"
-                                        // value={cook}
-                                        // onChange={handleCook}
+                                        value={renterCook}
+                                        onChange={handleCookChange}
                                         label="Cook"
                                         id="cook"
                                         color="primary"

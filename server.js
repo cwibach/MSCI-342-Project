@@ -61,6 +61,9 @@ app.use('/', getRenterUserIDRouter);
 const getLandlordUserIDRouter = require('./routes/getLandlordUserID');
 app.use('/', getLandlordUserIDRouter);
 
+// Get Filtered Renters Api
+const getFilteredRentersRouter = require('./routes/getFilteredRenters');
+app.use('/', getFilteredRentersRouter);
 
 /*
 
