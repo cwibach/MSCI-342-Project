@@ -1,23 +1,130 @@
 import React from 'react';
-import { Button, Typography, ThemeProvider, CssBaseline } from '@mui/material';
+import { Button, Typography, ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 
-export const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
+const serverURL = "";
+
+export const ExpandedUnitInfo = ({ unit, unExpandUnit, userId }) => {
+
+    /*
+        Check if renter is interested
+    */
+
+    // Creates state variable
+    const [interest, setInterest] = React.useState(0)
+
+    // Activates the intital APIs
+    React.useEffect(() => {
+        isInterested();
+    }, []);
+
+    const isInterested = () => {
+        callApiIsInterested()
+            .then(res => {
+                console.log("isInterested returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("isInterested parsed: ", parsed);
+                setInterest(parsed[0].count);
+            });
+    }
+
+    const callApiIsInterested = async () => {
+        const url = serverURL + "/api/isInterested";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: unit.posting_id,
+                renter_id: userId
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("isInterested: ", body);
+        return body;
+    }
+
+    /*
+        Change interest
+    */
+
+    const handleChangeInterest = () => {
+        addInterest()
+    }
+
+    const addInterest = () => {
+        callApiAddInterest()
+            .then(res => {
+                console.log("callApiAddInterest returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiAddInterest parsed: ", parsed);
+                isInterested();
+            });
+    }
+
+    const callApiAddInterest = async () => {
+        const url = serverURL + "/api/addInterest";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                renter_id: userId,
+                posting_id: unit.posting_id,
+                interest: interest
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Renter: ", body);
+        return body;
+    }
 
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
-            <Typography
-                style={{
-                    marginTop: appTheme.spacing(1),
-                    marginLeft: appTheme.spacing(3)
-                }}
-                variant="h5"
-                component="div"
-                color="inherit"
+
+            <Box
+                display="flex"
+                flexGrow={1}
             >
-                {unit.address}
-            </Typography>
+                <Typography
+                    style={{
+                        marginTop: appTheme.spacing(1),
+                        marginLeft: appTheme.spacing(3)
+                    }}
+                    variant="h5"
+                    component="div"
+                    color="inherit"
+                >
+                    {unit.address}
+                </Typography>
+
+                <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    flexGrow={1}
+                    alignItems="flex-start">
+
+                    <Button variant="contained"
+                        style={{
+                            marginTop: appTheme.spacing(1),
+                            marginRight: appTheme.spacing(3),
+                            backgroundColor: "#5A189A"
+                        }}
+                        onClick={handleChangeInterest}
+                    >
+                        {interest === 0 ? "Favourite" : "Unfavourite"}
+                    </Button>
+                </Box>
+            </Box>
 
             <Typography
                 style={{
@@ -60,22 +167,125 @@ export const ExpandedUnitInfo = ({ unit, unExpandUnit }) => {
     )
 }
 
-export const UnexpandedUnitInfo = ({ unit, expandUnit }) => {
+export const UnexpandedUnitInfo = ({ unit, expandUnit, userId }) => {
 
+    /*
+        Check if renter is interested
+    */
+
+    // Creates state variable
+    const [interest, setInterest] = React.useState(0)
+
+    // Activates the intital APIs
+    React.useEffect(() => {
+        isInterested();
+    }, []);
+
+    const isInterested = () => {
+        callApiIsInterested()
+            .then(res => {
+                console.log("isInterested returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("isInterested parsed: ", parsed);
+                setInterest(parsed[0].count);
+            });
+    }
+
+    const callApiIsInterested = async () => {
+        const url = serverURL + "/api/isInterested";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: unit.posting_id,
+                renter_id: userId
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("isInterested: ", body);
+        return body;
+    }
+
+    /*
+        Change interest
+    */
+
+    const handleChangeInterest = () => {
+        addInterest()
+    }
+
+    const addInterest = () => {
+        callApiAddInterest()
+            .then(res => {
+                console.log("callApiAddInterest returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiAddInterest parsed: ", parsed);
+                isInterested();
+            });
+    }
+
+    const callApiAddInterest = async () => {
+        const url = serverURL + "/api/addInterest";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                renter_id: userId,
+                posting_id: unit.posting_id,
+                interest: interest
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Renter: ", body);
+        return body;
+    }
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
-            <Typography
-                style={{
-                    marginTop: appTheme.spacing(1),
-                    marginLeft: appTheme.spacing(3)
-                }}
-                variant="h5"
-                component="div"
-                color="inherit"
+            <Box
+                display="flex"
+                flexGrow={1}
             >
-                {unit.address}
-            </Typography>
+                <Typography
+                    style={{
+                        marginTop: appTheme.spacing(1),
+                        marginLeft: appTheme.spacing(3)
+                    }}
+                    variant="h5"
+                    component="div"
+                    color="inherit"
+                >
+                    {unit.address}
+                </Typography>
+
+                <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    flexGrow={1}
+                    alignItems="flex-start">
+
+                    <Button variant="contained"
+                        style={{
+                            marginTop: appTheme.spacing(1),
+                            marginRight: appTheme.spacing(3),
+                            backgroundColor: "#5A189A"
+                        }}
+                        onClick={handleChangeInterest}
+                    >
+                        {interest === 0 ? "Favourite" : "Unfavourite"}
+                    </Button>
+                </Box>
+            </Box>
 
             <Button onClick={() => expandUnit(unit.posting_id)}
                 variant="contained"
