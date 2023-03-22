@@ -19,8 +19,17 @@ router.post('/api/addInterest', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `INSERT INTO osellner.Interested (renter_id, posting_id) VALUES (?, ?)`;
-	let data = [req.body.renter_id, req.body.posting_id];
+	let sql = '';
+
+	if (req.body.interest === 0) {
+		sql = `INSERT INTO osellner.Interested (renter_id, posting_id) VALUES (${req.body.renter_id}, ${req.body.posting_id});`;
+	} else {
+		sql = `DELETE FROM osellner.Interested
+		WHERE osellner.Interested.posting_id LIKE ${req.body.posting_id}
+		AND osellner.Interested.renter_id LIKE ${req.body.renter_id};`;
+	}
+
+	let data = [req.body.renter_id, req.body.posting_id, req.body.interest];
 	
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {

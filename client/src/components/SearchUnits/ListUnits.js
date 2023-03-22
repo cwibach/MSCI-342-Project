@@ -50,7 +50,7 @@ const ListofUnits = ({ units, userId }) => {
                                     }}
                                     sx={{ p: 1, mt: 2, mx: "auto", overflow: "hidden" }}
                                 >
-                                    <ExpandedUnitInfo unit={unit} unExpandUnit={unExpandUnit} />
+                                    <ExpandedUnitInfo unit={unit} unExpandUnit={unExpandUnit} userId={userId} />
                                 </Box>
                             </>) : (<>
                                 {(anyExpanded) ? (<> </>) : (<>
@@ -63,7 +63,7 @@ const ListofUnits = ({ units, userId }) => {
                                         }}
                                         sx={{ p: 1, mt: 2, mx: "auto", overflow: "hidden" }}
                                     >
-                                        <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} />
+                                        <UnexpandedUnitInfo unit={unit} expandUnit={expandUnit} userId={userId} />
                                     </Box>
                                 </>)}
                             </>)}

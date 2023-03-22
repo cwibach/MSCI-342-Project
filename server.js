@@ -65,6 +65,11 @@ app.use('/', getLandlordUserIDRouter);
 const getFilteredRentersRouter = require('./routes/getFilteredRenters');
 app.use('/', getFilteredRentersRouter);
 
+// IsInterested Api
+const isInterestedRouter = require('./routes/isInterested');
+app.use('/', isInterestedRouter);
+
+
 /*
 
 	APIs To Edit Data
