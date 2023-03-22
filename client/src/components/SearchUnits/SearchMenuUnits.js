@@ -8,7 +8,7 @@ import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, getAllUnits }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
     const [minPrice, setMinPrice] = React.useState(0);
     const [maxPrice, setMaxPrice] = React.useState(1000000);
@@ -44,7 +44,6 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             setMinBath(maxBath);
         } else {
             getFilteredUnits();
-            setUnitMode(true);
         }
     }
 
@@ -57,6 +56,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             .then(res => {
                 var parsed = JSON.parse(res.express);
                 setUnitList(parsed);
+                setUnitMode(true);
             });
     }
 
@@ -201,6 +201,10 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                     <Box>
                         <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                             Search for Units
+                        </Button>
+
+                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} onClick={getAllUnits} variant="contained">
+                            See ALL units
                         </Button>
                     </Box>
 
