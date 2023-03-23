@@ -152,6 +152,45 @@ export const ExpandedUnitInfo = ({ unit, unExpandUnit, userId }) => {
                 ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
             </Typography>
 
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(2),
+                    marginLeft: appTheme.spacing(3),
+                    marginBottom: appTheme.spacing(1)
+                }}
+                variant="h5"
+                component="div"
+                color="inherit"
+            >
+                Landlord Contact Info
+            </Typography>
+
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(0.5),
+                    marginLeft: appTheme.spacing(5),
+                    marginBottom: appTheme.spacing(1)
+                }}
+                variant="subtitle1"
+                component="div"
+                color="inherit"
+            >
+                Phone #: {unit.phone}
+            </Typography>
+
+            <Typography
+                style={{
+                    marginTop: appTheme.spacing(0.5),
+                    marginLeft: appTheme.spacing(5),
+                    marginBottom: appTheme.spacing(1)
+                }}
+                variant="subtitle1"
+                component="div"
+                color="inherit"
+            >
+                Email: {unit.email}
+            </Typography>
+
             <Button
                 onClick={() => unExpandUnit()}
                 variant="contained"

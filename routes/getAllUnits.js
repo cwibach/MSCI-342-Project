@@ -19,7 +19,9 @@ router.post('/api/getAllUnits', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM osellner.Postings`;
+	let sql = `SELECT p.posting_id, p.rooms, p.bathrooms, p.apt_price, p.address, p.visible,
+	 l.phone, l.email FROM osellner.Postings AS p, osellner.Landlords AS l
+	WHERE p.creator_id LIKE l.landlord_id`;
 	console.log(sql);
 	let data = [];
 

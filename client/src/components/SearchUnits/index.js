@@ -24,11 +24,6 @@ const SearchUnits = () => {
     // User Id
     const { userId } = React.useContext(UserContext);
 
-    // Activates the intital APIs
-    React.useEffect(() => {
-        getAllUnits();
-    }, []);
-
     const getAllUnits = () => {
         callApiGetAllUnits()
             .then(res => {
@@ -36,6 +31,7 @@ const SearchUnits = () => {
                 var parsed = JSON.parse(res.express);
                 console.log("getAllUnits parsed: ", parsed);
                 setUnitList(parsed);
+                setUnitMode(true);
             });
     }
 
@@ -100,7 +96,8 @@ const SearchUnits = () => {
                     <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
-                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} />
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible}
+                        getAllUnits={getAllUnits} />
                 </>)}
 
             </Grid>
