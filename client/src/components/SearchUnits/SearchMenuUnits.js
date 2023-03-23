@@ -1,44 +1,47 @@
 import React from 'react';
 import {
-    Button, Box, RadioGroup, FormControlLabel, Radio, FormLabel,
-    ThemeProvider, CssBaseline, Grid, Typography, TextField
+    Button, Box, RadioGroup, FormControlLabel, Radio, FormGroup,
+    ThemeProvider, CssBaseline, Grid, Typography, Checkbox
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, getAllUnits }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, userId }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
-    const [minPrice, setMinPrice] = React.useState(0);
-    const [maxPrice, setMaxPrice] = React.useState(1000000);
-    const [minBed, setMinBed] = React.useState(0);
-    const [maxBed, setMaxBed] = React.useState(100);
-    const [minBath, setMinBath] = React.useState(0);
-    const [maxBath, setMaxBath] = React.useState(100);
+    const [minPrice, setMinPrice] = React.useState("");
+    const [maxPrice, setMaxPrice] = React.useState("");
+    const [minBed, setMinBed] = React.useState("");
+    const [maxBed, setMaxBed] = React.useState("");
+    const [minBath, setMinBath] = React.useState("");
+    const [maxBath, setMaxBath] = React.useState("");
+
+    const [onlyInterested, setOnlyInterested] = React.useState(false);
 
     const handleReset = () => {
         setSortMethod(0)
-        setMinPrice(0)
-        setMaxPrice(1000000)
-        setMinBed(0)
-        setMaxBed(100)
-        setMinBath(0)
-        setMaxBath(100)
+        setMinPrice("")
+        setMaxPrice("")
+        setMinBed("")
+        setMaxBed("")
+        setMinBath("")
+        setMaxBath("")
+        setOnlyInterested(false)
     }
 
     const handleSearchUnits = (event) => {
         event.preventDefault();
 
-        if (maxPrice < minPrice) {
+        if (maxPrice < minPrice && minPrice && maxPrice) {
             setAlertMessage("Maximum price must be greater than minimum price");
             setAlertVisible(true);
             setMinPrice(maxPrice);
-        } else if (maxBed < minBed) {
+        } else if (maxBed < minBed && minBed && maxBed) {
             setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
             setAlertVisible(true);
             setMinBed(maxBed);
-        } else if (maxBath < minBath) {
+        } else if (maxBath < minBath && minBath && maxBath) {
             setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
             setAlertVisible(true);
             setMinBath(maxBath);
@@ -76,7 +79,9 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                 minBed: minBed,
                 maxBed: maxBed,
                 minBath: minBath,
-                maxBath: maxBath
+                maxBath: maxBath,
+                renter_id: userId,
+                onlyInterested: onlyInterested
             })
         });
         const body = await response.json();
@@ -107,6 +112,10 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
 
     const handleMaxBathChange = (event) => {
         setMaxBath(parseInt(event.target.value));
+    }
+
+    const handleOnlyInterested = (event) => {
+        setOnlyInterested(event.target.checked);
     }
 
     return (
@@ -198,16 +207,34 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
 
                     </Box>
 
-                    <Box>
-                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                    <Box
+                        display="flex"
+                        alignItems={"center"}
+                        sx={{ mt: 4, mb: 1 }}
+                    >
+                        <Button sx={{ ml: 1 }} type="submit" variant="contained">
                             Search for Units
                         </Button>
 
-                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} onClick={getAllUnits} variant="contained">
-                            See ALL units
-                        </Button>
+                        <Box
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignContent={"center"}
+                            flexGrow={1}
+                            alignItems="flex-start"
+                            sx={{ ml: 3 }}
+                        >
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={onlyInterested}
+                                        onChange={handleOnlyInterested}
+                                    />
+                                }
+                                label="Only Show Favourites"
+                            />
+                        </Box>
                     </Box>
-
                 </form>
             </Box>
         </ThemeProvider>

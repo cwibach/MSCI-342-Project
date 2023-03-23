@@ -158,11 +158,11 @@ export const ExpandedUnitInfo = ({ unit, unExpandUnit, userId }) => {
                     marginLeft: appTheme.spacing(3),
                     marginBottom: appTheme.spacing(1)
                 }}
-                variant="h5"
+                variant="h6"
                 component="div"
                 color="inherit"
             >
-                Landlord Contact Info
+                Landlord Contact Information:
             </Typography>
 
             <Typography
@@ -175,7 +175,7 @@ export const ExpandedUnitInfo = ({ unit, unExpandUnit, userId }) => {
                 component="div"
                 color="inherit"
             >
-                Phone #: {unit.phone}
+                Phone Number: {unit.phone}
             </Typography>
 
             <Typography
