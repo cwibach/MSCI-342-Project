@@ -8,23 +8,26 @@ import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, getAllUnits }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, userId }) => {
     const [sortMethod, setSortMethod] = React.useState(0);
-    const [minPrice, setMinPrice] = React.useState(0);
-    const [maxPrice, setMaxPrice] = React.useState(1000000);
-    const [minBed, setMinBed] = React.useState(0);
-    const [maxBed, setMaxBed] = React.useState(100);
-    const [minBath, setMinBath] = React.useState(0);
-    const [maxBath, setMaxBath] = React.useState(100);
+    const [minPrice, setMinPrice] = React.useState("");
+    const [maxPrice, setMaxPrice] = React.useState("");
+    const [minBed, setMinBed] = React.useState("");
+    const [maxBed, setMaxBed] = React.useState("");
+    const [minBath, setMinBath] = React.useState("");
+    const [maxBath, setMaxBath] = React.useState("");
+
+    const [onlyInterested, setOnlyInterested] = React.useState(false);
 
     const handleReset = () => {
         setSortMethod(0)
-        setMinPrice(0)
-        setMaxPrice(1000000)
-        setMinBed(0)
-        setMaxBed(100)
-        setMinBath(0)
-        setMaxBath(100)
+        setMinPrice("")
+        setMaxPrice("")
+        setMinBed("")
+        setMaxBed("")
+        setMinBath("")
+        setMaxBath("")
+        setOnlyInterested("")
     }
 
     const handleSearchUnits = (event) => {
@@ -76,7 +79,9 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                 minBed: minBed,
                 maxBed: maxBed,
                 minBath: minBath,
-                maxBath: maxBath
+                maxBath: maxBath,
+                renter_id: userId,
+                onlyInterested: onlyInterested
             })
         });
         const body = await response.json();
@@ -201,10 +206,6 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                     <Box>
                         <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
                             Search for Units
-                        </Button>
-
-                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} onClick={getAllUnits} variant="contained">
-                            See ALL units
                         </Button>
                     </Box>
 

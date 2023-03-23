@@ -24,33 +24,6 @@ const SearchUnits = () => {
     // User Id
     const { userId } = React.useContext(UserContext);
 
-    const getAllUnits = () => {
-        callApiGetAllUnits()
-            .then(res => {
-                console.log("getAllUnits returned: ", res)
-                var parsed = JSON.parse(res.express);
-                console.log("getAllUnits parsed: ", parsed);
-                setUnitList(parsed);
-                setUnitMode(true);
-            });
-    }
-
-    const callApiGetAllUnits = async () => {
-        const url = serverURL + "/api/getAllUnits";
-        console.log(url);
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        console.log("All Units: ", body);
-        return body;
-    }
-
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -96,8 +69,7 @@ const SearchUnits = () => {
                     <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
-                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible}
-                        getAllUnits={getAllUnits} />
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId} />
                 </>)}
 
             </Grid>
