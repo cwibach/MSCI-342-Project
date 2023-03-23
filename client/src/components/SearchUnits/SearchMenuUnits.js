@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-    Button, Box, RadioGroup, FormControlLabel, Radio, FormLabel,
-    ThemeProvider, CssBaseline, Grid, Typography, TextField
+    Button, Box, RadioGroup, FormControlLabel, Radio, FormGroup,
+    ThemeProvider, CssBaseline, Grid, Typography, Checkbox
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
@@ -114,6 +114,10 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
         setMaxBath(parseInt(event.target.value));
     }
 
+    const handleOnlyInterested = (event) => {
+        setOnlyInterested(event.target.value);
+    }
+
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
@@ -203,12 +207,32 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
 
                     </Box>
 
-                    <Box>
-                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                    <Box
+                        display="flex"
+                        alignItems={"center"}
+                        sx={{ mt: 4, mb: 1 }}
+                    >
+                        <Button sx={{ ml: 1 }} type="submit" variant="contained">
                             Search for Units
                         </Button>
-                    </Box>
 
+                        <Box
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignContent={"center"}
+                            flexGrow={1}
+                            alignItems="flex-start"
+                            sx={{ ml: 3 }}
+                        >
+                            <FormGroup>
+                                <FormControlLabel control={
+                                    <Checkbox
+                                        onChange={handleOnlyInterested}
+                                    />
+                                } label="Only Show Interested" />
+                            </FormGroup>
+                        </Box>
+                    </Box>
                 </form>
             </Box>
         </ThemeProvider>
