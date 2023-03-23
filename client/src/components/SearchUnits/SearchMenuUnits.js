@@ -33,15 +33,15 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     const handleSearchUnits = (event) => {
         event.preventDefault();
 
-        if (maxPrice < minPrice) {
+        if (maxPrice < minPrice && minPrice && maxPrice) {
             setAlertMessage("Maximum price must be greater than minimum price");
             setAlertVisible(true);
             setMinPrice(maxPrice);
-        } else if (maxBed < minBed) {
+        } else if (maxBed < minBed && minBed && maxBed) {
             setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
             setAlertVisible(true);
             setMinBed(maxBed);
-        } else if (maxBath < minBath) {
+        } else if (maxBath < minBath && minBath && maxBath) {
             setAlertMessage("Maximum number of bedrooms must be greater than minimum number of bedrooms");
             setAlertVisible(true);
             setMinBath(maxBath);
