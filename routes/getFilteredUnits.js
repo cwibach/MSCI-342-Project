@@ -37,7 +37,7 @@ router.post('/api/getFilteredUnits', (req, res) => {
 		LEFT JOIN osellner.Interested
 		ON osellner.Postings.posting_id = osellner.Interested.posting_id
 		WHERE visible LIKE 1
-		AND (Interested.renter_id IS NULL OR Interested.renter_id LIKE \"` + req.body.userId + `\")`
+		AND Interested.renter_id LIKE ` + req.body.renter_id
 	} else {
 		sql += `SELECT creator_id, Postings.posting_id AS posting_id, address, rooms, bathrooms, apt_price, visible, phone, email FROM osellner.Postings 
 		JOIN osellner.Landlords

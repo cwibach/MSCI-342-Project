@@ -27,7 +27,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
         setMaxBed("")
         setMinBath("")
         setMaxBath("")
-        setOnlyInterested("")
+        setOnlyInterested(false)
     }
 
     const handleSearchUnits = (event) => {
@@ -115,7 +115,7 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
     }
 
     const handleOnlyInterested = (event) => {
-        setOnlyInterested(event.target.value);
+        setOnlyInterested(event.target.checked);
     }
 
     return (
@@ -224,13 +224,15 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
                             alignItems="flex-start"
                             sx={{ ml: 3 }}
                         >
-                            <FormGroup>
-                                <FormControlLabel control={
+                            <FormControlLabel
+                                control={
                                     <Checkbox
+                                        checked={onlyInterested}
                                         onChange={handleOnlyInterested}
                                     />
-                                } label="Only Show Interested" />
-                            </FormGroup>
+                                }
+                                label="Only Show Favourites"
+                            />
                         </Box>
                     </Box>
                 </form>
