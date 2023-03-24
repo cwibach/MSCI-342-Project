@@ -117,7 +117,7 @@ function SearchRenters() {
                 </>) : (<>
 
                     {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+                    <SearchMenuRenters userId={userId} setRenters={setRenters} setRenterMode={setRenterMode} />
 
 
                 </>)}
@@ -132,7 +132,7 @@ function SearchRenters() {
 
 // const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
-const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
+const SearchMenuRenters = ({ userId, setRenters, setRenterMode}) => {
 
     const [renterCook, setRenterCook] = React.useState("");
     const [renterGender, setRenterGender] = React.useState("");
@@ -173,7 +173,8 @@ const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
             body: JSON.stringify({
                 renterCook: renterCook,
                 renterGender: renterGender,
-                renterBed: renterBed
+                renterBed: renterBed,
+                renter_id: userId
             })
         });
         const body = await response.json();
