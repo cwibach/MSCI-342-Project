@@ -16,8 +16,19 @@ router.post('/api/getFilteredRenters', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = "SELECT * FROM osellner.Renters WHERE osellner.Renters.renter_id NOT LIKE ? ";
-	let data = [req.body.renter_id];
+	let sql = "";
+
+	if (req.body.renter_id && req.body.onlyFriends) {
+		sql = `SELECT * FROM osellner.Renters
+		LEFT JOIN osellner.Connection
+		ON osellner.Renters.renter_id = osellner.Connection.friend_id
+		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id;
+	} else {
+		sql = `SELECT * FROM osellner.Renters 
+		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id;
+	}
+
+	
 
 	var arr = []
 
@@ -38,6 +49,8 @@ router.post('/api/getFilteredRenters', (req, res) => {
 		sql += " AND " + arr[i]
 	}
 	sql += ";"
+
+	let data = [];
  
 	connection.query(sql, data, (error, results, fields) => {
 	if (error) {
