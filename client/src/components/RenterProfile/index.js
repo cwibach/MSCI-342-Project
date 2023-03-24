@@ -35,6 +35,7 @@ function RenterProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getRenterProfileInfo parsed: ", parsed);
                 setProfile(parsed);
+                setEditMode(false);
             });
     }
 
@@ -91,7 +92,7 @@ function RenterProfile() {
             </AppBar>
 
             {(editMode) ? (<>
-                <EditRenterProfile item={profile[0]} handleChangeMode={handleChangeMode} />
+                <EditRenterProfile item={profile[0]} handleChangeMode={handleChangeMode} userID={userId} getProfile={getProfile} />
             </>) : (<>
                 {/* User Results */}
                 {profile.map((item) => {
@@ -213,11 +214,10 @@ function RenterProfile() {
     );
 }
 
-const EditRenterProfile = ({ item, handleChangeMode }) => {
+const EditRenterProfile = ({ item, handleChangeMode, userID, getProfile }) => {
     const [firstName, setFirstName] = React.useState(item.first_name);
     const [lastName, setLastName] = React.useState(item.last_name);
     const [phone, setPhone] = React.useState(item.phone);
-    const [email, setEmail] = React.useState(item.email);
     const [bedtime, setBedtime] = React.useState(item.bedtime);
     const [birthday, setBirthday] = React.useState(item.birthday);
     const [gender, setGender] = React.useState(item.gender);
@@ -225,6 +225,44 @@ const EditRenterProfile = ({ item, handleChangeMode }) => {
 
     async function handleFormSubmit(e) {
         e.preventDefault();
+
+        editRenterProfileInfo();
+    }
+
+    const editRenterProfileInfo = () => {
+        callApiEditRenterProfileInfo()
+            .then(res => {
+                console.log("getEditRenterInfo returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("getEditRenterInfoInfo parsed: ", parsed);
+                getProfile();
+            });
+    }
+
+    const callApiEditRenterProfileInfo = async () => {
+
+        const url = serverURL + "/api/editRenterInfo";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userID: userID,
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                bedtime: bedtime,
+                birthday: birthday,
+                cook: cook,
+                gender: gender
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
     }
 
     const handleFirst = (event) => {
@@ -237,10 +275,6 @@ const EditRenterProfile = ({ item, handleChangeMode }) => {
 
     const handlePhone = (event) => {
         setPhone(event.target.value);
-    }
-
-    const handleEmail = (event) => {
-        setEmail(event.target.value);
     }
 
     const handleBedtime = (event) => {
@@ -418,21 +452,6 @@ const EditRenterProfile = ({ item, handleChangeMode }) => {
                             onChange={handlePhone}
                             label="Phone Number"
                             id="phone"
-                            type="text"
-                            sx={{ mt: 1, mb: 1 }}
-                            color="primary"
-                        />
-
-                        <TextField
-                            variant="filled"
-                            style={{ background: "#ffffff" }}
-                            required
-                            fullWidth
-                            name="email"
-                            value={email}
-                            onChange={handleEmail}
-                            label="Email Address"
-                            id="email"
                             type="text"
                             sx={{ mt: 1, mb: 1 }}
                             color="primary"

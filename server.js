@@ -80,6 +80,10 @@ app.use('/', isInterestedRouter);
 const editVisibilityRouter = require('./routes/editVisibility');
 app.use('/', editVisibilityRouter);
 
+// Update Renter Profile Information
+const editRenterInfoRouter = require('./routes/editRenterInfo');
+app.use('/', editRenterInfoRouter);
+
 /*
 
 	APIs To Add Data 
