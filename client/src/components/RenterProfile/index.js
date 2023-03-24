@@ -35,10 +35,14 @@ function RenterProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getRenterProfileInfo parsed: ", parsed);
                 setProfile(parsed);
+                setSuccessVisible(false);
             });
     }
 
     const callApiGetRenterProfileInfo = async () => {
+        setSuccessMessage("Getting profile info...");
+        setSuccessMessage(true);
+
         const url = serverURL + "/api/getRenterProfileInfo";
         console.log(url);
 

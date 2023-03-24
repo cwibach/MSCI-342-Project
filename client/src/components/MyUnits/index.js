@@ -36,10 +36,14 @@ function MyUnits() {
                 var parsed = JSON.parse(res.express);
                 console.log("getMyUnits parsed: ", parsed);
                 setUnitList(parsed);
+                setSuccessVisible(false);
             });
     }
 
     const callApiGetMyUnits = async () => {
+        setSuccessMessage("Getting Units...");
+        setSuccessVisible(true);
+
         const url = serverURL + "/api/getMyUnits";
         console.log(url);
 

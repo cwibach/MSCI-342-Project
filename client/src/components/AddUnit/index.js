@@ -67,10 +67,14 @@ function AddUnit() {
                 console.log("callApiAddPosting returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiAddPosting parsed: ", parsed);
+                setSuccessMessage("Posting Succesfully Created!");
             });
     }
 
     const callApiAddPosting = async () => {
+        setSuccessMessage("Creating Posting...")
+        setSuccessVisible(true);
+
         const url = serverURL + "/api/addPosting";
         console.log(url);
 

@@ -36,10 +36,14 @@ function LandlordProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getLandlordProfileInfo parsed: ", parsed);
                 setProfile(parsed);
+                setSuccessVisible(false);
             });
     }
 
     const callApiGetLandlordProfileInfo = async () => {
+        setSuccessMessage("Getting Profile Info...");
+        setSuccessVisible(true);
+
         const url = serverURL + "/api/getLandlordProfileInfo";
         console.log(url);
 

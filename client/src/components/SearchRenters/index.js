@@ -53,10 +53,14 @@ function SearchRenters() {
                 var parsed = JSON.parse(res.express);
                 console.log("getRenters parsed: ", parsed);
                 setRenters(parsed);
+                setSuccessVisible(false);
             });
     }
 
     const callApiGetRenters = async () => {
+        setSuccessMessage("Retrieving Renters...");
+        setSuccessVisible(true);
+
         const url = serverURL + "/api/getRenters";
         console.log(url);
 
@@ -123,7 +127,8 @@ function SearchRenters() {
                 </>) : (<>
 
                     {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} 
+                    setSuccessMessage={setSuccessMessage} setSuccessVisible={setSuccessVisible} />
 
 
                 </>)}
@@ -138,7 +143,7 @@ function SearchRenters() {
 
 // const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
-const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+const SearchMenuRenters = ({ setRenters, setRenterMode, setSuccessMessage, setSuccessVisible }) => {
 
     const [renterCook, setRenterCook] = React.useState("");
     const [renterGender, setRenterGender] = React.useState("");
@@ -148,7 +153,6 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
         event.preventDefault()
 
         getFilteredRenters()
-        setRenterMode(true)
     }
 
     const handleReset = () => {
@@ -164,10 +168,15 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
                 var parsed = JSON.parse(res.express);
                 console.log("getFilteredRenters parsed: ", parsed);
                 setRenters(parsed);
+                setSuccessVisible(false);
+                setRenterMode(true)
             });
     }
 
     const callApiGetFilteredRenters = async () => {
+        setSuccessMessage("Getting Filtered Renters...")
+        setSuccessVisible(true);
+
         const url = serverURL + "/api/getFilteredRenters";
         console.log(url);
 

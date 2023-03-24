@@ -75,7 +75,8 @@ const SearchUnits = () => {
                     <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
-                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId} />
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId}
+                        setSuccessMessage={setSuccessMessage} setSuccessVisible={setSuccessVisible} />
                 </>)}
 
             </Grid>
