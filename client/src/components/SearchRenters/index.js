@@ -37,11 +37,6 @@ function SearchRenters() {
         getRenters();
     }, [userId]);
 
-    // Handle method for searching renters
-    // const handleSearchRenters = (event) => {
-    //     setRenterMode(true);
-    // }
-
     const getRenters = () => {
         callApiGetRenters()
             .then(res => {
@@ -116,7 +111,6 @@ function SearchRenters() {
 
                 </>) : (<>
 
-                    {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
                     <SearchMenuRenters userId={userId} setRenters={setRenters} setRenterMode={setRenterMode} />
 
 
@@ -130,7 +124,6 @@ function SearchRenters() {
     );
 }
 
-// const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
 const SearchMenuRenters = ({ userId, setRenters, setRenterMode}) => {
 
