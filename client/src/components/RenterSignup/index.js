@@ -6,7 +6,7 @@ import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select,
 import { appTheme } from "../../themes/theme";
 import { useAuth } from '../../contexts/AuthContext';
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import AlertBar from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -27,8 +27,8 @@ function RenterSignup() {
     const [first_name, setFirst_name] = React.useState('');
     const [last_name, setLast_name] = React.useState('');
 
-    const [alertVisible, setAlertVisible] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [errorVisible, setErrorVisible] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
     const { renterRegister } = useAuth();
@@ -39,8 +39,8 @@ function RenterSignup() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setAlertMessage("Error: Passwords do not match");
-            setAlertVisible(true);
+            setErrorMessage("Error: Passwords do not match");
+            setErrorVisible(true);
         } else {
 
             try {
@@ -55,8 +55,8 @@ function RenterSignup() {
                 history.push('/RenterProfile');
             } catch (e) {
                 console.log(e);
-                setAlertMessage("Error: Failed to Register");
-                setAlertVisible(true);
+                setErrorMessage("Error: Failed to Register");
+                setErrorVisible(true);
             }
             setLoading(false);
         }
@@ -185,7 +185,7 @@ function RenterSignup() {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
+            <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
 
             <Box
                 alignItems="center"

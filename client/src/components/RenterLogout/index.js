@@ -6,13 +6,13 @@ import { appTheme } from "../../themes/theme";
 import { AppPaper} from "../../themes/paper";
 import history from '../Navigation/history';
 import { useAuth } from "../../contexts/AuthContext";
-import AlertBar from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 import NavButton from "../GeneralResources/navButton";
 
 export default function RenterLogout() {
     const { renterLogout } = useAuth();
-    const [alertVisible, setAlertVisible] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [errorVisible, setErrorVisible] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
 
 
     async function handleLogout() {
@@ -20,8 +20,8 @@ export default function RenterLogout() {
             await renterLogout();
             history.push("/");
         } catch {
-            setAlertVisible(true);
-            setAlertMessage("Error: Failed to Logout");
+            setErrorVisible(true);
+            setErrorMessage("Error: Failed to Logout");
         }
     }
 
@@ -53,7 +53,7 @@ export default function RenterLogout() {
                 </Toolbar>
             </AppBar>
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
+            <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
 
             <Box
                 alignItems="center"

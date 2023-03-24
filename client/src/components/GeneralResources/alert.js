@@ -3,7 +3,7 @@ import { Button} from '@mui/material';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
-export function errorAlert({alertVisible, alertMessage, setAlertVisible}) {
+export default function ErrorAlert({alertVisible, alertMessage, setAlertVisible}) {
 
     const handleClose = () => {
         setAlertVisible(false);
@@ -28,7 +28,7 @@ export function errorAlert({alertVisible, alertMessage, setAlertVisible}) {
     )
 }
 
-export function successAlert({alertVisible, alertMessage, setAlertVisible}) {
+export function SuccessAlert({alertVisible, alertMessage, setAlertVisible}) {
 
     const handleClose = () => {
         setAlertVisible(false);
@@ -44,6 +44,7 @@ export function successAlert({alertVisible, alertMessage, setAlertVisible}) {
                         CLOSE
                     </Button>
                 }>
+                <AlertTitle>Error</AlertTitle>
                 {alertMessage}
             </Alert>
         </>) : (<>
