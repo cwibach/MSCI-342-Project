@@ -6,7 +6,7 @@ import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import ErrorAlert, {SuccessAlert} from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -21,9 +21,6 @@ export default function LandlordLogin({ setUserID }) {
     const [errorVisible, setErrorVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
 
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
-
     const { login } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
@@ -35,8 +32,8 @@ export default function LandlordLogin({ setUserID }) {
             await login(email, password);
 
             getLandlordUserID();
-
             history.push('/LandlordProfile')
+
         } catch (e) {
             setErrorVisible(true);
             setErrorMessage("Error on login, please try again");
@@ -54,6 +51,7 @@ export default function LandlordLogin({ setUserID }) {
                 let tempUserID = parsed[0].landlord_id;
                 console.log("landlord_id", tempUserID);
                 setUserId(tempUserID);
+
             })
     }
 
@@ -97,8 +95,6 @@ export default function LandlordLogin({ setUserID }) {
             <CssBaseline enableColorScheme />
 
             <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
-
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <Box
                 alignItems="center"

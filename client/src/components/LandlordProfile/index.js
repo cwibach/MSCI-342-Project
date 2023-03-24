@@ -5,7 +5,6 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/m
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import {SuccessAlert} from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -17,9 +16,6 @@ function LandlordProfile() {
 
     // Profile List State
     const [profile, setProfile] = React.useState([]);
-
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -36,13 +32,10 @@ function LandlordProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getLandlordProfileInfo parsed: ", parsed);
                 setProfile(parsed);
-                setSuccessVisible(false);
             });
     }
 
     const callApiGetLandlordProfileInfo = async () => {
-        setSuccessMessage("Getting Profile Info...");
-        setSuccessVisible(true);
 
         const url = serverURL + "/api/getLandlordProfileInfo";
         console.log(url);
@@ -90,8 +83,6 @@ function LandlordProfile() {
                     </Box>
                 </Toolbar>
             </AppBar>
-
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             {/* User Results */}
             {profile.map((item) => {

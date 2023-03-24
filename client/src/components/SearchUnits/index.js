@@ -8,7 +8,6 @@ import NavButton from "../GeneralResources/navButton";
 import AlertBar from '../GeneralResources/alert';
 import SearchMenuUnits from "./SearchMenuUnits";
 import ListofUnits from "./ListUnits";
-import {SuccessAlert} from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -21,9 +20,6 @@ const SearchUnits = () => {
     const [unitMode, setUnitMode] = React.useState(false);
     const [alertVisible, setAlertVisible] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState("");
-
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id
     const { userId } = React.useContext(UserContext);
@@ -58,8 +54,6 @@ const SearchUnits = () => {
 
             </AppBar>
 
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
-
             <AlertBar alertMessage={alertMessage} alertVisible={alertVisible} setAlertVisible={setAlertVisible} />
 
             <Grid margin={appTheme.spacing(3 / 4)}>
@@ -75,8 +69,7 @@ const SearchUnits = () => {
                     <ListofUnits units={unitList} userId={userId} />
                 </>) : (<>
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
-                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId}
-                        setSuccessMessage={setSuccessMessage} setSuccessVisible={setSuccessVisible} />
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId}/>
                 </>)}
 
             </Grid>

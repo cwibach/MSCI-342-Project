@@ -5,7 +5,6 @@ import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import {SuccessAlert} from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -17,9 +16,6 @@ function MyUnits() {
 
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
-
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -36,13 +32,10 @@ function MyUnits() {
                 var parsed = JSON.parse(res.express);
                 console.log("getMyUnits parsed: ", parsed);
                 setUnitList(parsed);
-                setSuccessVisible(false);
             });
     }
 
     const callApiGetMyUnits = async () => {
-        setSuccessMessage("Getting Units...");
-        setSuccessVisible(true);
 
         const url = serverURL + "/api/getMyUnits";
         console.log(url);
@@ -92,8 +85,6 @@ function MyUnits() {
                     </Box>
                 </Toolbar>
             </AppBar>
-
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <ListofUnits getMyUnits={getMyUnits} unitList={unitList} />
 

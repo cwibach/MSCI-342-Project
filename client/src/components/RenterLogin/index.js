@@ -6,7 +6,7 @@ import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import ErrorAlert, {SuccessAlert} from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -21,9 +21,6 @@ export default function RenterLogin({ setUserID }) {
     const [errorVisible, setErrorVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
 
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
-
     const { renterLogin } = useAuth();
     const { setUserId } = React.useContext(UserContext);
 
@@ -33,7 +30,6 @@ export default function RenterLogin({ setUserID }) {
         try {
             setLoading(true);
             await renterLogin(email, password);
-
             getRenterUserID();
 
             history.push('/RenterProfile')
@@ -54,6 +50,7 @@ export default function RenterLogin({ setUserID }) {
                 let tempUserID = parsed[0].renter_id;
                 console.log("renter_id", tempUserID);
                 setUserId(tempUserID);
+
             })
     }
 
@@ -97,9 +94,6 @@ export default function RenterLogin({ setUserID }) {
             <CssBaseline enableColorScheme />
 
             <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
-
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
-
             <Box
                 alignItems="center"
                 style={{

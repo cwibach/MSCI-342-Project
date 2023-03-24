@@ -8,7 +8,7 @@ import LessGreaterNumericBox from "../GeneralResources/LessGreaterNumericBox";
 
 const serverURL = "";
 
-const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, userId, setSuccessMessage, setSuccessVisible }) => {
+const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMessage, userId}) => {
     const [sortMethod, setSortMethod] = React.useState(0);
     const [minPrice, setMinPrice] = React.useState("");
     const [maxPrice, setMaxPrice] = React.useState("");
@@ -59,14 +59,11 @@ const SearchMenuUnits = ({ setUnitList, setUnitMode, setAlertVisible, setAlertMe
             .then(res => {
                 var parsed = JSON.parse(res.express);
                 setUnitList(parsed);
-                setSuccessVisible(false);
                 setUnitMode(true);
             });
     }
 
     const callApiGetFilteredUnits = async () => {
-        setSuccessMessage("Getting Units...");
-        setSuccessVisible(true);
 
         const url = serverURL + "/api/getFilteredUnits";
         console.log(url);

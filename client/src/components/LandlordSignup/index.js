@@ -43,12 +43,16 @@ export default function LandlordSignup() {
 
             try {
                 setLoading(true);
+                setSuccessMessage("Signing up...");
+                setSuccessVisible(true);
                 await register(email, password);
 
                 // what to do if succesful
 
                 addLandlord();
                 getLandlordUserID();
+
+                setSuccessVisible(false);
 
                 history.push('/LandlordProfile');
             } catch (e) {

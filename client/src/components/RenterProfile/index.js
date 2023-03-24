@@ -5,7 +5,6 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, autocompleteC
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import {SuccessAlert} from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -16,9 +15,6 @@ function RenterProfile() {
 
     // Profile List State
     const [profile, setProfile] = React.useState([]);
-
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -35,13 +31,10 @@ function RenterProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getRenterProfileInfo parsed: ", parsed);
                 setProfile(parsed);
-                setSuccessVisible(false);
             });
     }
 
     const callApiGetRenterProfileInfo = async () => {
-        setSuccessMessage("Getting profile info...");
-        setSuccessMessage(true);
 
         const url = serverURL + "/api/getRenterProfileInfo";
         console.log(url);
@@ -88,8 +81,6 @@ function RenterProfile() {
                     </Box>
                 </Toolbar>
             </AppBar>
-
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             {/* User Results */}
             {profile.map((item) => {

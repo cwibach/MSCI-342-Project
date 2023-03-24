@@ -48,12 +48,16 @@ function RenterSignup() {
 
             try {
                 setLoading(true);
+                setSuccessMessage("Signing up...");
+                setSuccessVisible(true);
                 await renterRegister(email, password);
 
                 // what to do if succesful
 
                 addRenter();
                 getRenterID();
+
+                setSuccessVisible(false);
 
                 history.push('/RenterProfile');
             } catch (e) {

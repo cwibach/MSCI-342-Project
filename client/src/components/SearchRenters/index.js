@@ -15,7 +15,6 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import {SuccessAlert} from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -29,9 +28,6 @@ function SearchRenters() {
 
     // Button State
     const [renterMode, setRenterMode] = React.useState(false);
-
-    const [successVisible, setSuccessVisible] = React.useState(false);
-    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -53,14 +49,10 @@ function SearchRenters() {
                 var parsed = JSON.parse(res.express);
                 console.log("getRenters parsed: ", parsed);
                 setRenters(parsed);
-                setSuccessVisible(false);
             });
     }
 
     const callApiGetRenters = async () => {
-        setSuccessMessage("Retrieving Renters...");
-        setSuccessVisible(true);
-
         const url = serverURL + "/api/getRenters";
         console.log(url);
 
@@ -108,8 +100,6 @@ function SearchRenters() {
                 </Toolbar>
             </AppBar>
 
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
-
             <Grid margin={appTheme.spacing(3 / 4)}>
 
                 {(renterMode) ? (<>
@@ -127,8 +117,7 @@ function SearchRenters() {
                 </>) : (<>
 
                     {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} 
-                    setSuccessMessage={setSuccessMessage} setSuccessVisible={setSuccessVisible} />
+                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
 
 
                 </>)}
@@ -143,7 +132,7 @@ function SearchRenters() {
 
 // const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
-const SearchMenuRenters = ({ setRenters, setRenterMode, setSuccessMessage, setSuccessVisible }) => {
+const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
 
     const [renterCook, setRenterCook] = React.useState("");
     const [renterGender, setRenterGender] = React.useState("");
@@ -168,15 +157,11 @@ const SearchMenuRenters = ({ setRenters, setRenterMode, setSuccessMessage, setSu
                 var parsed = JSON.parse(res.express);
                 console.log("getFilteredRenters parsed: ", parsed);
                 setRenters(parsed);
-                setSuccessVisible(false);
                 setRenterMode(true)
             });
     }
 
     const callApiGetFilteredRenters = async () => {
-        setSuccessMessage("Getting Filtered Renters...")
-        setSuccessVisible(true);
-
         const url = serverURL + "/api/getFilteredRenters";
         console.log(url);
 

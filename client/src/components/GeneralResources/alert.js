@@ -44,7 +44,6 @@ export function SuccessAlert({alertVisible, alertMessage, setAlertVisible}) {
                         CLOSE
                     </Button>
                 }>
-                <AlertTitle>Error</AlertTitle>
                 {alertMessage}
             </Alert>
         </>) : (<>
