@@ -35,6 +35,7 @@ function RenterProfile() {
     }
 
     const callApiGetRenterProfileInfo = async () => {
+
         const url = serverURL + "/api/getRenterProfileInfo";
         console.log(url);
 
@@ -80,8 +81,6 @@ function RenterProfile() {
                     </Box>
                 </Toolbar>
             </AppBar>
-
-
 
             {/* User Results */}
             {profile.map((item) => {

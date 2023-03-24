@@ -6,7 +6,7 @@ import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import AlertBar from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -18,8 +18,8 @@ export default function RenterLogin({ setUserID }) {
     const [password, setPassword] = React.useState("");
 
     const [loading, setLoading] = React.useState(false);
-    const [alertVisible, setAlertVisible] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [errorVisible, setErrorVisible] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
 
     const { renterLogin } = useAuth();
     const { setUserId } = React.useContext(UserContext);
@@ -30,13 +30,12 @@ export default function RenterLogin({ setUserID }) {
         try {
             setLoading(true);
             await renterLogin(email, password);
-
             getRenterUserID();
 
             history.push('/RenterProfile')
         } catch (e) {
-            setAlertVisible(true);
-            setAlertMessage("Error on login, please try again");
+            setErrorVisible(true);
+            setErrorMessage("Error on login, please try again");
         }
 
         setLoading(false);
@@ -51,6 +50,7 @@ export default function RenterLogin({ setUserID }) {
                 let tempUserID = parsed[0].renter_id;
                 console.log("renter_id", tempUserID);
                 setUserId(tempUserID);
+
             })
     }
 
@@ -93,8 +93,7 @@ export default function RenterLogin({ setUserID }) {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
-
+            <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
             <Box
                 alignItems="center"
                 style={{

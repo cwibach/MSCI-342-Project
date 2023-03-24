@@ -132,7 +132,7 @@ function SearchRenters() {
 
 // const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
-const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
+const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
 
     const [renterCook, setRenterCook] = React.useState("");
     const [renterGender, setRenterGender] = React.useState("");
@@ -142,7 +142,6 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
         event.preventDefault()
 
         getFilteredRenters()
-        setRenterMode(true)
     }
 
     const handleReset = () => {
@@ -158,6 +157,7 @@ const SearchMenuRenters = ({ setRenters, setRenterMode }) => {
                 var parsed = JSON.parse(res.express);
                 console.log("getFilteredRenters parsed: ", parsed);
                 setRenters(parsed);
+                setRenterMode(true)
             });
     }
 

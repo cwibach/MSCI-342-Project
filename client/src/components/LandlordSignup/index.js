@@ -7,7 +7,7 @@ import history from '../Navigation/history';
 import { ThemeProvider } from '@mui/material/styles';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import AlertBar from '../GeneralResources/alert.js';
+import ErrorAlert, {SuccessAlert} from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -24,8 +24,11 @@ export default function LandlordSignup() {
     const [username, setUsername] = React.useState('');
 
     const [loading, setLoading] = React.useState(false);
-    const [alertVisible, setAlertVisible] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [errorVisible, setErrorVisible] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
+
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
 
     const { setUserId } = React.useContext(UserContext);
     const { register } = useAuth();
@@ -34,12 +37,14 @@ export default function LandlordSignup() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setAlertMessage("Error: Passwords do not match");
-            setAlertVisible(true);
+            setErrorMessage("Error: Passwords do not match");
+            setErrorVisible(true);
         } else {
 
             try {
                 setLoading(true);
+                setSuccessMessage("Signing up...");
+                setSuccessVisible(true);
                 await register(email, password);
 
                 // what to do if succesful
@@ -47,10 +52,12 @@ export default function LandlordSignup() {
                 addLandlord();
                 getLandlordUserID();
 
+                setSuccessVisible(false);
+
                 history.push('/LandlordProfile');
             } catch (e) {
-                setAlertMessage("Error: Failed to Register");
-                setAlertVisible(true);
+                setErrorMessage("Error: Failed to Register");
+                setErrorVisible(true);
             }
             setLoading(false);
         }
@@ -158,7 +165,9 @@ export default function LandlordSignup() {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
+            <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
+
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <Box
                 alignItems="center"

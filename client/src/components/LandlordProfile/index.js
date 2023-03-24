@@ -6,6 +6,7 @@ import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 
+
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
 // DEV MODE
@@ -35,6 +36,7 @@ function LandlordProfile() {
     }
 
     const callApiGetLandlordProfileInfo = async () => {
+
         const url = serverURL + "/api/getLandlordProfileInfo";
         console.log(url);
 
@@ -81,8 +83,6 @@ function LandlordProfile() {
                     </Box>
                 </Toolbar>
             </AppBar>
-
-
 
             {/* User Results */}
             {profile.map((item) => {

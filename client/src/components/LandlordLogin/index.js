@@ -6,7 +6,7 @@ import history from '../Navigation/history';
 import TextField from '@mui/material/TextField';
 import { useAuth } from "../../contexts/AuthContext";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import AlertBar from '../GeneralResources/alert.js';
+import ErrorAlert from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -18,8 +18,8 @@ export default function LandlordLogin({ setUserID }) {
     const [password, setPassword] = React.useState("");
 
     const [loading, setLoading] = React.useState(false);
-    const [alertVisible, setAlertVisible] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [errorVisible, setErrorVisible] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
 
     const { login } = useAuth();
     const { setUserId } = React.useContext(UserContext);
@@ -32,11 +32,11 @@ export default function LandlordLogin({ setUserID }) {
             await login(email, password);
 
             getLandlordUserID();
-
             history.push('/LandlordProfile')
+
         } catch (e) {
-            setAlertVisible(true);
-            setAlertMessage("Error on login, please try again");
+            setErrorVisible(true);
+            setErrorMessage("Error on login, please try again");
         }
 
         setLoading(false);
@@ -51,6 +51,7 @@ export default function LandlordLogin({ setUserID }) {
                 let tempUserID = parsed[0].landlord_id;
                 console.log("landlord_id", tempUserID);
                 setUserId(tempUserID);
+
             })
     }
 
@@ -93,7 +94,7 @@ export default function LandlordLogin({ setUserID }) {
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
 
-            <AlertBar alertVisible={alertVisible} alertMessage={alertMessage} setAlertVisible={setAlertVisible} />
+            <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
 
             <Box
                 alignItems="center"

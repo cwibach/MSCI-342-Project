@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } f
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import {SuccessAlert} from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -24,6 +25,9 @@ function AddUnit() {
     const [address, setAddress] = React.useState('');
     const [visible, setVisible] = React.useState(true);
 
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
+
     // Handles submitting the form
     const handleSubmit = (event) => {
 
@@ -37,6 +41,7 @@ function AddUnit() {
             setBathrooms('');
             setApt_price('');
             setAddress('');
+            setSuccessVisible(true);
         }
 
     };
@@ -63,10 +68,13 @@ function AddUnit() {
                 console.log("callApiAddPosting returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiAddPosting parsed: ", parsed);
+                setSuccessMessage("Posting Succesfully Created!");
+                setSuccessVisible(true);
             });
     }
 
     const callApiAddPosting = async () => {
+
         const url = serverURL + "/api/addPosting";
         console.log(url);
 
@@ -119,6 +127,7 @@ function AddUnit() {
                 </Toolbar>
             </AppBar>
 
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <Box
                 alignItems="center"

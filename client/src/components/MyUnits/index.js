@@ -36,6 +36,7 @@ function MyUnits() {
     }
 
     const callApiGetMyUnits = async () => {
+
         const url = serverURL + "/api/getMyUnits";
         console.log(url);
 
