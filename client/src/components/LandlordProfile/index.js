@@ -5,6 +5,8 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/m
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import {SuccessAlert} from '../GeneralResources/alert.js';
+
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -15,6 +17,9 @@ function LandlordProfile() {
 
     // Profile List State
     const [profile, setProfile] = React.useState([]);
+
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -82,7 +87,7 @@ function LandlordProfile() {
                 </Toolbar>
             </AppBar>
 
-
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             {/* User Results */}
             {profile.map((item) => {

@@ -6,7 +6,7 @@ import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select,
 import { appTheme } from "../../themes/theme";
 import { useAuth } from '../../contexts/AuthContext';
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import ErrorAlert from '../GeneralResources/alert.js';
+import ErrorAlert, {SuccessAlert} from '../GeneralResources/alert.js';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
@@ -30,6 +30,9 @@ function RenterSignup() {
     const [errorVisible, setErrorVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
     const [loading, setLoading] = React.useState(false);
+
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
 
     const { renterRegister } = useAuth();
     const { setUserId } = React.useContext(UserContext);
@@ -186,6 +189,8 @@ function RenterSignup() {
             <CssBaseline enableColorScheme />
 
             <ErrorAlert alertVisible={errorVisible} alertMessage={errorMessage} setAlertVisible={setErrorVisible} />
+
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <Box
                 alignItems="center"

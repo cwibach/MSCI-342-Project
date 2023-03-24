@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } f
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import {SuccessAlert} from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -23,6 +24,9 @@ function AddUnit() {
     const [apt_price, setApt_price] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [visible, setVisible] = React.useState(true);
+
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
 
     // Handles submitting the form
     const handleSubmit = (event) => {
@@ -119,6 +123,7 @@ function AddUnit() {
                 </Toolbar>
             </AppBar>
 
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <Box
                 alignItems="center"

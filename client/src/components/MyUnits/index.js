@@ -5,6 +5,7 @@ import { appTheme } from "../../themes/theme";
 import { AppPaper } from "../../themes/paper";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
+import {SuccessAlert} from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -16,6 +17,9 @@ function MyUnits() {
 
     // Profile List State
     const [unitList, setUnitList] = React.useState([]);
+
+    const [successVisible, setSuccessVisible] = React.useState(false);
+    const [successMessage, setSuccessMessage] = React.useState("");
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -84,6 +88,8 @@ function MyUnits() {
                     </Box>
                 </Toolbar>
             </AppBar>
+
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
 
             <ListofUnits getMyUnits={getMyUnits} unitList={unitList} />
 
