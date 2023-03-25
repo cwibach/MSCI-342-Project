@@ -94,9 +94,9 @@ function LandlordProfile() {
                 </Toolbar>
             </AppBar>
 
-            {(EditMode) ? ( <>
-                <EditLandlordProfile item={profile[0]} handleChangeMode={handleChangeMode} userID={userId} getProfile={getProfile}/>
-            </>): (<>
+            {(EditMode) ? (<>
+                <EditLandlordProfile item={profile[0]} handleChangeMode={handleChangeMode} userID={userId} getProfile={getProfile} />
+            </>) : (<>
                 {/* User Results */}
                 {profile.map((item) => {
                     return (
@@ -162,9 +162,10 @@ function LandlordProfile() {
                                         </Typography>
                                     </Grid>
 
-                                    <Button onClick={handleChangeMode} sx={{ml:7, mt:2}}
-                                        varent="contained">
-                                            Edit Profile
+                                    <Button onClick={handleChangeMode}
+                                        sx={{ ml: "auto", mt: 4, mr: "auto", pl: 6, pr: 6 }}
+                                        variant="contained">
+                                        Edit Profile
                                     </Button>
 
                                 </Grid>
@@ -179,7 +180,7 @@ function LandlordProfile() {
     );
 }
 
-const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
+const EditLandlordProfile = ({ item, handleChangeMode, userID, getProfile }) => {
     const [firstName, setFirstName] = React.useState(item.first_name);
     const [lastName, setLastName] = React.useState(item.last_name);
     const [phone, setPhone] = React.useState(item.phone);
@@ -236,7 +237,7 @@ const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
         return body;
     }
 
-    
+
     return (
         <Box
             alignItems="center"
@@ -245,7 +246,7 @@ const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
                 color: "#ffffff",
                 borderRadius: 12
             }}
-            sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
+            sx={{ p: 5, mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
         >
 
             {/* Creates a column grid for the body of the page */}
@@ -255,9 +256,6 @@ const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
                 alignItems="center"
 
                 display="flex"
-                style={{
-                    marginTop: 45
-                }}
             >
 
                 {/* Page Title */}
@@ -277,56 +275,56 @@ const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
                 >
                     <form onSubmit={handleFormSubmit}>
 
-                    <Grid container
-                             direction="row"
-                             spacing={1}
-                         >
-                             <Grid item xs={6}>
-                                 <TextField
-                                     variant="filled"
-                                     style={{ background: "#ffffff" }}
-                                     required
-                                     fullWidth
-                                     value={firstName}
-                                     onChange={handleFirst}
-                                     label="First Name"
-                                     type="text"
-                                     sx={{ mt: 2, mb: 1 }}
-                                     color="primary"
-                                 />
-                             </Grid>
+                        <Grid container
+                            direction="row"
+                            spacing={1}
+                        >
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    value={firstName}
+                                    onChange={handleFirst}
+                                    label="First Name"
+                                    type="text"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                />
+                            </Grid>
 
-                             <Grid item xs={6}>
-                                 <TextField
-                                     variant="filled"
-                                     style={{ background: "#ffffff" }}
-                                     required
-                                     fullWidth
-                                     value={lastName}
-                                     onChange={handleLast}
-                                     label="Last Name"
-                                     type="text"
-                                     sx={{ mt: 2, mb: 1 }}
-                                     color="primary"
-                                 />
-                             </Grid>
-                         </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="filled"
+                                    style={{ background: "#ffffff" }}
+                                    required
+                                    fullWidth
+                                    value={lastName}
+                                    onChange={handleLast}
+                                    label="Last Name"
+                                    type="text"
+                                    sx={{ mt: 2, mb: 1 }}
+                                    color="primary"
+                                />
+                            </Grid>
+                        </Grid>
 
-                         <TextField
-                             variant="filled"
-                             style={{ background: "#ffffff" }}
-                             required
-                             fullWidth
-                             name="phone"
-                             value={phone}
-                             onChange={handlePhone}
-                             label="Phone Number"
-                             id="phone"
-                             type="text"
-                             sx={{ mt: 1, mb: 1 }}
-                             color="primary"
-                         />
-                         
+                        <TextField
+                            variant="filled"
+                            style={{ background: "#ffffff" }}
+                            required
+                            fullWidth
+                            name="phone"
+                            value={phone}
+                            onChange={handlePhone}
+                            label="Phone Number"
+                            id="phone"
+                            type="text"
+                            sx={{ mt: 1, mb: 1 }}
+                            color="primary"
+                        />
+
                         <Button
                             type="submit"
                             fullWidth
@@ -334,15 +332,15 @@ const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
                             sx={{ mt: 2, mb: 1 }}
                             color="primary"
                         >
-                            Submit Changes
+                            Save Changes
                         </Button>
-                    
+
                         <Button onClick={handleChangeMode}
                             fullWidth
-                            sx={{ mt: 2, mb:1}}
-                            color = "primary"
+                            sx={{ mt: 2, mb: 1 }}
+                            color="primary"
                             variant="contained">
-                            Cancel Edit
+                            Cancel
                         </Button>
 
                     </form>
