@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 
 class UnitMap extends Component {
     render() {
-
         const mapStyles = {
             width: '45%',
             height: '100%'
         }
+
         return (
             <Map
                 google={this.props.google}
@@ -19,7 +19,8 @@ class UnitMap extends Component {
                         lng: -80.53849451032545
                     }
                 }
-            />
+            >
+            </Map>
         );
     }
 
