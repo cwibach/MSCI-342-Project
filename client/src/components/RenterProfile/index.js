@@ -195,7 +195,7 @@ function RenterProfile() {
                                         </Typography>
                                     </Grid>
 
-                                    <Button onClick={handleChangeMode} sx={{ ml: 7, mt: 2 }}
+                                    <Button onClick={handleChangeMode} sx={{ ml: "auto", mt: 4, mr: "auto", pl: 6, pr: 6 }}
                                         variant="contained">
                                         Edit Profile
                                     </Button>
@@ -301,7 +301,7 @@ const EditRenterProfile = ({ item, handleChangeMode, userID, getProfile }) => {
                 color: "#ffffff",
                 borderRadius: 12
             }}
-            sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
+            sx={{ p: 5, mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
         >
 
             {/* Creates a column grid for the body of the page */}
@@ -464,14 +464,14 @@ const EditRenterProfile = ({ item, handleChangeMode, userID, getProfile }) => {
                             sx={{ mt: 2, mb: 1 }}
                             color="primary"
                         >
-                            Submit Changes
+                            Save Changes
                         </Button>
 
                         <Button onClick={handleChangeMode} fullWidth
                             variant="contained"
                             sx={{ mt: 2, mb: 1 }}
                             color="primary">
-                            Cancel Edit
+                            Cancel
                         </Button>
                     </form>
 
