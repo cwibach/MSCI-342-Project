@@ -84,6 +84,10 @@ app.use('/', isFriendRouter);
 const editVisibilityRouter = require('./routes/editVisibility');
 app.use('/', editVisibilityRouter);
 
+// Toggle Landlord Profile
+const editLandlordInfoRouter = require('./routes/editLandlordInfo');
+app.use('/', editLandlordInfoRouter);
+
 /*
 
 	APIs To Add Data 
