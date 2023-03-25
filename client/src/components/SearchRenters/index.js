@@ -1,18 +1,16 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import {
-    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid,
-    RadioGroup, FormControlLabel, Radio, FormLabel
+    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, 
+    Grid, FormControlLabel, Checkbox
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper, AppPaper2 } from "../../themes/paper";
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { UserContext } from '../Navigation/PrivateRoute.js';
 
@@ -36,11 +34,6 @@ function SearchRenters() {
     React.useEffect(() => {
         getRenters();
     }, [userId]);
-
-    // Handle method for searching renters
-    // const handleSearchRenters = (event) => {
-    //     setRenterMode(true);
-    // }
 
     const getRenters = () => {
         callApiGetRenters()
@@ -116,8 +109,7 @@ function SearchRenters() {
 
                 </>) : (<>
 
-                    {/* <SearchMenuRenters handleSearchRenters={handleSearchRenters} setRenters={setRenters} setRenterMode={setRenterMode} /> */}
-                    <SearchMenuRenters setRenters={setRenters} setRenterMode={setRenterMode} />
+                    <SearchMenuRenters userId={userId} setRenters={setRenters} setRenterMode={setRenterMode} />
 
 
                 </>)}
@@ -130,13 +122,13 @@ function SearchRenters() {
     );
 }
 
-// const SearchMenuRenters = ({ handleSearchRenters, setRenters, setRenterMode }) => {
 
-const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
+const SearchMenuRenters = ({ userId, setRenters, setRenterMode }) => {
 
     const [renterCook, setRenterCook] = React.useState("");
     const [renterGender, setRenterGender] = React.useState("");
     const [renterBed, setRenterBed] = React.useState("");
+    const [onlyFriends, setOnlyFriends] = React.useState(false);
 
     const handleSearchRenters = (event) => {
         event.preventDefault()
@@ -148,6 +140,7 @@ const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
         setRenterCook("")
         setRenterGender("")
         setRenterBed("")
+        setOnlyFriends(false)
     }
 
     const getFilteredRenters = () => {
@@ -173,7 +166,9 @@ const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
             body: JSON.stringify({
                 renterCook: renterCook,
                 renterGender: renterGender,
-                renterBed: renterBed
+                renterBed: renterBed,
+                renter_id: userId,
+                onlyFriends: onlyFriends
             })
         });
         const body = await response.json();
@@ -194,6 +189,10 @@ const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
 
     const handleGenderChange = (event) => {
         setRenterGender(event.target.value)
+    }
+
+    const handleOnlyFriends = (event) => {
+        setOnlyFriends(event.target.checked);
     }
 
     return (
@@ -296,10 +295,33 @@ const SearchMenuRenters = ({ setRenters, setRenterMode}) => {
                         </Grid>
                     </Box>
 
-                    <Box>
-                        <Button sx={{ mt: 1, mb: 1, ml: 1 }} type="submit" variant="contained">
+                    <Box
+                        display="flex"
+                        alignItems={"center"}
+                        sx={{ mt: 4, mb: 1 }}
+                    >
+                        <Button sx={{ ml: 1 }} type="submit" variant="contained">
                             Search for Renters
                         </Button>
+
+                        <Box
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignContent={"center"}
+                            flexGrow={1}
+                            alignItems="flex-start"
+                            sx={{ ml: 3 }}
+                        >
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={onlyFriends}
+                                        onChange={handleOnlyFriends}
+                                    />
+                                }
+                                label="Only Show Friends"
+                            />
+                        </Box>
                     </Box>
 
                 </form>

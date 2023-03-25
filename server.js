@@ -69,6 +69,10 @@ app.use('/', getFilteredRentersRouter);
 const isInterestedRouter = require('./routes/isInterested');
 app.use('/', isInterestedRouter);
 
+// IsFriend Api
+const isFriendRouter = require('./routes/isFriend');
+app.use('/', isFriendRouter);
+
 
 /*
 
@@ -101,6 +105,10 @@ app.use('/', addLandlordRouter);
 // Add Interested Api
 const addInterestRouter = require('./routes/addInterest');
 app.use('/', addInterestRouter);
+
+// Add Friend Api
+const addFriendRouter = require('./routes/addFriend');
+app.use('/', addFriendRouter);
 
 /*
 

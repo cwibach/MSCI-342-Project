@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, Box, RadioGroup, FormControlLabel, Radio, FormGroup,
+    Button, Box, RadioGroup, FormControlLabel, Radio,
     ThemeProvider, CssBaseline, Grid, Typography, Checkbox
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
