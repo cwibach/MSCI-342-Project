@@ -38,7 +38,22 @@ const RenterList = ({ renters }) => {
         <>
             <ThemeProvider theme={appTheme}>
                 <CssBaseline enableColorScheme />
-                {renters.map((renter) => {
+                {(renters.length === 0) ? (<>
+                    <Box
+                        alignItems="center"
+                        style={{
+                            backgroundColor: "#9D4EDD",
+                            color: "#ffffff",
+                            borderRadius: 12
+                        }}
+                        sx={{ p: 3, mt: 2, mx: "auto", overflow: "hidden" }}
+                    >
+                        <Typography variant="h4">
+                            No Results
+                        </Typography>
+                    </Box>
+                </>) : (<>
+                    {renters.map((renter) => {
                     return (
                         <Grid item key={renter.renter_id}>
                             <Box
@@ -64,6 +79,8 @@ const RenterList = ({ renters }) => {
                         </Grid>
                     );
                 })}
+                </>)}
+                
             </ThemeProvider>
         </>
     );
