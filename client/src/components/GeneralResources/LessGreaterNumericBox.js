@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, TextField, InputAdornment, Typography, ThemeProvider, CssBaseline, Grid } from '@mui/material';
+import { TextField, InputAdornment, Typography, ThemeProvider, CssBaseline, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 
 

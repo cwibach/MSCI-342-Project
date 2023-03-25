@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper } from "../../themes/paper";
 import RenterList from '../RenterList/index';
 
 const serverURL = "";
