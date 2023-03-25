@@ -1,7 +1,11 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+// import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
+import {
+    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, autocompleteClasses,
+    TextField, FormControl, InputLabel, Select, MenuItem
+} from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
@@ -16,6 +20,7 @@ function LandlordProfile() {
 
     // Profile List State
     const [profile, setProfile] = React.useState([]);
+    const [EditMode, setEditMode] = React.useState(false);
 
     // User Id 
     const { userId } = React.useContext(UserContext);
@@ -32,6 +37,7 @@ function LandlordProfile() {
                 var parsed = JSON.parse(res.express);
                 console.log("getLandlordProfileInfo parsed: ", parsed);
                 setProfile(parsed);
+                setEditMode(false);
             });
     }
 
@@ -53,6 +59,10 @@ function LandlordProfile() {
         if (response.status !== 200) throw Error(body.message);
         console.log("Profile: ", body);
         return body;
+    }
+
+    const handleChangeMode = () => {
+        setEditMode(!EditMode);
     }
 
 
@@ -84,81 +94,261 @@ function LandlordProfile() {
                 </Toolbar>
             </AppBar>
 
-            {/* User Results */}
-            {profile.map((item) => {
-                return (
-                    <Box
-                        alignItems="center"
-                        style={{
-                            backgroundColor: "#9D4EDD",
-                            color: "#ffffff",
-                            borderRadius: 12
-                        }}
-                        sx={{ pb: 7, mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
-                    >
-
-                        {/* Creates a column grid for the body of the page */}
-                        <Grid container
-                            direction="column"
-                            justifyContent="space-evenly"
+            {(EditMode) ? ( <>
+                <EditLandlordProfile item={profile[0]} handleChangeMode={handleChangeMode} userID={userId} getProfile={getProfile}/>
+            </>): (<>
+                {/* User Results */}
+                {profile.map((item) => {
+                    return (
+                        <Box
                             alignItems="center"
-
-                            display="flex"
                             style={{
-                                marginTop: 45
+                                backgroundColor: "#9D4EDD",
+                                color: "#ffffff",
+                                borderRadius: 12
                             }}
+                            sx={{ pb: 7, mt: 5, mx: "auto", maxWidth: 3 / 8, overflow: "hidden" }}
                         >
 
-                            {/* Page Title */}
-                            <Grid item>
-                                <Typography variant="h3">
-                                    <b>Profile Information</b>
-                                </Typography>
-                            </Grid>
+                            {/* Creates a column grid for the body of the page */}
                             <Grid container
-                                alignContent="center"
+                                direction="column"
+                                justifyContent="space-evenly"
+                                alignItems="center"
 
-                                direction="row" style={{
-                                    marginTop: 20
+                                display="flex"
+                                style={{
+                                    marginTop: 45
                                 }}
                             >
-                                {/* Row 1 */}
-                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                                <Grid item xs={3}></Grid>
-                                <Grid item xs={9}>
-                                    <Typography variant="h5">
-                                        <b>Name:</b> {item.first_name != '' && item.first_name} {item.last_name != '' && item.last_name}
+
+                                {/* Page Title */}
+                                <Grid item>
+                                    <Typography variant="h3">
+                                        <b>Profile Information</b>
                                     </Typography>
                                 </Grid>
+                                <Grid container
+                                    alignContent="center"
 
-                                {/* Row 2 */}
-                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                                <Grid item xs={3}></Grid>
-                                <Grid item xs={8}>
-                                    <Typography variant="h5">
-                                        <b>Email:</b> {item.email != '' && item.email}
-                                    </Typography>
+                                    direction="row" style={{
+                                        marginTop: 20
+                                    }}
+                                >
+                                    {/* Row 1 */}
+                                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                    <Grid item xs={3}></Grid>
+                                    <Grid item xs={9}>
+                                        <Typography variant="h5">
+                                            <b>Name:</b> {item.first_name != '' && item.first_name} {item.last_name != '' && item.last_name}
+                                        </Typography>
+                                    </Grid>
+
+                                    {/* Row 2 */}
+                                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                    <Grid item xs={3}></Grid>
+                                    <Grid item xs={8}>
+                                        <Typography variant="h5">
+                                            <b>Email:</b> {item.email != '' && item.email}
+                                        </Typography>
+                                    </Grid>
+
+                                    {/* Row 3 */}
+                                    <Box sx={{ display: 'flex', pb: 5 }}></Box>
+                                    <Grid item xs={3}></Grid>
+                                    <Grid item xs={9}>
+                                        <Typography variant="h5">
+                                            <b>Phone:</b> {item.phone != '' && item.phone}
+                                        </Typography>
+                                    </Grid>
+
+                                    <Button onClick={handleChangeMode} sx={{ml:7, mt:2}}
+                                        varent="contained">
+                                            Edit Profile
+                                    </Button>
+
                                 </Grid>
-
-                                {/* Row 3 */}
-                                <Box sx={{ display: 'flex', pb: 5 }}></Box>
-                                <Grid item xs={3}></Grid>
-                                <Grid item xs={9}>
-                                    <Typography variant="h5">
-                                        <b>Phone:</b> {item.phone != '' && item.phone}
-                                    </Typography>
-                                </Grid>
-
                             </Grid>
-                        </Grid>
-                    </Box>
+                        </Box>
 
-                );
-            })}
-
+                    );
+                })}
+            </>)}
 
         </ThemeProvider>
     );
 }
 
+const EditLandlordProfile = ({item, handleChangeMode, userID, getProfile}) => {
+    const [firstName, setFirstName] = React.useState(item.first_name);
+    const [lastName, setLastName] = React.useState(item.last_name);
+    const [phone, setPhone] = React.useState(item.phone);
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        editLandlordInfo();
+    }
+
+    const handleFirst = (event) => {
+        setFirstName(event.target.value);
+    }
+
+    const handleLast = (event) => {
+        setLastName(event.target.value);
+    }
+
+    const handlePhone = (event) => {
+        setPhone(event.target.value);
+    }
+
+
+    const editLandlordInfo = () => {
+        callApiEditLandlordInfo()
+            .then(res => {
+                console.log("editLandlordInfo returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("editLandlordInfo parsed: ", parsed);
+                getProfile();
+            });
+    }
+
+    const callApiEditLandlordInfo = async () => {
+
+        const url = serverURL + "/api/editLandlordInfo";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userID: userID,
+                first_name: firstName,
+                last_name: lastName,
+                phone: phone
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Profile: ", body);
+        return body;
+    }
+
+    
+    return (
+        <Box
+            alignItems="center"
+            style={{
+                backgroundColor: "#9D4EDD",
+                color: "#ffffff",
+                borderRadius: 12
+            }}
+            sx={{ p: 5, mt: 7, mx: "auto", maxWidth: 1 / 3, overflow: "hidden" }}
+        >
+
+            {/* Creates a column grid for the body of the page */}
+            <Grid container
+                direction="column"
+                justifyContent="space-evenly"
+                alignItems="center"
+
+                display="flex"
+                style={{
+                    marginTop: 45
+                }}
+            >
+
+                {/* Page Title */}
+                <Grid item>
+                    <Typography variant="h3">
+                        <b>Edit Information</b>
+                    </Typography>
+                </Grid>
+
+                <Grid container
+                    alignContent="center"
+                    direction="column"
+                    alignItems="center"
+                    style={{ color: "#ffffff" }}
+                    justifyContent="center"
+
+                >
+                    <form onSubmit={handleFormSubmit}>
+
+                    <Grid container
+                             direction="row"
+                             spacing={1}
+                         >
+                             <Grid item xs={6}>
+                                 <TextField
+                                     variant="filled"
+                                     style={{ background: "#ffffff" }}
+                                     required
+                                     fullWidth
+                                     value={firstName}
+                                     onChange={handleFirst}
+                                     label="First Name"
+                                     type="text"
+                                     sx={{ mt: 2, mb: 1 }}
+                                     color="primary"
+                                 />
+                             </Grid>
+
+                             <Grid item xs={6}>
+                                 <TextField
+                                     variant="filled"
+                                     style={{ background: "#ffffff" }}
+                                     required
+                                     fullWidth
+                                     value={lastName}
+                                     onChange={handleLast}
+                                     label="Last Name"
+                                     type="text"
+                                     sx={{ mt: 2, mb: 1 }}
+                                     color="primary"
+                                 />
+                             </Grid>
+                         </Grid>
+
+                         <TextField
+                             variant="filled"
+                             style={{ background: "#ffffff" }}
+                             required
+                             fullWidth
+                             name="phone"
+                             value={phone}
+                             onChange={handlePhone}
+                             label="Phone Number"
+                             id="phone"
+                             type="text"
+                             sx={{ mt: 1, mb: 1 }}
+                             color="primary"
+                         />
+                         
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 2, mb: 1 }}
+                            color="primary"
+                        >
+                            Submit Changes
+                        </Button>
+                    
+                        <Button onClick={handleChangeMode}
+                            fullWidth
+                            sx={{ mt: 2, mb:1}}
+                            color = "primary"
+                            variant="contained">
+                            Cancel Edit
+                        </Button>
+
+                    </form>
+                </Grid>
+            </Grid>
+        </Box>
+    );
+}
 export default LandlordProfile;

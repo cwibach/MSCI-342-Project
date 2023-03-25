@@ -16,7 +16,20 @@ router.post('/api/getFilteredRenters', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = "SELECT * FROM osellner.Renters";
+	let sql = "";
+
+	if (req.body.renter_id && req.body.onlyFriends) {
+		sql = `SELECT * FROM osellner.Renters
+		LEFT JOIN osellner.Connection
+		ON osellner.Renters.renter_id = osellner.Connection.friend_id
+		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id + 
+		` AND osellner.Connection.connection_id IS NOT NULL`;
+	} else {
+		sql = `SELECT * FROM osellner.Renters 
+		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id;
+	}
+
+	
 
 	var arr = []
 
@@ -25,33 +38,29 @@ router.post('/api/getFilteredRenters', (req, res) => {
 	}
 
 	if (req.body.renterCook) {
-		arr.push("Renters.cook LIKE " + "\"" + req.body.renterCook + "\"") 
+		arr.push("Renters.cook LIKE " + "\"" + req.body.renterCook + "\"")
 	}
 
 	if (req.body.renterBed) {
-		arr.push("Renters.bedtime <= " + "\"" + req.body.renterBed + "\"") 
+		arr.push("Renters.bedtime <= " + "\"" + req.body.renterBed + "\"")
 	}
 
-	if (arr.length === 1) {
-		sql += " WHERE " + arr[0] + ";"
-	} else if (arr.length > 1) {
-		sql += " WHERE " + arr[0] 
-		for (let i = 1; i < arr.length; i++) {
-			sql += " AND " + arr[i] 
-		}
-		sql += ";"
+
+	for (let i = 0; i < arr.length; i++) {
+		sql += " AND " + arr[i]
 	}
-	
-	let data = []
+	sql += ";"
+
+	let data = [];
  
 	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
+	if (error) {
+		return console.error(error.message);
+	}
 
-		let obj = JSON.stringify(results);
-		res.send({ express: obj });
-	});
-	connection.end();
+	let obj = JSON.stringify(results);
+	res.send({ express: obj });
+});
+connection.end();
 });
 module.exports = router;
