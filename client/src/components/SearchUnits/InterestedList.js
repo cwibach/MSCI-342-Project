@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper } from "../../themes/paper";
 import RenterList from '../RenterList/index';
 
 const serverURL = "";
@@ -11,10 +10,6 @@ const InterestedList = ({ unitID, userId }) => {
     // Profile List State
     const [renters, setRenters] = React.useState([]);
 
-    // Activates the intital APIs
-    React.useEffect(() => {
-        getInterestedRenters();
-    }, []);
 
     const getInterestedRenters = () => {
         callApiGetInterestedRenters()
@@ -25,6 +20,11 @@ const InterestedList = ({ unitID, userId }) => {
                 setRenters(parsed);
             });
     }
+
+    // Activates the intital APIs
+    React.useEffect(() => {
+        getInterestedRenters();
+    }, []);
 
     const callApiGetInterestedRenters = async () => {
         const url = serverURL + "/api/getInterestedRenters";
@@ -64,13 +64,13 @@ const InterestedList = ({ unitID, userId }) => {
                             Interested Renters:
                         </Typography>
                     </Box>
-                    
+
                     <Box
-                        sx={{ ml: 4}}
+                        sx={{ ml: 4 }}
                     >
                         <RenterList renters={renters} />
                     </Box>
-                    
+
                 </>
             }
         </ThemeProvider>

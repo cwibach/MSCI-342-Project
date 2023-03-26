@@ -8,11 +8,8 @@ import NavButton from "../GeneralResources/navButton";
 import AlertBar from '../GeneralResources/alert';
 import SearchMenuUnits from "./SearchMenuUnits";
 import ListofUnits from "./ListUnits";
+import UnitMap from './UnitMap';
 
-// SERVER MODE
-// const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
-// DEV MODE
-const serverURL = "";
 
 const SearchUnits = () => {
     // Profile List State
@@ -66,10 +63,23 @@ const SearchUnits = () => {
                         </Typography>
                     </Button>
 
-                    <ListofUnits units={unitList} userId={userId} />
+                    <Grid container
+                        direction="row"
+                        spacing={1}
+                    >
+                        <Grid item xs={6}>
+                            <ListofUnits units={unitList} userId={userId} />
+                        </Grid>
+
+                        <Grid item xs={6} mt={3}>
+                            <UnitMap units={unitList} />
+                        </Grid>
+                    </Grid>
+
+                    {/*  */}
                 </>) : (<>
                     <SearchMenuUnits setUnitList={setUnitList} setUnitMode={setUnitMode}
-                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId}/>
+                        setAlertMessage={setAlertMessage} setAlertVisible={setAlertVisible} userId={userId} />
                 </>)}
 
             </Grid>
