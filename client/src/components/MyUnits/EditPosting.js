@@ -13,7 +13,7 @@ const EditPosting = ({ editUnitID, getMyUnits, handleChangeMode }) => {
         getPostingInfo()
     }, []);
 
-    const [unit, setUnit] = React.useState([])
+    const [unit, setUnit] = React.useState({})
 
     const getPostingInfo = () => {
         callApiGetPostingInfo()
@@ -21,7 +21,7 @@ const EditPosting = ({ editUnitID, getMyUnits, handleChangeMode }) => {
                 console.log("callApiGetPostingInfo returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiGetPostingInfo parsed: ", parsed);
-                setUnit(parsed);
+                setUnit(parsed[0]);
             });
     }
 
@@ -52,10 +52,10 @@ const EditPosting = ({ editUnitID, getMyUnits, handleChangeMode }) => {
     const [price, setAptPrice] = React.useState("");
 
     React.useEffect(() => {
-        setAddress(unit[0].address)
-        setBathroom(unit[0].bathrooms)
-        setBedroom(unit[0].rooms)
-        setAptPrice(unit[0].apt_price)
+        setAddress(unit.address)
+        setBathroom(unit.bathrooms)
+        setBedroom(unit.rooms)
+        setAptPrice(unit.apt_price)
 
     }, [unit]);
 
