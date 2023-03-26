@@ -1,17 +1,9 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import {
-    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, 
-    Grid, FormControlLabel, Checkbox
-} from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import RenterList from '../RenterList/index';
 import NavButton from "../GeneralResources/navButton";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import SearchMenuRenters from './SearchMenuRenters';
 
