@@ -1,15 +1,12 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import {
-    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, Grid, autocompleteClasses,
-    TextField, FormControl, InputLabel, Select, MenuItem
+    AppBar, Toolbar, Box, CssBaseline, ThemeProvider
 } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import ListofUnits from './ListofUnits';
-import EditPosting from './EditPosting';
-import { Edit } from '@mui/icons-material';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 

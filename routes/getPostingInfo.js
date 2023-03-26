@@ -19,8 +19,8 @@ router.post('/api/getPostingInfo', (req, res) => {
 
 	let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM osellner.Landlords
-	WHERE osellner.Renters.landlord_id LIKE ?
+	let sql = `SELECT * FROM osellner.Postings
+	WHERE osellner.Postings.posting_id LIKE ?
 	`;
 	console.log(sql);
 	let data = [req.body.posting_id];

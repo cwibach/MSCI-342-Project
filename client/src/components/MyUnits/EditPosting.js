@@ -1,25 +1,63 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { Box, Button, Grid, MenuItem, Select, InputLabel, FormControl, TextField } from '@mui/material';
-import { appTheme } from "../../themes/theme";
+import { Box, Button, Grid, TextField } from '@mui/material';
 
 // SERVER MODE
 // const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3103"; 
 // DEV MODE
 const serverURL = "";
 
-const EditPosting = ({ unit, userID, getMyUnits, handleChangeMode }) => {
-    const [address, setAddress] = React.useState(unit.address);
-    const [bathroom, setBathroom] = React.useState(unit.bathrooms);
-    const [bedroom, setBedroom] = React.useState(unit.rooms);
-    const [price, setAptPrice] = React.useState(unit.apt_price);
+const EditPosting = ({ editUnitID, getMyUnits, handleChangeMode }) => {
+
+    React.useEffect(() => {
+        getPostingInfo()
+    }, []);
+
+    const [unit, setUnit] = React.useState([])
+
+    const getPostingInfo = () => {
+        callApiGetPostingInfo()
+            .then(res => {
+                console.log("callApiGetPostingInfo returned: ", res)
+                var parsed = JSON.parse(res.express);
+                console.log("callApiGetPostingInfo parsed: ", parsed);
+                setUnit(parsed);
+            });
+    }
+
+    const callApiGetPostingInfo = async () => {
+
+        const url = serverURL + "/api/getPostingInfo";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                posting_id: editUnitID
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log("Posting: ", body);
+        return body;
+    }
 
 
-    // const [EditMode, setEditMode] = React.useState(false);
+    const [address, setAddress] = React.useState("");
+    const [bathroom, setBathroom] = React.useState("");
+    const [bedroom, setBedroom] = React.useState("");
+    const [price, setAptPrice] = React.useState("");
 
-    // const handleChangeMode = () => {
-    //     setEditMode(!EditMode);
-    // }
+    React.useEffect(() => {
+        setAddress(unit[0].address)
+        setBathroom(unit[0].bathrooms)
+        setBedroom(unit[0].rooms)
+        setAptPrice(unit[0].apt_price)
+
+    }, [unit]);
 
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -50,7 +88,6 @@ const EditPosting = ({ unit, userID, getMyUnits, handleChangeMode }) => {
                 var parsed = JSON.parse(res.express);
                 console.log("editPostingInfo parsed: ", parsed);
                 getMyUnits();
-                console.log("A");
             });
     }
 

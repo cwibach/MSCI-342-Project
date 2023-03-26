@@ -37,12 +37,23 @@ const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode 
     // Delete Posting Id State
     const [deletePostingID, setDeletePostingID] = React.useState("");
 
+    // Edit Posting Id State
+    const [editUnitID, setEditUnitID] = React.useState("");
+
+    // Edit Post State
+    const [editUnit, setEditUnit] = React.useState([]);
+
     React.useEffect(() => {
         deletePosting()
     }, [deletePostingID]);
 
     const handleDelete = (event) => {
         setDeletePostingID(event.target.value)
+    }
+
+    const handleEditUnitID = (event) => {
+        setEditUnitID(event.target.value);
+        handleChangeMode();
     }
 
     const deletePosting = () => {
@@ -115,18 +126,11 @@ const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode 
         return body;
     }
 
-    //Janky
-    // const [EditMode, setEditMode] = React.useState(false);
-
-    // const handleChangeMode = () => {
-    //     setEditMode(!EditMode);
-    // }
-
     return (
         <>
             <Grid margin={appTheme.spacing(1)}>
                 {(EditMode) ? (<>
-                    <EditPosting unit={unitList[0]} handleChangeMode={handleChangeMode} userID={userID} getMyUnits={getMyUnits} />
+                    <EditPosting editUnitID={editUnitID} handleChangeMode={handleChangeMode} userID={userID} getMyUnits={getMyUnits} />
                 </>) : (<>
                     {unitList.map((unit) => {
 
@@ -196,7 +200,7 @@ const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode 
                                                     backgroundColor: "#5A189A"
                                                 }}
                                                 value={unit.posting_id}
-                                                onClick={handleChangeMode}>
+                                                onClick={handleEditUnitID}>
                                                 Edit Details
                                             </Button>
 
