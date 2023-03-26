@@ -50,12 +50,9 @@ export default function LandlordSignup() {
                 // what to do if succesful
 
                 addLandlord();
-                getLandlordUserID();
 
-                setSuccessVisible(false);
-
-                history.push('/LandlordProfile');
             } catch (e) {
+                setSuccessVisible(false);
                 setErrorMessage("Error: Failed to Register");
                 setErrorVisible(true);
             }
@@ -70,6 +67,7 @@ export default function LandlordSignup() {
                 console.log("callApiAddLandlord returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiAddLandlord parsed: ", parsed);
+                getLandlordUserID();
             });
     }
 
@@ -106,6 +104,8 @@ export default function LandlordSignup() {
                 let tempUserID = parsed[0].landlord_id;
                 console.log("landlord_id", tempUserID);
                 setUserId(tempUserID);
+                setSuccessVisible(false);
+                history.push('/LandlordProfile');
             })
     }
 

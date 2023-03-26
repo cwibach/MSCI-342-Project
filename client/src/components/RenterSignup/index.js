@@ -55,15 +55,12 @@ function RenterSignup() {
                 // what to do if succesful
 
                 addRenter();
-                getRenterID();
 
-                setSuccessVisible(false);
-
-                history.push('/RenterProfile');
             } catch (e) {
                 console.log(e);
                 setErrorMessage("Error: Failed to Register");
                 setErrorVisible(true);
+                setSuccessVisible(false);
             }
             setLoading(false);
         }
@@ -126,6 +123,7 @@ function RenterSignup() {
                 console.log("callApiAddRenter returned: ", res)
                 var parsed = JSON.parse(res.express);
                 console.log("callApiAddRenter parsed: ", parsed);
+                getRenterID();
             });
     }
 
@@ -166,11 +164,13 @@ function RenterSignup() {
                 let tempUserID = parsed[0].renter_id;
                 console.log("renter_id", tempUserID);
                 setUserId(tempUserID);
+                setSuccessVisible(false);
+                history.push('/RenterProfile');
             })
     }
 
     const callAPIGetRenterID = async () => {
-        const url = serverURL + "/api/getRenterID";
+        const url = serverURL + "/api/getRenterUserID";
         console.log(url);
 
         const response = await fetch(url, {

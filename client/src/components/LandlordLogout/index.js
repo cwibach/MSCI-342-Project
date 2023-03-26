@@ -77,7 +77,7 @@ export default function LandlordLogout() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         color="primary"
-                        onClick={() => { handleLogout() }}
+                        onClick={handleLogout}
                     >
                         Confirm Logout
                     </Button>
