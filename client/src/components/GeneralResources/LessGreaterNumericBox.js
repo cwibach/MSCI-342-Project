@@ -11,7 +11,7 @@ const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLa
             <Grid container spacing={2} alignItems={"center"}>
                 <Grid item xs={3}></Grid>
                 <Grid item xs={2}>
-                    <Typography>
+                    <Typography component={'span'}>
                         {minLabel}
                         <TextField
                             InputProps={{
@@ -30,12 +30,13 @@ const LessGreaterNumericBox = ({ minValue, maxValue, minChange, maxChange, minLa
                     <Typography
                         variant="h6"
                         textAlign={"center"}
+                        component={'span'}
                     >
                         {centreLabel}
                     </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                    <Typography>
+                    <Typography component={'span'}>
                         {maxLabel}
                         <TextField
                             InputProps={{
