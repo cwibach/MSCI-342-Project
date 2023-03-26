@@ -13,7 +13,7 @@ import ErrorAlert from '../GeneralResources/alert.js';
 // DEV MODE
 const serverURL = "";
 
-export default function LandlordLogin({ setUserID }) {
+export default function LandlordLogin() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 

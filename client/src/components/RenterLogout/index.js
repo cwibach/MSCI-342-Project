@@ -1,9 +1,7 @@
 import React from 'react';
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
-import { AppPaper} from "../../themes/paper";
 import history from '../Navigation/history';
 import { useAuth } from "../../contexts/AuthContext";
 import ErrorAlert from '../GeneralResources/alert.js';
@@ -77,7 +75,7 @@ export default function RenterLogout() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         color="primary"
-                        onClick={() => { handleLogout() }}
+                        onClick={handleLogout}
                     >
                         Confirm Logout
                     </Button>

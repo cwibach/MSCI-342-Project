@@ -52,7 +52,7 @@ function RenterSignup() {
                 setSuccessVisible(true);
                 await renterRegister(email, password);
 
-                // what to do if succesful
+                // what to do if successful
 
                 addRenter();
                 getRenterID();
