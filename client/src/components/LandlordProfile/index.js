@@ -1,11 +1,7 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-// import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
-import {
-    AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, autocompleteClasses,
-    TextField, FormControl, InputLabel, Select, MenuItem
-} from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
