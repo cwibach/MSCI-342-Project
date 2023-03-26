@@ -3,20 +3,20 @@ import React, { Component } from 'react';
 
 class UnitMap extends Component {
     render() {
-        const mapStyles = {
-            width: '45%',
-            height: '100%'
+        const containerStyle = {
+            maxWidth: '45%',
+            height: '75%'
         }
 
         return (
             <Map
                 google={this.props.google}
-                zoom={14}
-                style={mapStyles}
+                zoom={15}
+                containerStyle={containerStyle}
                 initialCenter={
                     {
-                        lat: 43.4706047695797,
-                        lng: -80.53849451032545
+                        lat: 43.46923379997185, 
+                        lng: -80.5406966618935
                     }
                 }
             >

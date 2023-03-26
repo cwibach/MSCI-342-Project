@@ -71,8 +71,13 @@ const SearchUnits = () => {
                             <ListofUnits units={unitList} userId={userId} />
                         </Grid>
 
-                        <Grid item xs={6} mt={3}>
-                            <UnitMap units={unitList} />
+                        <Grid item xs={6} style={{ overflow: 'hidden' }} >
+                            <Box
+                                sx={{ m: 3 }}
+                            >
+                                <UnitMap units={unitList} />
+                            </Box>
+
                         </Grid>
                     </Grid>
 
