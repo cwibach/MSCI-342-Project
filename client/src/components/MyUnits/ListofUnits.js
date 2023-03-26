@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import { Box, Button, Grid } from '@mui/material';
 import { appTheme } from "../../themes/theme";
+import EditPosting from './EditPosting';
 
 
 // SERVER MODE
@@ -9,7 +10,7 @@ import { appTheme } from "../../themes/theme";
 // DEV MODE
 const serverURL = "";
 
-const ListofUnits = ({ unitList, getMyUnits }) => {
+const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode }) => {
 
     const [expanded, setExpanded] = React.useState([]);
 
@@ -114,128 +115,152 @@ const ListofUnits = ({ unitList, getMyUnits }) => {
         return body;
     }
 
+    //Janky
+    // const [EditMode, setEditMode] = React.useState(false);
+
+    // const handleChangeMode = () => {
+    //     setEditMode(!EditMode);
+    // }
+
     return (
         <>
             <Grid margin={appTheme.spacing(1)}>
-                {unitList.map((unit) => {
+                {(EditMode) ? (<>
+                    <EditPosting unit={unitList[0]} handleChangeMode={handleChangeMode} userID={userID} getMyUnits={getMyUnits} />
+                </>) : (<>
+                    {unitList.map((unit) => {
 
-                    return (
-                        <Grid item key={unit.posting_id}>
-                            <Box
-                                alignItems="center"
-                                style={{
-                                    backgroundColor: "#9D4EDD",
-                                    color: "#ffffff",
-                                    borderRadius: 12
-                                }}
-                                sx={{ mt: 2, mx: "auto", overflow: "hidden" }}
-                            >
+                        return (
+                            <Grid item key={unit.posting_id}>
                                 <Box
-                                    margin={1}
-                                    display="flex"
-                                    justifyContent="flex-end"
-                                    flexGrow={1}
-                                    alignItems="flex-start"
+                                    alignItems="center"
+                                    style={{
+                                        backgroundColor: "#9D4EDD",
+                                        color: "#ffffff",
+                                        borderRadius: 12
+                                    }}
+                                    sx={{ mt: 2, mx: "auto", overflow: "hidden" }}
                                 >
-                                    <Typography
-                                        style={{
-                                            marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(3)
-                                        }}
-                                        variant="h5"
-                                        component="div"
-                                        color="inherit"
-                                    >
-                                        {unit.address}
-                                    </Typography>
-
                                     <Box
+                                        margin={1}
                                         display="flex"
                                         justifyContent="flex-end"
                                         flexGrow={1}
-                                        alignItems="flex-start">
-
-                                        <Button variant="contained"
+                                        alignItems="flex-start"
+                                    >
+                                        <Typography
                                             style={{
                                                 marginTop: appTheme.spacing(1),
-                                                marginRight: appTheme.spacing(1),
-                                                backgroundColor: "#5A189A"
+                                                marginLeft: appTheme.spacing(3)
                                             }}
-                                            value={unit.posting_id}
-                                            onClick={handleToggleVisibility}
+                                            variant="h5"
+                                            component="div"
+                                            color="inherit"
                                         >
-                                            {unit.visible ? "Visible" : "Hidden"}
-                                        </Button>
+                                            {unit.address}
+                                        </Typography>
 
-                                        <Button variant="contained"
+                                        <Box
+                                            display="flex"
+                                            justifyContent="flex-end"
+                                            flexGrow={1}
+                                            alignItems="flex-start">
+
+                                            <Button variant="contained"
+                                                style={{
+                                                    marginTop: appTheme.spacing(1),
+                                                    marginRight: appTheme.spacing(1),
+                                                    backgroundColor: "#5A189A"
+                                                }}
+                                                value={unit.posting_id}
+                                                onClick={handleToggleVisibility}
+                                            >
+                                                {unit.visible ? "Visible" : "Hidden"}
+                                            </Button>
+
+                                            <Button variant="contained"
+                                                style={{
+                                                    marginTop: appTheme.spacing(1),
+                                                    marginRight: appTheme.spacing(1),
+                                                    backgroundColor: "#5A189A"
+                                                }}
+                                                value={unit.posting_id}
+                                                onClick={handleDelete}>
+                                                Delete
+                                            </Button>
+
+                                            <Button variant="contained"
+                                                style={{
+                                                    marginTop: appTheme.spacing(1),
+                                                    marginRight: appTheme.spacing(3),
+                                                    backgroundColor: "#5A189A"
+                                                }}
+                                                value={unit.posting_id}
+                                                onClick={handleChangeMode}>
+                                                Edit Details
+                                            </Button>
+
+                                        </Box>
+                                    </Box>
+
+                                    {(expanded.includes(unit.posting_id)) ? (<>
+                                        <Typography
                                             style={{
                                                 marginTop: appTheme.spacing(1),
-                                                marginRight: appTheme.spacing(3),
-                                                backgroundColor: "#5A189A"
+                                                marginLeft: appTheme.spacing(5)
                                             }}
-                                            value={unit.posting_id}
-                                            onClick={handleDelete}>
-                                            Delete
+                                            variant="subtitle1"
+                                            component="div"
+                                            color="inherit"
+                                        >
+                                            {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
+                                        </Typography>
+
+                                        <Typography
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginLeft: appTheme.spacing(5),
+                                                marginBottom: appTheme.spacing(1)
+                                            }}
+                                            variant="subtitle1"
+                                            component="div"
+                                            color="inherit"
+                                        >
+                                            ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
+                                        </Typography>
+
+                                        <Button
+                                            onClick={() => removeFromExpanded(unit.posting_id)}
+                                            variant="contained"
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginLeft: appTheme.spacing(3),
+                                                marginBottom: appTheme.spacing(2)
+                                            }}>
+                                            Hide Details
                                         </Button>
-                                    </Box>
+
+                                    </>) : (<>
+                                        <Button
+                                            onClick={() => addToExpanded(unit.posting_id)}
+                                            variant="contained"
+                                            style={{
+                                                marginTop: appTheme.spacing(1),
+                                                marginLeft: appTheme.spacing(3),
+                                                marginBottom: appTheme.spacing(2)
+                                            }}>
+                                            Show Details
+                                        </Button>
+                                    </>)}
                                 </Box>
-
-                                {(expanded.includes(unit.posting_id)) ? (<>
-                                    <Typography
-                                        style={{
-                                            marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(5)
-                                        }}
-                                        variant="subtitle1"
-                                        component="div"
-                                        color="inherit"
-                                    >
-                                        {unit.rooms} Bedrooms, {unit.bathrooms} Bathrooms,
-                                    </Typography>
-
-                                    <Typography
-                                        style={{
-                                            marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(5),
-                                            marginBottom: appTheme.spacing(1)
-                                        }}
-                                        variant="subtitle1"
-                                        component="div"
-                                        color="inherit"
-                                    >
-                                        ${Math.round(unit.apt_price / unit.rooms)}/person/month, Total Price: ${unit.apt_price}/month
-                                    </Typography>
-
-                                    <Button
-                                        onClick={() => removeFromExpanded(unit.posting_id)}
-                                        variant="contained"
-                                        style={{
-                                            marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(3),
-                                            marginBottom: appTheme.spacing(2)
-                                        }}>
-                                        Hide Details
-                                    </Button>
-
-                                </>) : (<>
-                                    <Button
-                                        onClick={() => addToExpanded(unit.posting_id)}
-                                        variant="contained"
-                                        style={{
-                                            marginTop: appTheme.spacing(1),
-                                            marginLeft: appTheme.spacing(3),
-                                            marginBottom: appTheme.spacing(2)
-                                        }}>
-                                        Show Details
-                                    </Button>
-                                </>)}
-                            </Box>
-                        </Grid>
-                    );
-                })}
+                            </Grid>
+                        );
+                    })}
+                </>)}
             </Grid>
         </>
     );
 }
+
 
 export default ListofUnits;
