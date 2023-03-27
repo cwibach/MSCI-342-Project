@@ -23,7 +23,6 @@ router.post('/api/isFriend', (req, res) => {
     WHERE osellner.Connection.friend_id LIKE ?
     AND osellner.Connection.renter_id LIKE ?;`;
 
-    console.log(sql);
     let data = [req.body.friend_id, req.body.renter_id];
 
     connection.query(sql, data, (error, results, fields) => {

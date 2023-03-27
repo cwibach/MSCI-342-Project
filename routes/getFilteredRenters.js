@@ -19,11 +19,12 @@ router.post('/api/getFilteredRenters', (req, res) => {
 	let sql = "";
 
 	if (req.body.renter_id && req.body.onlyFriends) {
-		sql = `SELECT * FROM osellner.Renters
+		sql = `SELECT osellner.Renters.renter_id, username, password, email, phone, bedtime, birthday, gender, cook, first_name, last_name FROM osellner.Renters
 		LEFT JOIN osellner.Connection
 		ON osellner.Renters.renter_id = osellner.Connection.friend_id
 		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id + 
-		` AND osellner.Connection.connection_id IS NOT NULL`;
+		` AND osellner.Connection.connection_id IS NOT NULL 
+		 AND osellner.Connection.renter_id LIKE ` + req.body.renter_id;
 	} else {
 		sql = `SELECT * FROM osellner.Renters 
 		WHERE osellner.Renters.renter_id NOT LIKE ` + req.body.renter_id;
