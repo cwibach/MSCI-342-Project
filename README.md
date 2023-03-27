@@ -14,6 +14,30 @@ npm install --legacy-peer-deps
 yarn dev
 ```
 
+## Testing instructions
+1. In the route directory folder and client folder run 
+```
+npm install --legacy-peer-deps
+```
+2a. After installation, in the client directory folder run
+```
+yarn test
+```
 
+2b. After installation, in the client directory folder run
+```
+yarn cypress
+```
 
+- Ensure app is running in a seperate commandline 
+
+```
+yarn dev
+```
+
+- Choose E2E testing
+
+- Select browser the app is running in
+
+- Select the end-to-end tests to run them
 
