@@ -135,7 +135,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Name:</b> {item.first_name != '' && item.first_name} {item.last_name != '' && item.last_name}
+                                            <b>Name:</b> {item.first_name !== '' && item.first_name} {item.last_name !== '' && item.last_name}
                                         </Typography>
                                     </Grid>
 
@@ -144,7 +144,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={8}>
                                         <Typography variant="h5">
-                                            <b>Email:</b> {item.email != '' && item.email}
+                                            <b>Email:</b> {item.email !== '' && item.email}
                                         </Typography>
                                     </Grid>
 
@@ -153,7 +153,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Phone:</b> {item.phone != '' && item.phone}
+                                            <b>Phone:</b> {item.phone !== '' && item.phone}
                                         </Typography>
                                     </Grid>
 
@@ -162,7 +162,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Bedtime:</b> {item.bedtime != '' && item.bedtime}
+                                            <b>Bedtime:</b> {item.bedtime !== '' && item.bedtime}
                                         </Typography>
                                     </Grid>
 
@@ -171,7 +171,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Birthday:</b> {item.birthday != '' && item.birthday}
+                                            <b>Birthday:</b> {item.birthday !== '' && item.birthday}
                                         </Typography>
                                     </Grid>
 
@@ -180,7 +180,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Roommate Gender:</b> {item.gender != '' && item.gender}
+                                            <b>Roommate Gender:</b> {item.gender !== '' && item.gender}
                                         </Typography>
                                     </Grid>
 
@@ -189,7 +189,7 @@ function RenterProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Cooking Frequency:</b> {item.cook != '' && item.cook}
+                                            <b>Cooking Frequency:</b> {item.cook !== '' && item.cook}
                                         </Typography>
                                     </Grid>
 

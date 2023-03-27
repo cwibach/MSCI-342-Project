@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
@@ -137,7 +137,7 @@ export default function LandlordProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Name:</b> {item.first_name != '' && item.first_name} {item.last_name != '' && item.last_name}
+                                            <b>Name:</b> {item.first_name !== '' && item.first_name} {item.last_name !== '' && item.last_name}
                                         </Typography>
                                     </Grid>
 
@@ -146,7 +146,7 @@ export default function LandlordProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={8}>
                                         <Typography variant="h5">
-                                            <b>Email:</b> {item.email != '' && item.email}
+                                            <b>Email:</b> {item.email !== '' && item.email}
                                         </Typography>
                                     </Grid>
 
@@ -155,7 +155,7 @@ export default function LandlordProfile() {
                                     <Grid item xs={3}></Grid>
                                     <Grid item xs={9}>
                                         <Typography variant="h5">
-                                            <b>Phone:</b> {item.phone != '' && item.phone}
+                                            <b>Phone:</b> {item.phone !== '' && item.phone}
                                         </Typography>
                                     </Grid>
 

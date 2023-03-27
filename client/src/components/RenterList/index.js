@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import { Button, Grid, Box, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { Grid, Box, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { appTheme } from "../../themes/theme";
 import { UserContext } from '../Navigation/PrivateRoute.js';
 import ExpandedRenter from './ExpandedRenter';
@@ -26,7 +26,7 @@ const RenterList = ({ renters }) => {
         let tempExpanded = [...expanded];
 
         for (let i = 0; i < tempExpanded.length; i++) {
-            if (tempExpanded[i] == renterID) {
+            if (tempExpanded[i] === renterID) {
                 tempExpanded.splice(i, 1);
             }
         }
