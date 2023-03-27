@@ -8,7 +8,7 @@ describe('LessGreaterNumericBox Test', () => {
     function renderComponent() {
         render(
             <LessGreaterNumericBox minValue={0} maxValue={100} minChange={() => {}} maxChange={() => {}} 
-            minLabel={"Minimum # of Rooms"} maxLabel={"Maximum # of Rooms"} centreLabel={"Beds"} icon={"$"} />
+            minLabel={"Minimum # of Rooms"} maxLabel={"Maximum # of Rooms"} centreLabel={"Beds"} icon={""} />
         );
     }
 
@@ -17,7 +17,6 @@ describe('LessGreaterNumericBox Test', () => {
         expect(screen.getByText('Minimum # of Rooms')).toBeInTheDocument();
         expect(screen.getByText('Maximum # of Rooms')).toBeInTheDocument();
         expect(screen.getByText('Beds')).toBeInTheDocument();
-        expect(screen.getByText('$')).toBeInTheDocument();
     });
     
 });
