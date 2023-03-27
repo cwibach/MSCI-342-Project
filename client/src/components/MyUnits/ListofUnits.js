@@ -26,7 +26,7 @@ const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode 
         let tempExpanded = [...expanded];
 
         for (let i = 0; i < tempExpanded.length; i++) {
-            if (tempExpanded[i] == unitID) {
+            if (tempExpanded[i] === unitID) {
                 tempExpanded.splice(i, 1);
             }
         }
@@ -39,9 +39,6 @@ const ListofUnits = ({ unitList, getMyUnits, userID, handleChangeMode, EditMode 
 
     // Edit Posting Id State
     const [editUnitID, setEditUnitID] = React.useState("");
-
-    // Edit Post State
-    const [editUnit, setEditUnit] = React.useState([]);
 
     React.useEffect(() => {
         deletePosting()

@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import history from '../Navigation/history';
-import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl, Link, Divider } from '@mui/material';
+import { Box, Button, CssBaseline, ThemeProvider, TextField, InputLabel, Select, MenuItem, FormControl, Link } from '@mui/material';
 import { appTheme } from "../../themes/theme";
 import { useAuth } from '../../contexts/AuthContext';
 import { UserContext } from '../Navigation/PrivateRoute.js';
