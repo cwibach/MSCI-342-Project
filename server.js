@@ -92,6 +92,11 @@ app.use('/', editRenterInfoRouter);
 const editLandlordInfoRouter = require('./routes/editLandlordInfo');
 app.use('/', editLandlordInfoRouter);
 
+// Update Posting Information
+
+const editPostingInfoRouter = require('./routes/editPostingInfo');
+app.use('/', editPostingInfoRouter);
+
 /*
 
 	APIs To Add Data 
