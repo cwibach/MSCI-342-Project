@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Box, Button, CssBaseline, ThemeProvider, TextField } f
 import { appTheme } from "../../themes/theme";
 import NavButton from "../GeneralResources/navButton";
 import { UserContext } from '../Navigation/PrivateRoute.js';
-import {SuccessAlert} from '../GeneralResources/alert.js';
+import { SuccessAlert } from '../GeneralResources/alert.js';
 
 
 // SERVER MODE
@@ -30,20 +30,11 @@ function AddUnit() {
 
     // Handles submitting the form
     const handleSubmit = (event) => {
+        event.preventDefault();
 
-        // Checks if every input was filled in
-        if (rooms !== '' && bathrooms !== '' && apt_price !== '' && address !== '') {
-            // Post to Database
-            addPosting();
 
-            // Reset Textfields
-            setRooms('');
-            setBathrooms('');
-            setApt_price('');
-            setAddress('');
-            setSuccessVisible(true);
-        }
-
+        // Post to Database
+        addPosting();
     };
 
     // Functions to handle the form values
@@ -70,6 +61,10 @@ function AddUnit() {
                 console.log("callApiAddPosting parsed: ", parsed);
                 setSuccessMessage("Posting Succesfully Created!");
                 setSuccessVisible(true);
+                setRooms('');
+                setBathrooms('');
+                setApt_price('');
+                setAddress('');
             });
     }
 
@@ -127,7 +122,7 @@ function AddUnit() {
                 </Toolbar>
             </AppBar>
 
-            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible}/>
+            <SuccessAlert alertVisible={successVisible} alertMessage={successMessage} setAlertVisible={setSuccessVisible} />
 
             <Box
                 alignItems="center"
