@@ -23,7 +23,6 @@ router.post('/api/isInterested', (req, res) => {
     WHERE osellner.Interested.posting_id LIKE ?
     AND osellner.Interested.renter_id LIKE ?;`;
 
-    console.log(sql);
     let data = [req.body.posting_id, req.body.renter_id];
 
     connection.query(sql, data, (error, results, fields) => {
