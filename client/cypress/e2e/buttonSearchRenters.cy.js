@@ -3,8 +3,10 @@ describe('view search renters list', () => {
 
         cy.visit('/Community');
 
-        cy.contains("See Renters").click();
+        cy.contains("Search for Renters").click();
 
-        cy.contains('Return to Search');
+        cy.contains('Return to Search').click();
+
+        cy.contains('Reset Filters');
     });
 });
