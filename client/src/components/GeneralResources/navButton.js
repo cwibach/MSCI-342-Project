@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import history from '../Navigation/history';
-import { Button} from '@mui/material';
+import { Button } from '@mui/material';
 
 const NavButton = ({ destination, text, strong }) => {
     const goToPage = () => {
@@ -19,7 +19,7 @@ const NavButton = ({ destination, text, strong }) => {
                 <Typography variant="h5" noWrap>
                     {(strong) ? (<>
                         <strong>{text}</strong>
-                    </>): (<>
+                    </>) : (<>
                         {text}
                     </>)}
                 </Typography>
